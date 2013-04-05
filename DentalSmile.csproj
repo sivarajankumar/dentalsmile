@@ -150,12 +150,6 @@
     <Resource Include="Icons\225.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\3dengine\helixtoolkit_29db50621e34\Source\HelixToolkit.Wpf\HelixToolkit.Wpf.csproj">
-      <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
-      <Name>HelixToolkit.Wpf_NET40</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\106.png" />
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +194,12 @@
   <ItemGroup>
     <Resource Include="Icons\del_teeth.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\3dengine\helixtoolkit_29db50621e34\Source\HelixToolkit.Wpf\HelixToolkit.Wpf_NET40.csproj">
+      <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
+      <Name>HelixToolkit.Wpf_NET40</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

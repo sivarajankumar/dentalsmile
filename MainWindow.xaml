@@ -81,7 +81,7 @@
                             <Grid>
                                 <xctk:BusyIndicator x:Name="busyIndicator" IsBusy="False" DisplayAfter="0"/>
                                 <newton:World x:Name="_world" />
-                                <helix:HelixViewport3D newton:World.World="{Binding ElementName=_world}" x:Name="view1" DataContext="{Binding vm}" CameraRotationMode="Trackball"  ModelUpDirection="0,1,0" ShowCoordinateSystem="True" ShowTriangleCountInfo="True" MouseDown="view1_MouseDown" MouseMove="view1_MouseMove" MouseDoubleClick="view1_MouseDoubleClick" >
+                                <helix:HelixViewport3D  x:Name="view1" DataContext="{Binding vm}" CameraRotationMode="Trackball"  ModelUpDirection="0,1,0" ShowCoordinateSystem="True" ShowTriangleCountInfo="True" MouseDown="view1_MouseDown" MouseMove="view1_MouseMove" MouseDoubleClick="view1_MouseDoubleClick" >
                                     <ModelVisual3D x:Name="root1">
                                         <helix:DefaultLights/>
                                         <ModelVisual3D  x:Name="vmodel" />
