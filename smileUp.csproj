@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C7E67BDC-CA63-418E-ACFB-731902C0DDEE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>smileUp</RootNamespace>
+    <AssemblyName>smileUp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AvalonDock">
+      <HintPath>.\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Physics.RidgedBody.NewtonDynamics">
+      <HintPath>.\System.Physics.RidgedBody.NewtonDynamics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFLibrary">
+      <HintPath>.\WPFLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>.\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BaseMarker.cs" />
+    <Compile Include="BraceVisual3D.cs" />
+    <Compile Include="Brace.cs" />
+    <Compile Include="WireVisual3D.cs" />
+    <Compile Include="CustomEditors\CustomAttributeEditorWire.cs" />
+    <Compile Include="Wire.cs" />
+    <Compile Include="CustomEditors\Editors.cs" />
+    <Compile Include="CustomEditors\CustomAttributeEditorBrace.cs" />
+    <Compile Include="CustomEditors\CustomAttributeEditorTeeth.cs" />
+    <Compile Include="Dialogs\ProgressDialog.xaml.cs" />
+    <Compile Include="Patient.cs" />
+    <Compile Include="SmileObjExporter.cs" />
+    <Compile Include="SmileVisual3D.cs" />
+    <Compile Include="VisualTreeAdapter.cs" />
+    <Compile Include="SmileObjReader.cs" />
+    <Compile Include="SmileModelImporter.cs" />
+    <Compile Include="RawVisual3D.cs" />
+    <Compile Include="GeometryGenerator.cs" />
+    <Compile Include="GumVisual3D.cs" />
+    <Compile Include="JawVisual3D.cs" />
+    <Compile Include="MathHelper.cs" />
+    <Compile Include="Teeth.cs" />
+    <Compile Include="TeethVisual3D.cs" />
+    <Page Include="Dialogs\ProgressDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="ImageExtension.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Observable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Helps\SampleText.rtf" />
+    <Resource Include="Helps\CutText.rtf" />
+    <Resource Include="Helps\SlicesText.rtf" />
+    <Resource Include="Helps\WireText.rtf" />
+    <Resource Include="Helps\WireDrawedText.rtf" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\101.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\225.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\3dengine\helixtoolkit_29db50621e34\Source\HelixToolkit.Wpf\HelixToolkit.Wpf.csproj">
+      <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
+      <Name>HelixToolkit.Wpf_NET40</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\106.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\202.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\210.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\102.png" />
+    <Resource Include="Icons\103.png" />
+    <Resource Include="Icons\104.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\227.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\132.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\126.png" />
+    <Resource Include="Icons\128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\109.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\213.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Helps\Slices.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\brace.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\del_brace.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\teeth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\del_teeth.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
