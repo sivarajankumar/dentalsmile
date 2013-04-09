@@ -90,6 +90,9 @@ namespace smileUp
             cont = cont + 1;
             statusBarText.Text = " ... "+cont.ToString();
         }
+
+        #region TESTING
+
         /*
             watch = new Stopwatch();
             watch.Start();
@@ -298,6 +301,8 @@ namespace smileUp
               Point3d nearest = items.Aggregate( ( a, b ) => a.dist < b.dist ? a : b ).point;
             */
         }
+
+
         private void cut()
         {
             var n = new Vector3D(0, 0, 1);
@@ -318,6 +323,9 @@ namespace smileUp
             view1.Children.Add(mv);
 
         }
+        #endregion
+
+
 
         private void ModelLoaded(object sender, RoutedEventArgs e)
         {
@@ -586,7 +594,9 @@ namespace smileUp
                 {
                     vm.showHideManipulator(brace.Parent.Parent);
                 }
+
                 vm.showHideManipulator(brace);
+                selectTeethChart(brace.Parent.Model);
 
                 return;
             }else if (result is GumVisual3D)
@@ -939,13 +949,10 @@ namespace smileUp
         private void loadTeethNumberToChart()
         {
             chartPanel.EllipseCentreX = (350 / 2.5) ;
-            chartPanel.EllipseCentreY = (350 / 3) ;
+            chartPanel.EllipseCentreY = (350 / 2.5) ;
             chartPanel.EllipseWidth = 120;
             chartPanel.EllipseHeight = 140;
 
-            //BitmapImage bmp = new BitmapImage(new Uri("pack://application:,,,/Icons/bg.png"));
-            //Image bg = new Image();
-            //bg.Source = bmp;
             chartPanel.Background = Brushes.AliceBlue;
 
             for (var i = 1; i < 33; i++)

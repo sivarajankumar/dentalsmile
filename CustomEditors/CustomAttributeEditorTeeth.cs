@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.ComponentModel;
 using System.Text;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+using System.Text.RegularExpressions;
 
 namespace smileUp.CustomEditors
 {
@@ -57,7 +58,13 @@ namespace smileUp.CustomEditors
             teeth.Type = "Teeth";
             //TODO: assign the model data to the editor
             teeth.Id = model.Id;
-            teeth.TeethNumber = model.TeethNumber;
+            String tn = model.Id;
+            Match mt = Regex.Match(tn, @"teeth\d\d");
+            if (mt != null)
+                tn = mt.Value.Substring("teeth".Length, 2);
+            int itn = 0;
+            int.TryParse(tn, out itn);
+            teeth.TeethNumber = itn;
             
             return teeth;
         }

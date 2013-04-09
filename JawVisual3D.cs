@@ -175,7 +175,27 @@ namespace smileUp
 
         internal void updateTeethMap(string oldid, string newid)
         {
-
+            //find the existing new id
+            foreach (var g in gums)
+            {
+                GumVisual3D gum = g.Value;
+                if (gum != null)
+                {
+                    foreach (var t in gum.Children)
+                    {
+                        if (t is TeethVisual3D)
+                        {
+                            TeethVisual3D teeth = (TeethVisual3D)t;
+                            if (teeth.Id.Equals(newid))
+                            {
+                                teeth.Id = oldid;
+                                selectedGum.selectedTeeth.Id = newid;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
