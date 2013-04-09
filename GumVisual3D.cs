@@ -92,6 +92,7 @@ namespace smileUp
 
             int intID = getTeethIDint(t.Id);
             teethDictionaries.Add(intID, t.Id);
+            selectedTeeth = t;
             return t;
         }
 
@@ -125,7 +126,7 @@ namespace smileUp
             }
         }
 
-        internal void addBrace()
+        internal BraceVisual3D addBrace()
         {
             if (selectedTeeth != null)
             {
@@ -140,7 +141,6 @@ namespace smileUp
                     braces.Add(brace);
                     
                     braceDictionaries.Add(selectedTeeth.Id, brace);
-
                     /*if (selectedPoint != null)
                     {
                         Transform3DGroup transformGroup = new Transform3DGroup();
@@ -149,7 +149,9 @@ namespace smileUp
                     }*/
                 }
 
+                return brace;
             }
+            return null;
         }
 
         internal void removeBrace()

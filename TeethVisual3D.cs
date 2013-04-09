@@ -29,6 +29,8 @@ namespace smileUp
                 model.Id = Id;
 
                 sample(color);
+
+                
             }
         }
         public static Color getTeethColor(int num) {
@@ -64,9 +66,18 @@ namespace smileUp
         public CombinedManipulator Manipulator { get; set; }
         Boolean showManipulator = false;
         String id;
+
+        public static readonly DependencyProperty IdProperty
+           = DependencyProperty.Register("Id", typeof(String), typeof(TeethVisual3D),
+                                         new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange));
+
         public String Id
         {
-            set { id = value; }
+            set { 
+                id = value;
+                SetValue(IdProperty, value);
+                if(Model != null) Model.Id = value;
+            }
             get { return id; }
         }
 

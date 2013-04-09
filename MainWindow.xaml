@@ -4,8 +4,7 @@
         xmlns:helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf" 
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:avalonDock="http://avalondock.codeplex.com"
-        xmlns:newton="clr-namespace:System.Physics.RidgedBody.NewtonDynamics;assembly=System.Physics.RidgedBody.NewtonDynamics"
-        xmlns:smileUp="clr-namespace:smileUp" Title="{Binding ApplicationTitle}" Height="480" Width="640" Background="LightBlue">
+        xmlns:smileUp="clr-namespace:smileUp" Title="{Binding ApplicationTitle}" Height="600" Width="740" Background="LightBlue">
     <Window.Resources>
         <ContextMenu x:Key="MyContextMenu">
             <MenuItem Header="Send" />
@@ -80,7 +79,6 @@
 
                             <Grid>
                                 <xctk:BusyIndicator x:Name="busyIndicator" IsBusy="False" DisplayAfter="0"/>
-                                <newton:World x:Name="_world" />
                                 <helix:HelixViewport3D  x:Name="view1" DataContext="{Binding vm}" CameraRotationMode="Trackball"  ModelUpDirection="0,1,0" ShowCoordinateSystem="True" ShowTriangleCountInfo="True" MouseDown="view1_MouseDown" MouseMove="view1_MouseMove" MouseDoubleClick="view1_MouseDoubleClick" >
                                     <ModelVisual3D x:Name="root1">
                                         <helix:DefaultLights/>
@@ -88,21 +86,12 @@
                                     </ModelVisual3D>
 
                                 </helix:HelixViewport3D>
-
-                                <Canvas IsHitTestVisible="true" Visibility="Hidden" Width="150" Height="200" Margin="6,15,362,205" x:Name="canvasShortcut">
-                                    <Button Canvas.Top="6" Content="1" Height="23" Name="button1" Width="75" IsHitTestVisible="True" Canvas.Left="6" Click="button1_Click" />
-                                    <TextBlock Canvas.Left="27" Canvas.Top="25" Height="36" Name="textBlock1" Text="TextBlock"  FontSize="24" IsHitTestVisible="False" Foreground="Red" FontWeight="Bold" />
-                                    <Button Canvas.Left="6" Canvas.Top="55" Content="2" Height="23" Name="button2" Width="75" Click="button2_Click" />
-                                    <Button Canvas.Left="6" Canvas.Top="101" Content="3" Height="23" Name="button3" Width="75" Click="button3_Click" />
-                                    <Button Canvas.Left="6" Canvas.Top="147" Content="4" Height="23" Name="button4" Width="75" Click="button4_Click" />
-                                </Canvas>
-
                             </Grid>
                             
                             
                         </avalonDock:LayoutDocument>
                     </avalonDock:LayoutDocumentPane>
-                        <avalonDock:LayoutAnchorablePaneGroup DockWidth="250" Orientation="Vertical">
+                        <avalonDock:LayoutAnchorablePaneGroup DockWidth="350" Orientation="Vertical">
                             <avalonDock:LayoutAnchorablePane>
                                 <avalonDock:LayoutAnchorable Title="Help" CanClose="False" CanFloat="False" CanHide="False">
 
@@ -114,13 +103,14 @@
                                     </FlowDocument>
                                 </xctk:RichTextBox>
                             </avalonDock:LayoutAnchorable>
-                            <avalonDock:LayoutAnchorable Title="Preview" CanClose="False" CanFloat="False" CanHide="False">
-                                    <TextBox/>
-                                </avalonDock:LayoutAnchorable>
+                            <avalonDock:LayoutAnchorable Title="Teeth Chart" CanClose="False" CanFloat="False" CanHide="False">
+                                <smileUp:EllipticalLayoutPanel x:Name="chartPanel"/>
+
+                            </avalonDock:LayoutAnchorable>
                             </avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorable Title="Properties" CanClose="False" CanFloat="False" CanHide="False">
-                                <xctk:PropertyGrid x:Name="_propertyGrid" Width="300" Margin="5"/>
+                                <xctk:PropertyGrid x:Name="_propertyGrid" Width="330" Margin="5"/>
 
                             </avalonDock:LayoutAnchorable>
                             </avalonDock:LayoutAnchorablePane>
@@ -141,6 +131,7 @@
 
         <StatusBar Grid.Row="3">
             <StatusBarItem Content="Orthodontics Project -by Denteam [ Asyirini Fajrin - Dwi Miyanto - Fuad Ughi - Nunu Nugraha ] "/>
+            <TextBlock x:Name="statusBarText" Text=" -- 0"/>
         </StatusBar>
     </Grid>            
 

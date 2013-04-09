@@ -39,11 +39,11 @@
     <Reference Include="AvalonDock">
       <HintPath>.\AvalonDock.dll</HintPath>
     </Reference>
+    <Reference Include="Jitter">
+      <HintPath>.\Jitter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Physics.RidgedBody.NewtonDynamics">
-      <HintPath>.\System.Physics.RidgedBody.NewtonDynamics.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,6 +70,9 @@
     <Compile Include="BaseMarker.cs" />
     <Compile Include="BraceVisual3D.cs" />
     <Compile Include="Brace.cs" />
+    <Compile Include="CustomEditors\TeethMappingItemSource.cs" />
+    <Compile Include="EllipticalLayoutPanel.cs" />
+    <Compile Include="ImageToggleButton.cs" />
     <Compile Include="WireVisual3D.cs" />
     <Compile Include="CustomEditors\CustomAttributeEditorWire.cs" />
     <Compile Include="Wire.cs" />
@@ -199,6 +202,15 @@
       <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
       <Name>HelixToolkit.Wpf_NET40</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\teeth16.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\teeth16s.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -38,6 +38,9 @@ namespace smileUp
         [XmlIgnore]
         public Patient Patient { get; set; }
 
+        [XmlIgnore]
+        public int TeethNumber { get; set; }
+
         public Teeth()
         {
         }

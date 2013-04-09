@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using HelixToolkit.Wpf;
+using System.Text.RegularExpressions;
 
 namespace smileUp
 {
@@ -50,13 +51,15 @@ namespace smileUp
             //gums.Add("gumDefault", gum1);
         }
 
-        public void addTeeth(Point3D center)
+        public TeethVisual3D addTeeth(Point3D center)
         {
             if (selectedGum != null)
             {
                 selectedGum.selectedPoint = center;
                 selectedGum.addTeeth();
+                return selectedGum.selectedTeeth;
             }
+            return null;
         }
 
         public void removeTeeth()
@@ -77,27 +80,32 @@ namespace smileUp
                 {
                     foreach (var t in gum.Children)
                     {
-                        TeethVisual3D teeth = (TeethVisual3D)t;
-                        Console.WriteLine(teeth.Id);
-                        if (teeth.Id.StartsWith("teeth" + pStr))
+                        if (t is TeethVisual3D)
                         {
-                            teeth.showHideManipulator();
-                            selectedGum = gum;
-                            gum.selectedTeeth = teeth;
-                            break;
+                            TeethVisual3D teeth = (TeethVisual3D)t;
+                            //Console.WriteLine(teeth.Id);
+                            if(Regex.IsMatch(teeth.Id, @"teeth" + pStr))
+                            //if (teeth.Id.StartsWith("teeth" + pStr))
+                            {
+                                teeth.showHideManipulator();
+                                selectedGum = gum;
+                                gum.selectedTeeth = teeth;
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
 
-        internal void addBrace(Point3D center)
+        internal BraceVisual3D addBrace(Point3D center)
         {
             if (selectedGum != null)
             {
                 selectedGum.selectedPoint = center;
-                selectedGum.addBrace();
+                return selectedGum.addBrace();
             }
+            return null;
         }
 
         internal void removeBrace()
@@ -163,6 +171,11 @@ namespace smileUp
                 TubeVisual3D tube = new TubeVisual3D { Diameter = 1.02, Path = contours, Fill = (i % 2 == 0 ? Brushes.Green : Brushes.Blue) };
                 this.Children.Add(tube);
             }
+        }
+
+        internal void updateTeethMap(string oldid, string newid)
+        {
+
         }
     }
 }

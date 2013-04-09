@@ -140,7 +140,8 @@ namespace smileUp
         private JawVisual3D _jawVisual;
 
         private ModelVisual3D _rootVisual;
-        
+
+        MainWindow window;
             
         private IFileDialogService FileDialogService;
         public IHelixViewport3D HelixView { get; set; }
@@ -176,7 +177,8 @@ namespace smileUp
 
         public List<VisualElement> Elements { get; set; }
 
-        public MainViewModel(IFileDialogService fds, HelixViewport3D hv, ModelVisual3D rootModel)
+//        public MainViewModel(IFileDialogService fds, HelixViewport3D hv, ModelVisual3D rootModel)
+        public MainViewModel(IFileDialogService fds, HelixViewport3D hv, MainWindow window)
         {
             Expansion = 1;
             FileDialogService = fds;
@@ -198,10 +200,10 @@ namespace smileUp
             foreach (var c in hv.Children) Elements.Add(new VisualElement(c));
             Patient patient = new Patient();
             JawVisual = new JawVisual3D(patient);
-            RootVisual = rootModel;
+            RootVisual = window.vmodel;
 
-            rootModel.Children.Add(JawVisual);
-            
+            RootVisual.Children.Add(JawVisual);
+            this.window = window;
         }
 
         
@@ -381,11 +383,9 @@ namespace smileUp
                 smileMode = "JAW";
 
                 //if (!HelixView.Viewport.Children.Contains(RootVisual))                    HelixView.Viewport.Children.Add(RootVisual);
+                window.chartPanel.Visibility = Visibility.Visible;
 
                 ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
-                Canvas c = (Canvas)Application.Current.MainWindow.Resources["canvasShortcut"];
-                if (c != null)
-                    c.Visibility = Visibility.Visible;
             }
 
             HelixView.ZoomExtents(0);
@@ -434,6 +434,7 @@ namespace smileUp
 
                 }
                 var geom = new GeometryModel3D(mb.ToMesh(), MaterialHelper.CreateMaterial(Colors.BlueViolet));
+                geom.BackMaterial = MaterialHelper.CreateMaterial(Colors.Chocolate);
                 group.Children.Add(geom);
 
 
@@ -601,10 +602,8 @@ namespace smileUp
 
             //((HelixViewport3D)HelixView).Children.Clear();
             //((HelixViewport3D)HelixView).Children.Add(RootVisual);
-            
-            Canvas c = (Canvas)Application.Current.MainWindow.TryFindResource("canvasShortcut");
-            if (c != null)
-                c.Visibility = Visibility.Hidden;
+
+            window.reset();
 
         }
 
@@ -615,10 +614,12 @@ namespace smileUp
                 RawVisual.showHideManipulator();
         }
 
-        internal void addTeeth(Point3D p)
+        internal TeethVisual3D addTeeth(Point3D p)
         {
             if (JawVisual != null)
-                JawVisual.addTeeth(p);
+                return JawVisual.addTeeth(p);
+
+            return null;
         }
 
         internal void removeTeeth()
@@ -644,11 +645,12 @@ namespace smileUp
                 JawVisual.selectTeeth(p);
         }
 
-        internal void addBrace(Point3D center)
+        internal BraceVisual3D addBrace(Point3D center)
         {
             if (JawVisual != null)
-                JawVisual.addBrace(center);
+                return JawVisual.addBrace(center);
 
+            return null;
         }
 
         internal void removeBrace()
@@ -692,6 +694,11 @@ namespace smileUp
             {
                 JawVisual.drawWire(bracesModel);
             }
+        }
+
+        internal void updateTeethMap(string oldid, string newid)
+        {
+            JawVisual.updateTeethMap(oldid, newid);
         }
     }
 

@@ -19,6 +19,15 @@ using HelixToolkit.Wpf;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
+using Jitter;
+using Jitter.Collision;
+using Jitter.LinearMath;
+using Jitter.Collision.Shapes;
+using Jitter.Dynamics;
+using System.Diagnostics;
+using smileUp.CustomEditors;
+using System.Text.RegularExpressions;
+using System.Windows.Controls.Primitives;
 
 namespace smileUp
 {
@@ -37,6 +46,8 @@ namespace smileUp
 
         SmileVisual3D g;
 
+        private World world;
+
         public static MainWindow GetMainWindow(DependencyObject obj)
         {
             return (MainWindow)obj.GetValue(MainWindowProperty);
@@ -51,18 +62,82 @@ namespace smileUp
         public static readonly DependencyProperty MainWindowProperty =
             DependencyProperty.RegisterAttached("MainWindow", typeof(MainWindow), typeof(MainWindow), null);
 
-        
+        DispatcherTimer _timer = new DispatcherTimer();
+        int cont = 0;
+
         public MainWindow()
         {
             InitializeComponent();
-            vm = new MainViewModel(new FileDialogService(), view1, vmodel);
+            vm = new MainViewModel(new FileDialogService(), view1, this);
             DataContext = vm;
-            
-            //tester();
+
+            loadTeethNumberToChart();
+
+            Loaded += new RoutedEventHandler(OnLoaded);
         }
 
+        private void OnLoaded(object sender, EventArgs e)
+        {
+            _timer.Interval = new System.TimeSpan(0, 0, 0, 0, 1000);
+            _timer.Tick += new System.EventHandler(OnTimerEvent);
+
+            _timer.Start();
+
+        }
+
+        void OnTimerEvent(object sender, System.EventArgs args)
+        {
+            cont = cont + 1;
+            statusBarText.Text = " ... "+cont.ToString();
+        }
+        /*
+            watch = new Stopwatch();
+            watch.Start();
+
+            world = new World(new CollisionSystemSAP());
+            world.Gravity = new JVector(0, 0, 0);
+            world.CollisionSystem.CollisionDetected += new CollisionDetectedHandler(CollisionSystem_CollisionDetected);
+           //tester();
+
+            integratorThread = new Thread(IntegrationWorker);
+            integratorThread.Start();
+
+            this.Closing += MainWindow_Closing;
+
+        }
+        void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            watch.Stop();
+            integratorThread.Abort();
+        }
+        private void IntegrationWorker()
+        {
+            while (true)
+            {
+                watch.Restart();
+                float step = 1.0f / 65;
+                if (step > 1.0f / 100.0f) step = 1.0f / 100.0f;
+                world.Step(step, true);
+            }
+        }
+        void CollisionSystem_CollisionDetected(RigidBody body1, RigidBody body2, JVector point1, JVector point2, JVector normal, float penetration)
+        {
+            Console.WriteLine("CollisionSystem_CollisionDetected");
+        }
+        */
         private void tester()
         {
+            
+            BoxShape shape = new BoxShape( new JVector(300, 300, 1));
+            RigidBody body = new RigidBody(shape);
+            world.AddBody(body);
+            body.Position = new JVector(0, 0, -0.5f);
+            body.Material.Restitution = 0.0f;
+            body.LinearVelocity = JVector.Zero;
+            body.IsActive = false;
+            body.IsStatic = true;
+            body.Tag = false;
+
             /* Wiring Brace */
             Point3D p0 = new Point3D(-0.849706889491251, -3.41818201148931, -3.45752298819413);
             Point3D p1 = new Point3D(7.65467623338951, -2.94937570295315, -1.60678487891435);
@@ -87,12 +162,12 @@ namespace smileUp
             TubeVisual3D tube = new TubeVisual3D { Diameter = 1.02, Path = contours, Fill = Brushes.Green };
             view1.Children.Add(tube);
 
-            Point3D pp = new Point3D(0, 0, 0);
-            Vector3D mv = Point3D.Subtract(p0, pp);
+            //Point3D pp = new Point3D(0, 0, 0);
+            //Vector3D mv = Point3D.Subtract(p0, pp);
 
-            view1.Children.Add(new RectangleVisual3D { Origin = p0, Normal = mv, Fill = new SolidColorBrush(Color.FromArgb(190, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
+           // view1.Children.Add(new RectangleVisual3D { Origin = p0, Normal = mv, Fill = new SolidColorBrush(Color.FromArgb(190, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
 
-            view1.Children.Add(new RectangleVisual3D { Origin = pp, Normal = mv, Fill = new SolidColorBrush(Color.FromArgb(190, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.AliceBlue)) });
+            //view1.Children.Add(new RectangleVisual3D { Origin = pp, Normal = mv, Fill = new SolidColorBrush(Color.FromArgb(190, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.AliceBlue)) });
 
             /* Normal Vector Directions
             Point3D p0 = new Point3D(-0.849706889491251,-3.41818201148931,-3.45752298819413);
@@ -484,12 +559,12 @@ namespace smileUp
             {
                 TeethVisual3D teeth = (TeethVisual3D)result;
                 vm.showHideManipulator(teeth);
-
+                selectTeethChart(teeth.Model);
                 //TOOD: show enable icons/buttons
                 enableRemoveTeethButton(true);
                 _propertyGrid.Visibility = System.Windows.Visibility.Visible;
-                _propertyGrid.SelectedObject = CustomEditors.CustomAttributeEditorTeeth.CreateCustomAttributEditorTeeth(teeth.Model);
-
+                _propertyGrid.SelectedObject = CustomAttributeEditorTeeth.CreateCustomAttributEditorTeeth(teeth.Model);
+                _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
                 return;
             }
             else if (result is BraceVisual3D)
@@ -500,7 +575,7 @@ namespace smileUp
                 enableRemoveBraceButton(true);
 
                 _propertyGrid.Visibility = System.Windows.Visibility.Visible;                
-                _propertyGrid.SelectedObject = CustomEditors.CustomAttributeEditorBrace.CreateCustomAttributEditorBrace(brace.Model);
+                _propertyGrid.SelectedObject = CustomAttributeEditorBrace.CreateCustomAttributEditorBrace(brace.Model);
 
                 if (MakeWireBtn.IsChecked == true)
                 {
@@ -521,6 +596,7 @@ namespace smileUp
                 vm.showHideManipulator(gum);
 
                 enableAddTeethButton(true);
+                resetTeethChart();
 
                 _propertyGrid.Visibility = System.Windows.Visibility.Hidden;
                 _propertyGrid.SelectedObject = null; 
@@ -544,6 +620,27 @@ namespace smileUp
             //Console.WriteLine("MouseRight");
 
         }
+
+
+        void _propertyGrid_PropertyValueChanged(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventArgs e)
+        {
+            var item = e.OriginalSource as Xceed.Wpf.Toolkit.PropertyGrid.PropertyItem;
+            if (item.DisplayName == "TeethNumber") {
+                CustomAttributeEditorTeeth t = (CustomAttributeEditorTeeth)_propertyGrid.SelectedObject;
+                String oldid = t.Id;
+                int newValue = (int)e.NewValue;
+                String newid = Regex.Replace(oldid, @"teeth\d\d", "teeth" + newValue.ToString("00"), RegexOptions.IgnoreCase);
+                t.Id = newid;
+                _propertyGrid.SelectedObject = null;
+                _propertyGrid.SelectedObject = t;
+
+                vm.updateTeethMap(oldid, newid);
+
+                //TODO: save to DB
+            }
+
+        }
+
 
         private void enableAddBraceButton(bool b)
         {
@@ -691,7 +788,8 @@ namespace smileUp
         private void AddTeethBtn_Click(object sender, RoutedEventArgs e)
         {
             var pt = view1.FindNearestPoint(mousePoint);
-            vm.addTeeth((Point3D)pt);
+            TeethVisual3D t = vm.addTeeth((Point3D)pt);
+            if (t != null) world.AddBody(t.getRigidBody());
         }
 
         private void AlignObjectBtn_Click(object sender, RoutedEventArgs e)
@@ -738,7 +836,8 @@ namespace smileUp
         private void AddBraceBtn_Click(object sender, RoutedEventArgs e)
         {
             var pt = view1.FindNearestPoint(mousePoint);
-            vm.addBrace((Point3D)pt);
+            BraceVisual3D b = vm.addBrace((Point3D)pt);
+            if (b != null) world.AddBody(b.getRigidBody());
         }
 
         private void RemoveBraceBtn_Click(object sender, RoutedEventArgs e)
@@ -832,5 +931,113 @@ namespace smileUp
 
         }
 
+        public void reset()
+        {
+            chartPanel.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        private void loadTeethNumberToChart()
+        {
+            chartPanel.EllipseCentreX = (350 / 2.5) ;
+            chartPanel.EllipseCentreY = (350 / 3) ;
+            chartPanel.EllipseWidth = 120;
+            chartPanel.EllipseHeight = 140;
+
+            //BitmapImage bmp = new BitmapImage(new Uri("pack://application:,,,/Icons/bg.png"));
+            //Image bg = new Image();
+            //bg.Source = bmp;
+            chartPanel.Background = Brushes.AliceBlue;
+
+            for (var i = 1; i < 33; i++)
+            {
+                BitmapImage bitmap = new BitmapImage(new Uri("pack://application:,,,/Icons/teeth16.jpg"));
+                ImageToggleButton button = new ImageToggleButton(bitmap, "" + (chartPanel.Children.Count + 1));
+
+                button.Click += new RoutedEventHandler(button_Click);
+                button.Checked += new RoutedEventHandler(button_Checked);
+                button.Unchecked += new RoutedEventHandler(button_Checked);
+
+                chartPanel.Children.Add(button);
+            }
+            reset();
+        }
+ 
+        void button_Checked(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as ImageToggleButton;
+            if (btn.IsChecked == true)
+            {
+                BitmapImage bitmap = new BitmapImage(new Uri("pack://application:,,,/Icons/teeth16s.jpg"));
+                Image img = new Image();
+                img.Source = bitmap;
+                btn.Image= img;
+            }
+            else
+            {
+                BitmapImage bitmap = new BitmapImage(new Uri("pack://application:,,,/Icons/teeth16.jpg"));
+                Image img = new Image();
+                img.Source = bitmap;
+                btn.Image = img;
+            }
+
+        }
+
+        private void resetTeethChart()
+        {
+            //set FALSE another button checked
+            foreach (var b in chartPanel.Children)
+            {
+                if (b is ImageToggleButton)
+                {
+                    ((ImageToggleButton)b).IsChecked = false;
+                }
+            }
+        }
+        void button_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = e.OriginalSource as ImageToggleButton;
+            //set FALSE another button checked
+            foreach (var b in chartPanel.Children)
+            {
+                if (b.Equals(btn))
+                {
+                    continue;
+                }
+                if (b is ImageToggleButton)
+                {
+                    ((ImageToggleButton)b).IsChecked = false;
+                }
+            }
+            if (btn.IsChecked == true)
+            {
+                //should be false
+                int p = 0; 
+                int.TryParse(btn.Text.Text, out p);
+                vm.selectTeeth(p);
+            }
+            //MessageBox.Show(""+e.ToString());
+        }
+
+        private void selectTeethChart(Teeth teeth)
+        {
+            String id = teeth.Id;
+            Match mt = Regex.Match(id, @"teeth\d\d");
+            if(mt != null)
+                id = mt.Value.Substring("teeth".Length, 2);
+            int p = 0;
+            int.TryParse(id, out p);
+            foreach (var b in chartPanel.Children)
+            {                
+                if (b is ImageToggleButton)
+                {
+                    var btn = (ImageToggleButton)b;
+                    int pp = 0;
+                    int.TryParse(btn.Text.Text, out pp);
+                    if(pp == p) ((ImageToggleButton)b).IsChecked = true;
+                    else ((ImageToggleButton)b).IsChecked = false;
+                }
+            }
+        }
     }
+
 }

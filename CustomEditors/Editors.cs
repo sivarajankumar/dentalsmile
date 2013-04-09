@@ -17,9 +17,9 @@ namespace smileUp.CustomEditors
     //Custom editors that are used as attributes MUST implement the ITypeEditor interface.
     public class TextBoxEditor : Xceed.Wpf.Toolkit.PropertyGrid.Editors.ITypeEditor
     {
+        TextBox textBox = new TextBox();
         public FrameworkElement ResolveEditor(Xceed.Wpf.Toolkit.PropertyGrid.PropertyItem propertyItem)
         {
-            TextBox textBox = new TextBox();
             //textBox.Background = new SolidColorBrush(Colors.Red);
 
             //create the binding from the bound property item to the editor
@@ -31,6 +31,7 @@ namespace smileUp.CustomEditors
             BindingOperations.SetBinding(textBox, TextBox.TextProperty, _binding);
             return textBox;
         }
+
     }
 
 }
