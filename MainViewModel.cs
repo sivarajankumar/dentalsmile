@@ -639,10 +639,12 @@ namespace smileUp
 
         public string smileMode { get; set; }
 
-        internal void selectTeeth(int p)
+        internal TeethVisual3D selectTeeth(int p)
         {
+            TeethVisual3D r = null;
             if (JawVisual != null)
-                JawVisual.selectTeeth(p);
+                r = JawVisual.selectTeeth(p);
+            return r;
         }
 
         internal BraceVisual3D addBrace(Point3D center)

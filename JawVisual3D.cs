@@ -70,8 +70,9 @@ namespace smileUp
             }
         }
 
-        internal void selectTeeth(int p)
+        internal TeethVisual3D selectTeeth(int p)
         {
+            TeethVisual3D teeth = null;
             String pStr = p.ToString("00");
             foreach (var g in gums)
             {
@@ -82,7 +83,7 @@ namespace smileUp
                     {
                         if (t is TeethVisual3D)
                         {
-                            TeethVisual3D teeth = (TeethVisual3D)t;
+                            teeth = (TeethVisual3D)t;
                             //Console.WriteLine(teeth.Id);
                             if(Regex.IsMatch(teeth.Id, @"teeth" + pStr))
                             //if (teeth.Id.StartsWith("teeth" + pStr))
@@ -96,6 +97,7 @@ namespace smileUp
                     }
                 }
             }
+            return teeth;
         }
 
         internal BraceVisual3D addBrace(Point3D center)

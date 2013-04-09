@@ -566,13 +566,11 @@ namespace smileUp
             if (result is TeethVisual3D)
             {
                 TeethVisual3D teeth = (TeethVisual3D)result;
-                vm.showHideManipulator(teeth);
-                selectTeethChart(teeth.Model);
+                //vm.showHideManipulator(teeth);
+                selectTeethChart(teeth.Model.Id);
                 //TOOD: show enable icons/buttons
                 enableRemoveTeethButton(true);
-                _propertyGrid.Visibility = System.Windows.Visibility.Visible;
-                _propertyGrid.SelectedObject = CustomAttributeEditorTeeth.CreateCustomAttributEditorTeeth(teeth.Model);
-                _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
+                showTeethProperty(teeth);
                 return;
             }
             else if (result is BraceVisual3D)
@@ -596,7 +594,7 @@ namespace smileUp
                 }
 
                 vm.showHideManipulator(brace);
-                selectTeethChart(brace.Parent.Model);
+                selectTeethChart(brace.Parent.Model.Id);
 
                 return;
             }else if (result is GumVisual3D)
@@ -631,6 +629,13 @@ namespace smileUp
 
         }
 
+        private void showTeethProperty(TeethVisual3D teeth)
+        {
+            _propertyGrid.Visibility = System.Windows.Visibility.Visible;
+            _propertyGrid.SelectedObject = CustomAttributeEditorTeeth.CreateCustomAttributEditorTeeth(teeth.Model);
+            _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
+        }
+
 
         void _propertyGrid_PropertyValueChanged(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventArgs e)
         {
@@ -645,7 +650,8 @@ namespace smileUp
                 _propertyGrid.SelectedObject = t;
 
                 vm.updateTeethMap(oldid, newid);
-
+                selectTeethChart(newid);
+                
                 //TODO: save to DB
             }
 
@@ -1020,14 +1026,15 @@ namespace smileUp
                 //should be false
                 int p = 0; 
                 int.TryParse(btn.Text.Text, out p);
-                vm.selectTeeth(p);
+                TeethVisual3D teeth = vm.selectTeeth(p);
+                showTeethProperty(teeth);
             }
             //MessageBox.Show(""+e.ToString());
         }
 
-        private void selectTeethChart(Teeth teeth)
+        private void selectTeethChart(String id)
         {
-            String id = teeth.Id;
+            //String id = teeth.Id;
             Match mt = Regex.Match(id, @"teeth\d\d");
             if(mt != null)
                 id = mt.Value.Substring("teeth".Length, 2);
@@ -1044,6 +1051,8 @@ namespace smileUp
                     else ((ImageToggleButton)b).IsChecked = false;
                 }
             }
+            
+            vm.selectTeeth(p);
         }
     }
 

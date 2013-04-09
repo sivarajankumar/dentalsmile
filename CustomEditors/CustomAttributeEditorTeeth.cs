@@ -33,6 +33,7 @@ namespace smileUp.CustomEditors
         [Description("This property uses a TextBox as the default editor.")]
         //This custom editor is a Class that implements the ITypeEditor interface
         //[Editor(typeof(TextBoxEditor), typeof(TextBoxEditor))]
+        [ReadOnly(true)]
         public string Id
         {
             get;
