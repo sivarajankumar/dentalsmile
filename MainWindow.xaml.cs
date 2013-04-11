@@ -48,6 +48,7 @@ namespace smileUp
 
         private World world;
 
+        /*
         public static MainWindow GetMainWindow(DependencyObject obj)
         {
             return (MainWindow)obj.GetValue(MainWindowProperty);
@@ -59,9 +60,8 @@ namespace smileUp
         }
 
         // Using a DependencyProperty as the backing store for MainWindow.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MainWindowProperty =
-            DependencyProperty.RegisterAttached("MainWindow", typeof(MainWindow), typeof(MainWindow), null);
-
+        public static readonly DependencyProperty MainWindowProperty = DependencyProperty.RegisterAttached("MainWindow", typeof(MainWindow), typeof(MainWindow), null);
+        */
         DispatcherTimer _timer = new DispatcherTimer();
         int cont = 0;
 
@@ -511,45 +511,8 @@ namespace smileUp
             mousePoint = e.GetPosition(view1);
             if (teethMarkerBool)
             {
-                var pt = view1.FindNearestPoint(mousePoint);
-                if (pt is Point3D)
-                {
-                    if(points == null) points = new Point3DCollection();
-                    if (vectors == null) vectors = new Vector3DCollection();
-
-                    Console.WriteLine(pt.Value.ToString());
-                    //var pv = new PointsVisual3D();
-                    
-                    //pv.Points.Add((Point3D) pt);
-                    vm.RawVisual.AddBox(pt);
-                    //vm.HelixView.Viewport.Children.Add(b);
-
-                    points.Add((Point3D)pt);
-                    if (points.Count > 1)
-                    {
-                        Vector3DCollection v = new Vector3DCollection();
-                        for (var i = 1; i < points.Count; i++)
-                        {
-                            Point3D ps = points[i];
-                            Point3D p0 = points[i - 1];
-
-                            Vector3D n0 = Point3D.Subtract(ps, p0);
-
-                            if (i == 1)
-                            {
-                                n0.Normalize();
-                                v.Add(n0);
-                                //view1.Children.Add(new RectangleVisual3D { Origin = p0, Normal = n0, Fill = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
-                            }
-                            n0.Negate();
-                            n0.Normalize();
-                            v.Add(n0);
-                            //view1.Children.Add(new RectangleVisual3D { Origin = ps, Normal = n0, Fill = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
-                        }
-                        vectors = v;
-                    }
-                }
-                return;
+                if (addMarkerToTeeth(mousePoint))               
+                    return;                                
             }
 
 
@@ -629,6 +592,49 @@ namespace smileUp
 
         }
 
+        private bool addMarkerToTeeth(Point mousePoint)
+        {
+            var pt = view1.FindNearestPoint(mousePoint);
+            if (pt is Point3D)
+            {
+                if (points == null) points = new Point3DCollection();
+                if (vectors == null) vectors = new Vector3DCollection();
+
+                //Console.WriteLine(pt.Value.ToString());
+                //var pv = new PointsVisual3D();
+
+                //pv.Points.Add((Point3D) pt);
+                vm.RawVisual.AddBox(pt);
+                //vm.HelixView.Viewport.Children.Add(b);
+
+                points.Add((Point3D)pt);
+                if (points.Count > 1)
+                {
+                    Vector3DCollection v = new Vector3DCollection();
+                    for (var i = 1; i < points.Count; i++)
+                    {
+                        Point3D ps = points[i];
+                        Point3D p0 = points[i - 1];
+
+                        Vector3D n0 = Point3D.Subtract(ps, p0);
+
+                        if (i == 1)
+                        {
+                            n0.Normalize();
+                            v.Add(n0);
+                            //view1.Children.Add(new RectangleVisual3D { Origin = p0, Normal = n0, Fill = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
+                        }
+                        n0.Negate();
+                        n0.Normalize();
+                        v.Add(n0);
+                        //view1.Children.Add(new RectangleVisual3D { Origin = ps, Normal = n0, Fill = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
+                    }
+                    vectors = v;
+                }
+            }
+            return true;
+        }
+
         private void showTeethProperty(TeethVisual3D teeth)
         {
             _propertyGrid.Visibility = System.Windows.Visibility.Visible;
@@ -683,8 +689,21 @@ namespace smileUp
         
         private void view1_MouseMove(object sender, MouseEventArgs e)
         {
+            mousePoint = e.GetPosition(view1);
             //var pt = view1.FindNearestPoint(e.GetPosition(view1));
+            
+            //TODO: detect collision between visual3d
+            /*ModelVisual3D result = GetHitTestResult(mousePoint);
+            if (result == null)
+            {
+                return;
+            }
 
+
+            if (result is TeethVisual3D)
+            {
+                Console.WriteLine("teeth");    
+            }*/
         }
 
         private void manip(object sender, MouseButtonEventArgs e)
@@ -805,7 +824,7 @@ namespace smileUp
         {
             var pt = view1.FindNearestPoint(mousePoint);
             TeethVisual3D t = vm.addTeeth((Point3D)pt);
-            if (t != null) world.AddBody(t.getRigidBody());
+            //if (t != null) world.AddBody(t.getRigidBody());
         }
 
         private void AlignObjectBtn_Click(object sender, RoutedEventArgs e)
@@ -853,7 +872,7 @@ namespace smileUp
         {
             var pt = view1.FindNearestPoint(mousePoint);
             BraceVisual3D b = vm.addBrace((Point3D)pt);
-            if (b != null) world.AddBody(b.getRigidBody());
+            //if (b != null) world.AddBody(b.getRigidBody());
         }
 
         private void RemoveBraceBtn_Click(object sender, RoutedEventArgs e)
@@ -1036,7 +1055,7 @@ namespace smileUp
         {
             //String id = teeth.Id;
             Match mt = Regex.Match(id, @"teeth\d\d");
-            if(mt != null)
+            if(mt != null && mt.Length > 0)
                 id = mt.Value.Substring("teeth".Length, 2);
             int p = 0;
             int.TryParse(id, out p);

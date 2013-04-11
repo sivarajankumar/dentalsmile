@@ -9,17 +9,45 @@ using Jitter.Collision.Shapes;
 using Jitter.Dynamics;
 using Jitter.Collision;
 using Jitter.LinearMath;
+using System.Windows;
+using System.Windows.Data;
 
 namespace smileUp
 {
     public class SmileVisual3D : ModelVisual3D
     {
         ModelVisual3D target;
-        RigidBody body;
+        public static readonly DependencyProperty TargetTransformProperty = DependencyProperty.Register("TargetTransform", typeof(Transform3D), typeof(SmileVisual3D), new PropertyMetadata(TargetTransformChanged));
+
+        private static void TargetTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //detect
+            if (d is TeethVisual3D)
+            {
+                TeethVisual3D dt = (TeethVisual3D)d;
+                GumVisual3D gum = dt.Parent;
+                foreach (var t in gum.Children)
+                {
+                    if (t is TeethVisual3D)
+                    {
+                        TeethVisual3D teeth = (TeethVisual3D)t;
+                        if (!teeth.Equals(d))
+                        {
+                            if (teeth.IsInside(dt))
+                            {
+                                Console.WriteLine(dt.Id+"TargetTransformChanged. TODO: detect collision detections"+teeth.Id);
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+         
 
         public SmileVisual3D() 
         {
-            
+
         }
 
         public SmileVisual3D(ModelVisual3D t)
@@ -27,6 +55,12 @@ namespace smileUp
             this.target = t;
 
         }
+        public virtual void Bind(ModelVisual3D source)
+        {
+            BindingOperations.SetBinding(this, TargetTransformProperty, new Binding("Transform") { Source = source });
+        }
+
+
         internal void createPlane()
         {
             if (target != null)
@@ -44,44 +78,18 @@ namespace smileUp
             }
         }
 
-        public RigidBody getRigidBody()
+        bool IsInside(ModelVisual3D other)
         {
-            Shape shape = new TriangleMeshShape(getOctree());
-            if(body == null) body = new RigidBody(shape);
-            else body.Shape = shape;
-            
-            body.Material.Restitution = 0.0f;            
-            body.LinearVelocity = JVector.Zero;
-            body.IsActive = false;
-            //body.IsStatic = true;
-
-            return body;
-        }
-
-        public Octree getOctree()
-        {
-            List<JVector> pos = new List<JVector>();
-            List<TriangleVertexIndices> tris = new List<TriangleVertexIndices>();
-
-            MeshGeometry3D mesh = GetMesh();
-            for (int i = 0; i < mesh.TriangleIndices.Count; i += 3)
-            {
-                int i0 = mesh.TriangleIndices[i];
-                int i1 = mesh.TriangleIndices[i + 1];
-                int i2 = mesh.TriangleIndices[i + 2];
-                var p0 = mesh.Positions[i0];
-                var p1 = mesh.Positions[i1];
-                var p2 = mesh.Positions[i2];
-
-                pos.Add(new JVector((float)p0.X, (float)p0.Y, (float)p0.Z));
-                pos.Add(new JVector((float)p1.X, (float)p1.Y, (float)p1.Z));
-                pos.Add(new JVector((float)p2.X, (float)p2.Y, (float)p2.Z));
-
-                tris.Add(new TriangleVertexIndices(i0, i1, i2));
-            }
-            Octree octree = new Octree(pos, tris);
-            octree.BuildOctree();
-            return octree;
+            Rect3D r = this.Content.Bounds;
+            Rect3D o = other.Content.Bounds;
+            return r.IntersectsWith(o);        
+            /*return r.X <= o.X &&
+                   r.Y <= o.Y &&
+                   r.Z <= o.Z &&
+                   o.X >= r.X &&
+                   o.Y >= r.Y &&
+                   o.Z >= r.Z;
+             */
         }
 
         public Point3D ToLocal(Point3D worldPoint)

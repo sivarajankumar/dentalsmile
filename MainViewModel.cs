@@ -624,9 +624,13 @@ namespace smileUp
 
         internal void removeTeeth()
         {
-            if (JawVisual != null)
+            if (MessageBox.Show("Are you sure to remove the Teeth? This action can't be undone!", "Remove Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                JawVisual.removeTeeth();                            }
+                if (JawVisual != null)
+                {
+                    JawVisual.removeTeeth();
+                }
+            }
         }
 
         internal void showHideManipulator(TeethVisual3D teeth)
@@ -657,10 +661,14 @@ namespace smileUp
 
         internal void removeBrace()
         {
-            if (JawVisual != null)
+            if (MessageBox.Show("Are you sure to remove the Brace? This action can't be undone!", "Remove Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                JawVisual.removeBrace();
+                if (JawVisual != null)
+                {
+                    JawVisual.removeBrace();
+                }
             }
+  
         }
 
         internal void showHideManipulator(BraceVisual3D brace)

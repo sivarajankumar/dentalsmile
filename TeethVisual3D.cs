@@ -34,10 +34,10 @@ namespace smileUp
             }
         }
         public static Color getTeethColor(int num) {
-            if (num % 2 == 0) return Colors.Blue;
-            if (num % 3 == 0) return Colors.Red;
-            if (num % 4 == 0) return Colors.GreenYellow;
             if (num % 5 == 0) return Colors.Orange;
+            if (num % 4 == 0) return Colors.GreenYellow;
+            if (num % 3 == 0) return Colors.Red;
+            if (num % 2 == 0) return Colors.Blue;
             return Colors.Gold;
         }
         internal void sample(Color color)
@@ -78,7 +78,10 @@ namespace smileUp
                 SetValue(IdProperty, value);
                 if(Model != null) Model.Id = value;
             }
-            get { return id; }
+            get {
+                id = (String) GetValue(IdProperty);
+                return id; 
+            }
         }
 
         Teeth model;
@@ -104,6 +107,7 @@ namespace smileUp
                     _manipulator.Diameter = Math.Max(r.SizeX, Math.Max(r.SizeY, r.SizeZ)) + 1;
                     _manipulator.Length = _manipulator.Diameter * 0.75;
                     _manipulator.Bind(this);
+                    Bind(_manipulator);
                 }
                 this.parent.Children.Add(_manipulator);
 
