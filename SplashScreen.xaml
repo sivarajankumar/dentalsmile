@@ -1,0 +1,24 @@
+﻿<Window x:Class="smileUp.SplashScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="SplashScreen" Height="350" Width="525" AllowsTransparency="True" Icon="Icons\logo_241818_web.jpg" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterScreen">
+
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Name="grid1">
+        <Image Source="Icons\cooltext989270166.png" Height="135" Width="235" Margin="0,0,0,25" Stretch="Fill" AllowDrop="False" >
+            <Image.Effect>
+                <DropShadowEffect BlurRadius="15" Color="Gray"/>
+            </Image.Effect>
+        </Image>
+        <Border Background="Maroon" CornerRadius="20" Height="30" Margin="0,277,0,0" BorderBrush="Red" BorderThickness="1" Opacity="50">
+            <Label Content="By: DenTeam [TMDG6]" FontWeight="Bold" Foreground="Wheat" Width="163">
+                <Label.Effect>
+                    <DropShadowEffect/>
+                </Label.Effect>
+            </Label>
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" />
+            </Border.Effect>
+        </Border>
+
+    </Grid>
+</Window>
