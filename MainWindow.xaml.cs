@@ -529,7 +529,7 @@ namespace smileUp
             if (result is TeethVisual3D)
             {
                 TeethVisual3D teeth = (TeethVisual3D)result;
-                //vm.showHideManipulator(teeth);
+                vm.showHideManipulator(teeth);
                 selectTeethChart(teeth.Model.Id);
                 //TOOD: show enable icons/buttons
                 enableRemoveTeethButton(true);
@@ -1046,6 +1046,7 @@ namespace smileUp
                 int p = 0; 
                 int.TryParse(btn.Text.Text, out p);
                 TeethVisual3D teeth = vm.selectTeeth(p);
+                teeth.showHideManipulator();
                 showTeethProperty(teeth);
             }
             //MessageBox.Show(""+e.ToString());

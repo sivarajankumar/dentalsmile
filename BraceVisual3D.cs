@@ -7,7 +7,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using System.Windows.Controls;
 using HelixToolkit.Wpf;
-using System.Windows.Data;
+
 
 namespace smileUp
 {
@@ -35,11 +35,6 @@ namespace smileUp
                 //BindingOperations.SetBinding(this.Manipulator,CombinedManipulator.TargetTransformProperty,new Binding("TargetTransform") { Source = this });
 
             }
-        }
-
-        public virtual void Bind(WireVisual3D source)
-        {
-            BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source });
         }
 
         internal void sample(Color color)

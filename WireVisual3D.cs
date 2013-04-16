@@ -7,6 +7,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using System.Windows.Controls;
 using HelixToolkit.Wpf;
+using System.Windows.Data;
 
 namespace smileUp
 {
@@ -29,6 +30,8 @@ namespace smileUp
                 model.Id = Id;
 
                 sample(color);
+
+                Bind(p);
             }
         }
 
@@ -123,6 +126,20 @@ namespace smileUp
 
             //this.parent.Children.Remove(_manipulator);
             _manipulator = null;
+        }
+
+        public static readonly DependencyProperty TargetTransformProperty = DependencyProperty.Register("TargetTransform", typeof(Transform3D), typeof(SmileVisual3D), new PropertyMetadata(TargetTransformChanged));
+        protected static void TargetTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is BraceVisual3D)
+            {
+                BraceVisual3D dt = (BraceVisual3D)d;
+                
+            }
+        }
+        public virtual void Bind(BraceVisual3D source)
+        {
+            BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source });
         }
     }
 }

@@ -19,7 +19,7 @@ namespace smileUp
         ModelVisual3D target;
         public static readonly DependencyProperty TargetTransformProperty = DependencyProperty.Register("TargetTransform", typeof(Transform3D), typeof(SmileVisual3D), new PropertyMetadata(TargetTransformChanged));
 
-        private static void TargetTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected static void TargetTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //detect
             if (d is TeethVisual3D)
@@ -39,7 +39,10 @@ namespace smileUp
 
                             }
                         }
-                    }
+                    }else
+                        if (t is BraceVisual3D)
+                        {
+                        }
                 }
             }
         }

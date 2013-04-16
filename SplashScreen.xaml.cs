@@ -42,7 +42,7 @@ namespace smileUp
         {
             cont = cont + 1;
 
-            if (cont > 5)
+            if (cont > 2)
             {
                 MainWindow m = new MainWindow();
                 m.Show();

@@ -30,7 +30,7 @@ namespace smileUp
 
                 sample(color);
 
-                
+                //showHideBoundingBox();
             }
         }
         public static Color getTeethColor(int num) {
@@ -120,6 +120,44 @@ namespace smileUp
             //}
 
             //Console.WriteLine("ID: "+id);
+        }
+
+        private BoundingBoxWireFrameVisual3D _boundingBox;
+        private BoundingBoxWireFrameVisual3D BoundingBox { get; set; }
+        private Boolean showBoundingBox = true;
+        public Boolean ShowBoundingBox
+        {
+            get
+            {
+                return showBoundingBox;
+                //        return (Boolean)this.GetValue(ShowBoundingBoxProperty);
+            }
+
+            set
+            {
+                this.showBoundingBox = value;
+                //       this.SetValue(ShowBoundingBoxProperty, value);
+            }
+        }
+
+        public void showHideBoundingBox()
+        {
+            if (ShowBoundingBox)
+            {
+                if (_boundingBox == null)
+                {
+                    _boundingBox = new BoundingBoxWireFrameVisual3D();
+                    _boundingBox.BoundingBox = this.Content.Bounds;
+                    this.parent.Children.Add(_boundingBox);
+                    showBoundingBox = false;
+                }
+            }
+            else
+            {
+                this.parent.Children.Remove(_boundingBox);
+                _boundingBox = null;
+                showBoundingBox = true;
+            }
         }
 
         internal void clearManipulator()

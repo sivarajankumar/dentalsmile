@@ -88,7 +88,7 @@ namespace smileUp
                             if(Regex.IsMatch(teeth.Id, @"teeth" + pStr))
                             //if (teeth.Id.StartsWith("teeth" + pStr))
                             {
-                                teeth.showHideManipulator();
+                                //teeth.showHideManipulator();
                                 selectedGum = gum;
                                 gum.selectedTeeth = teeth;
                                 break;
