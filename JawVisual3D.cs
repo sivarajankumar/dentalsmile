@@ -15,6 +15,12 @@ namespace smileUp
         public GumVisual3D selectedGum;
         public Patient patient;
 
+        //GumContainer gc;
+        //ToothContainer tc;
+        //BraceContainer bc;
+        //WireContainer wc;
+
+
         public JawVisual3D(Patient p)
         {
             //sample();
@@ -149,6 +155,7 @@ namespace smileUp
 
         internal void drawWire(List<BraceVisual3D> bracesModel)
         {
+            //clearWires();
             for (var i = 1; i < bracesModel.Count; i++)
             {
                 BraceVisual3D brace1 = bracesModel[i - 1];
@@ -157,22 +164,45 @@ namespace smileUp
                 //brace1.SetMesh(brace1.ToWorldMesh());
                 //brace2.SetMesh(brace2.ToWorldMesh());
 
-                Wire wire = new Wire();
-                wire.Brace1 = brace1.Model;
-                wire.Brace2 = brace2.Model;
-
-                Point3DCollection contours = new Point3DCollection();
-                contours.Add(brace1.ToWorld(brace1.centroid()));
-                contours.Add(brace2.ToWorld(brace2.centroid()));
-
                 //brace1.SetMesh(brace1.ToLocalMesh(brace1.GetMesh()));
                 //brace2.SetMesh(brace1.ToLocalMesh(brace2.GetMesh()));
 
-                WireVisual3D wv = new WireVisual3D(brace1);
-
-                TubeVisual3D tube = new TubeVisual3D { Diameter = 1.02, Path = contours, Fill = (i % 2 == 0 ? Brushes.Green : Brushes.Blue) };
-                this.Children.Add(tube);
+                WireVisual3D wv = new WireVisual3D((i % 2 == 0? Brushes.Green: Brushes.Blue), brace1, brace2);
+                this.Children.Add(wv);
             }
+        }
+
+        private void clearWires()
+        {
+            List<Visual3D> list = this.Children.ToList();
+            foreach (var t in list)
+            {
+                if (t is WireVisual3D)
+                {
+                    this.Children.Remove(t);
+                }
+            }
+        }
+
+        internal void removeWire(BraceVisual3D brace)
+        {
+            List<Visual3D> list = this.Children.ToList(); 
+            foreach (var t in list)
+            {
+                if (t is WireVisual3D)
+                {
+                    WireVisual3D wv = (WireVisual3D)t;
+                    if (brace.Id == wv.Brace1.Id)
+                    {
+                        this.Children.Remove(t);
+                    }
+                    else if (brace.Id == wv.Brace2.Id)
+                    {
+                        this.Children.Remove(t);
+                    }
+                }
+            }
+        
         }
 
         internal void updateTeethMap(string oldid, string newid)
@@ -198,6 +228,11 @@ namespace smileUp
                     }
                 }
             }
+        }
+
+        internal void drawWires()
+        {
+            if (selectedGum != null && selectedGum.braces != null) drawWire(selectedGum.braces);
         }
     }
 }

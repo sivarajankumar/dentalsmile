@@ -13,31 +13,42 @@ namespace smileUp
 {
     public class WireVisual3D : SmileVisual3D
     {
-        
+        public static readonly DependencyProperty ThicknesProperty = DependencyProperty.Register("ThicknesTransform", typeof(double), typeof(WireVisual3D), new UIPropertyMetadata(1.2, ThicknesChanged));
+        //public static readonly DependencyProperty ColourProperty = DependencyProperty.Register("ColourTransform", typeof(Brush), typeof(WireVisual3D), new UIPropertyMetadata(Brushes.Blue, ColourChanged));
+        public static readonly DependencyProperty MaterialProperty = DependencyProperty.Register("MaterialTransform", typeof(String), typeof(WireVisual3D), new UIPropertyMetadata("ceramic", MaterialChanged));
 
-        public WireVisual3D(BraceVisual3D parent)
-            : this(Colors.Pink, parent)
+
+        public WireVisual3D(Brush b, BraceVisual3D p1, BraceVisual3D p2)
         {
-        }
-        public WireVisual3D(Color color, BraceVisual3D p)
-        {
-            if (p != null)
+            if (p1 != null)
             {
-                this.parent = p;
-                Id = p.Id + "_wire" + p.Children.Count.ToString("00") + "." + p.Parent.Parent.Parent.patient.name;
-                
-                if (model == null) model = new Wire();
-                model.Id = Id;
+                Id = p1.Id + "_wire" + p1.Children.Count.ToString("00") + "." + p1.Parent.Parent.Parent.patient.name;
 
-                sample(color);
+                brace1 = p1;
+                brace2 = p2;
 
-                Bind(p);
+                contours(b);
+
+                Bind(p1, p2);
             }
         }
-
-        internal void sample(Color color)
+        void contours(Brush b)
         {
-            ///*
+                model = new Wire();
+                model.Brace1 = brace1.Model;
+                model.Brace2 = brace2.Model;
+
+                Point3DCollection contours = new Point3DCollection();
+                contours.Add(brace1.ToWorld(brace1.centroid()));
+                contours.Add(brace2.ToWorld(brace2.centroid()));
+
+                TubeVisual3D tube = new TubeVisual3D { Diameter = 1.02, Path = contours, Fill = b };
+                this.Children.Add(tube);
+        }
+
+        internal void sample(Brush b)
+        {            
+            /*
             GeometryModel3D bigCubeModel = GeometryGenerator.CreateCubeModel();
             bigCubeModel.Material = new DiffuseMaterial(new SolidColorBrush(color));
 
@@ -49,12 +60,24 @@ namespace smileUp
             //*/
         }
 
-
-        private BraceVisual3D parent;
-        public BraceVisual3D Parent
+        private Brush brush;
+        public Brush Brush
         {
-            set { parent = value; }
-            get { return parent; }        
+            set { brush = value; }
+            get { return brush; }
+        }
+
+        private BraceVisual3D brace1;
+        public BraceVisual3D Brace1
+        {
+            set { brace1 = value; }
+            get { return brace1; }        
+        }
+        private BraceVisual3D brace2;
+        public BraceVisual3D Brace2
+        {
+            set { brace2 = value; }
+            get { return brace2; }
         }
 
         private CombinedManipulator _manipulator;
@@ -76,7 +99,7 @@ namespace smileUp
 
         public void showHideManipulator()
         {
-            this.parent.clearManipulator();
+            this.brace1.clearManipulator();
             //if (showManipulator)
             //{
                 if (_manipulator == null)
@@ -91,7 +114,7 @@ namespace smileUp
                     //_manipulator.Length = _manipulator.Diameter * 0.75;
                     _manipulator.Bind(this);
                 }
-                this.parent.Children.Add(_manipulator);
+                this.brace1.Children.Add(_manipulator);
 
                 //showManipulator = false;
             //}
@@ -106,12 +129,12 @@ namespace smileUp
 
         internal void clearManipulator()
         {
-            List<Visual3D> childs = this.parent.Children.ToList();
+            List<Visual3D> childs = this.brace1.Children.ToList();
             foreach (var m in childs)
             {
                 if (m is CombinedManipulator)
                 {
-                    this.parent.Children.Remove(m);
+                    this.brace1.Children.Remove(m);
                 }
             }
 
@@ -128,18 +151,50 @@ namespace smileUp
             _manipulator = null;
         }
 
-        public static readonly DependencyProperty TargetTransformProperty = DependencyProperty.Register("TargetTransform", typeof(Transform3D), typeof(SmileVisual3D), new PropertyMetadata(TargetTransformChanged));
-        protected static void TargetTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static readonly DependencyProperty Target1TransformProperty = DependencyProperty.Register("Target1Transform", typeof(Transform3D), typeof(WireVisual3D), new PropertyMetadata(WireTransformChanged));
+        public static readonly DependencyProperty Target2TransformProperty = DependencyProperty.Register("Target2Transform", typeof(Transform3D), typeof(WireVisual3D), new PropertyMetadata(WireTransformChanged));
+        
+        protected static void WireTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is BraceVisual3D)
+            if (d is WireVisual3D)
             {
-                BraceVisual3D dt = (BraceVisual3D)d;
+                WireVisual3D dt = (WireVisual3D)d;
                 
+                Point3DCollection contours = new Point3DCollection();
+                contours.Add(dt.brace1.ToWorld(dt.brace1.centroid()));
+                contours.Add(dt.brace2.ToWorld(dt.brace2.centroid()));
+
+                dt.Children.Clear();
+                
+                TubeVisual3D tube = new TubeVisual3D { Diameter = 1.02, Path = contours, Fill = dt.brush };
+                dt.Children.Add(tube);
+                
+                //Console.WriteLine("wire:" + dt.Id);
             }
         }
-        public virtual void Bind(BraceVisual3D source)
+        public virtual void Bind(BraceVisual3D source1, BraceVisual3D source2)
         {
-            BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source });
+            Bind1(source1);
+            Bind2(source2);
+        }
+        public virtual void Bind1(BraceVisual3D source)
+        {
+            BindingOperations.SetBinding(this, Target1TransformProperty, new Binding("Transform") { Source = source });
+        }
+        public virtual void Bind2(BraceVisual3D source)
+        {
+            BindingOperations.SetBinding(this, Target2TransformProperty, new Binding("Transform") { Source = source });
+        }
+
+        
+        protected static void ThicknesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        { 
+        
+        }
+
+        protected static void MaterialChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }

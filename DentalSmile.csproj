@@ -70,6 +70,10 @@
     <Compile Include="BaseMarker.cs" />
     <Compile Include="BraceVisual3D.cs" />
     <Compile Include="Brace.cs" />
+    <Compile Include="BraceContainer.cs" />
+    <Compile Include="WireContainer.cs" />
+    <Compile Include="ToothContainer.cs" />
+    <Compile Include="GumContainer.cs" />
     <Compile Include="CustomEditors\TeethMappingItemSource.cs" />
     <Compile Include="EllipticalLayoutPanel.cs" />
     <Compile Include="ImageToggleButton.cs" />
@@ -205,7 +209,7 @@
     <Resource Include="Icons\del_teeth.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\3dengine\helixtoolkit_29db50621e34\Source\HelixToolkit.Wpf\HelixToolkit.Wpf_NET40.csproj">
+    <ProjectReference Include="..\helixtoolkit_07a74f1fe190\Source\HelixToolkit.Wpf\HelixToolkit.Wpf_NET40.csproj">
       <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
       <Name>HelixToolkit.Wpf_NET40</Name>
     </ProjectReference>

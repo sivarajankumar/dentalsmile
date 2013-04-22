@@ -141,6 +141,8 @@ namespace smileUp
 
         private ModelVisual3D _rootVisual;
 
+        private ModelVisual3D _tempVisual;
+
         MainWindow window;
             
         private IFileDialogService FileDialogService;
@@ -175,6 +177,12 @@ namespace smileUp
             set { _jawVisual = value; RaisePropertyChanged("JawVisual"); }
         }
 
+        public ModelVisual3D TempVisual
+        {
+            get { return _tempVisual; }
+            set { _tempVisual = value; RaisePropertyChanged("TempVisual"); }
+        }
+
         public List<VisualElement> Elements { get; set; }
 
 //        public MainViewModel(IFileDialogService fds, HelixViewport3D hv, ModelVisual3D rootModel)
@@ -196,13 +204,17 @@ namespace smileUp
             ModelToBaseMarker = new Dictionary<Model3D, BaseMarker>();
             OriginalMaterial = new Dictionary<Model3D, Material>();
 
-            Elements = new List<VisualElement>();
-            foreach (var c in hv.Children) Elements.Add(new VisualElement(c));
+            //Elements = new List<VisualElement>();
+            //foreach (var c in hv.Children) Elements.Add(new VisualElement(c));
+            
             Patient patient = new Patient();
             JawVisual = new JawVisual3D(patient);
             RootVisual = window.vmodel;
 
             RootVisual.Children.Add(JawVisual);
+
+            TempVisual = new ModelVisual3D();
+            RootVisual.Children.Add(TempVisual);
             this.window = window;
         }
 
@@ -382,6 +394,11 @@ namespace smileUp
                 RootVisual.Children.Add(JawVisual);
                 smileMode = "JAW";
 
+                if (JawVisual.selectedGum != null)
+                {
+                    drawWires();
+                }
+
                 //if (!HelixView.Viewport.Children.Contains(RootVisual))                    HelixView.Viewport.Children.Add(RootVisual);
                 window.chartPanel.Visibility = Visibility.Visible;
 
@@ -397,6 +414,7 @@ namespace smileUp
             }
 #endif
         }
+
 
         private void FileOpenRaw()
         {
@@ -598,6 +616,7 @@ namespace smileUp
         {
             RawVisual = null;
             JawVisual = null;
+            TempVisual = null;
             RootVisual.Children.Clear();
 
             //((HelixViewport3D)HelixView).Children.Clear();
@@ -706,9 +725,52 @@ namespace smileUp
             }
         }
 
+        internal void drawWires()
+        {
+            if (JawVisual != null)
+            {
+                JawVisual.drawWires();
+            }
+        }
+        
         internal void updateTeethMap(string oldid, string newid)
         {
             JawVisual.updateTeethMap(oldid, newid);
+        }
+
+        internal void addAllBrace()
+        {
+            if (JawVisual.selectedGum != null)
+            {
+                JawVisual.selectedGum.addAllBrace();
+            }
+        }
+        
+        internal void ShowHideBraceVisual(bool f)
+        {
+ 
+        }
+
+        internal void ShowHideTeethVisual(bool f)
+        {
+            if (f)
+            {
+                Visual3DCollection childs = JawVisual.selectedGum.Children;
+                foreach (var m in childs)
+                {
+                    //if (m is TeethVisual3D)
+                    //{
+                        //ModelVisual3D mv = (ModelVisual3D)m;
+                        //TempVisual.Children.Add(mv);
+                    //}
+                }
+            }
+            else
+            {
+                TempVisual.Children.Clear();
+            }
+            showHideJawVisual();
+            
         }
     }
 

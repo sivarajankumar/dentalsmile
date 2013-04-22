@@ -21,9 +21,9 @@
         <Menu>
             <MenuItem Header="_File">
                 <MenuItem Header="_Open..." Command="{Binding FileOpenCommand}"/>
-                <MenuItem Header="_OpenRaw..." Command="{Binding FileOpenRawCommand}"/>
                 <MenuItem Header="_Export..." Command="{Binding FileExportCommand}"/>
                 <Separator/>
+                <MenuItem Header="_OpenRaw..." Command="{Binding FileOpenRawCommand}"/>
                 <MenuItem Header="_ExportRaw..." Command="{Binding FileExportRawCommand}"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Command="{Binding FileExitCommand}"/>
@@ -50,6 +50,7 @@
             <ToolBar Band="1" FlowDirection="LeftToRight">
                 <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideRawVisualBtn" ToolTip="Show Hide RawVisual" Click="ShowHideRawVisualBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideJawVisualBtn" ToolTip="Show Hide JawVisual" Click="ShowHideJawVisualBtn_Click" />
+                <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideTeethVisualBtn" ToolTip="Show Hide Teeth Visual" Click="ShowHideTeethVisualBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/126.png}" x:Name="ShowVerticesBtn" ToolTip="Show Vertices" IsEnabled="False" Click="ShowVerticesBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/128.png}" x:Name="ShowSolidBtn" ToolTip="Show Solid" IsEnabled="False"/>
             </ToolBar>
@@ -66,8 +67,10 @@
                 <Button Content="{smileUp:Image /Icons/teeth.png}" x:Name="AddTeethBtn" ToolTip="AddTeeth" Click="AddTeethBtn_Click" />
                 <Button Content="{smileUp:Image /Icons/del_teeth.png}" x:Name="RemoveTeethBtn" ToolTip="RemoveTeeth" Click="RemoveTeethBtn_Click" IsEnabled="False"/>
                 <Button Content="{smileUp:Image /Icons/brace.ico}" x:Name="AddBraceBtn" ToolTip="AddBrace" Click="AddBraceBtn_Click" />
+                <Button Content="{smileUp:Image /Icons/brace.ico}" x:Name="AddAllBraceBtn" ToolTip="Add ALL Brace" Click="AddBraceBtn_Click" />
                 <Button Content="{smileUp:Image /Icons/del_brace.ico}" x:Name="RemoveBraceBtn" ToolTip="RemoveBrace" Click="RemoveBraceBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/213.png}" x:Name="MakeWireBtn" ToolTip="Make Wire - Connect Two Braces" Click="MakeWireBtn_Click" />
+                <Button Content="{smileUp:Image /Icons/213.png}" x:Name="MakeAllWireBtn" ToolTip="Make All Braces Connected by Wires" Click="MakeWireBtn_Click" />
             </ToolBar>
         </ToolBarTray>
 

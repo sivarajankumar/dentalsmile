@@ -34,12 +34,15 @@ namespace smileUp
             }
         }
         public static Color getTeethColor(int num) {
-            if (num % 5 == 0) return Colors.Orange;
-            if (num % 4 == 0) return Colors.GreenYellow;
-            if (num % 3 == 0) return Colors.Red;
-            if (num % 2 == 0) return Colors.Blue;
+
+            if ((num > 0 && num <= 3) || (num >= 14 && num <= 16) || (num >= 17 && num <= 19) || (num >= 30 && num <= 32)) return Colors.Blue;
+            else if ((num >= 4 && num <= 5) || (num >= 12 && num <= 13) || (num >= 20 && num <= 21) || (num >= 28 && num <= 29)) return Colors.Red;
+            else if ((num >= 6 && num <= 6) || (num >= 11 && num <= 11) || (num >= 22 && num <= 22) || (num >= 27 && num <= 27)) return Colors.Green;
+            else if ((num >= 7 && num <= 8) || (num >= 9 && num <= 10) || (num >= 23 && num <= 24) || (num >= 25 && num <= 26)) return Colors.BlueViolet;
+            
             return Colors.Gold;
         }
+
         internal void sample(Color color)
         {
             ///*
@@ -195,5 +198,50 @@ namespace smileUp
             return p;
         }
 
+        public BraceVisual3D addBrace()
+        {
+            BraceVisual3D brace = null;
+            GumVisual3D gum = this.parent;
+            gum.braceDictionaries.TryGetValue(this.Id, out brace);
+            //TODO: If multiple brace in one teeth?
+
+            if (brace == null)
+            {
+                brace = new BraceVisual3D(Colors.Yellow, this, true);
+                this.Children.Add(brace);
+                gum.braces.Add(brace);
+
+                gum.braceDictionaries.Add(this.Id, brace);
+                /*if (selectedPoint != null)
+                {
+                    Transform3DGroup transformGroup = new Transform3DGroup();
+                    transformGroup.Children.Add(new TranslateTransform3D(ToWorld(selectedPoint.ToVector3D())));
+                    brace.Transform = transformGroup;
+                }*/
+            }
+
+            return brace;
+
+        }
+
+
+        internal void removeBrace()
+        {
+            BraceVisual3D brace = null;
+            GumVisual3D gum = this.parent;
+            gum.braceDictionaries.TryGetValue(this.Id, out brace);
+            //TODO: If multiple brace in one teeth?
+
+            if (brace != null)
+            {
+                
+                clearManipulator();
+                this.Children.Remove(brace);
+                gum.braces.Remove(brace);
+                gum.braceDictionaries.Remove(this.Id);
+                gum.Parent.removeWire(brace);
+                brace = null;
+            }
+        }
     }
 }

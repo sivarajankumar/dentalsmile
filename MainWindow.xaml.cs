@@ -815,9 +815,22 @@ namespace smileUp
         {
             vm.showHideRawVisual();
         }
+
         private void ShowHideJawVisualBtn_Click(object sender, RoutedEventArgs e)
         {
             vm.showHideJawVisual();
+        }
+
+        private void ShowHideTeethVisualBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ShowHideTeethVisualBtn.IsChecked == true)
+            {
+                vm.ShowHideTeethVisual(true);
+            }
+            else
+            {
+                vm.ShowHideTeethVisual(false);
+            }
         }
 
         private void AddTeethBtn_Click(object sender, RoutedEventArgs e)
@@ -870,8 +883,33 @@ namespace smileUp
 
         private void AddBraceBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button)
+            {
+                Button b = sender as Button;
+                if (b.Name == AddAllBraceBtn.Name)
+                {
+                    vm.addAllBrace();
+                    return;
+                }
+            }
+            
             var pt = view1.FindNearestPoint(mousePoint);
-            BraceVisual3D b = vm.addBrace((Point3D)pt);
+            if (pt == null)
+            {
+                if (vm.JawVisual.selectedGum != null && vm.JawVisual.selectedGum.selectedTeeth != null)
+                {
+                    Point3D p = vm.JawVisual.selectedGum.selectedTeeth.centroid();
+                    BraceVisual3D b = vm.addBrace(p);
+                }
+                else
+                {
+                    MessageBox.Show("Please select a point");
+                }
+            }
+            else
+            {
+                BraceVisual3D b = vm.addBrace((Point3D)pt);
+            }
             //if (b != null) world.AddBody(b.getRigidBody());
         }
 
@@ -946,6 +984,17 @@ namespace smileUp
 
         private void MakeWireBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button)
+            {
+                Button b = sender as Button;
+                if (b.Name == MakeAllWireBtn.Name)
+                {
+                    vm.drawWires();
+                    displayHelp("WireDrawed");
+                    return;
+                }
+            }
+            
             if (MakeWireBtn.IsChecked == true)
             {
                 //display help/guide to select braces

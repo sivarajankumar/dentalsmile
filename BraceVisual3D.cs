@@ -14,11 +14,11 @@ namespace smileUp
     public class BraceVisual3D : SmileVisual3D
     {
         
-        public BraceVisual3D(TeethVisual3D parent)
-            : this(Colors.Pink, parent)
+        public BraceVisual3D(TeethVisual3D parent, bool generatedSample)
+            : this(Colors.Pink, parent, generatedSample)
         {
         }
-        public BraceVisual3D(Color color, TeethVisual3D p)
+        public BraceVisual3D(Color color, TeethVisual3D p, bool generatedSample)
         {
             if (p != null)
             {
@@ -27,8 +27,26 @@ namespace smileUp
                 
                 if (model == null) model = new Brace();
                 model.Id = Id;
+                
+                if(generatedSample) sample(color);
 
-                sample(color);
+                //BindingOperations.SetBinding(this, TransformProperty, new Binding("TargetTransform") { Source = this });
+
+                //BindingOperations.SetBinding(this.Manipulator,CombinedManipulator.TargetTransformProperty,new Binding("TargetTransform") { Source = this });
+
+            }
+        }
+        public BraceVisual3D(Material material, TeethVisual3D p)
+        {
+            if (p != null)
+            {
+                this.parent = p;
+                Id = p.Id + "_brace" + p.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.name; ;
+
+                if (model == null) model = new Brace();
+                model.Id = Id;
+
+                //sample(material);
 
                 //BindingOperations.SetBinding(this, TransformProperty, new Binding("TargetTransform") { Source = this });
 
@@ -37,12 +55,12 @@ namespace smileUp
             }
         }
 
-        internal void sample(Color color)
+        internal void sample(Material material)
         {
             ///*
             GeometryModel3D bigCubeModel = GeometryGenerator.CreateCubeModel();
-            bigCubeModel.Material = MaterialHelper.CreateMaterial(new LinearGradientBrush(Colors.Blue, Colors.Red, 45));
-
+            bigCubeModel.Material = material;
+            
             this.Content = bigCubeModel;
 
             Rect3D r = this.parent.Content.Bounds;
@@ -51,10 +69,15 @@ namespace smileUp
             transformGroup.Children.Add(new ScaleTransform3D(2, 2, 2));
             Point3D p0 = new Point3D(0, 0, 0);
             Point3D p1 = this.parent.centroid();
-            Console.WriteLine(Vector3D.DotProduct(p0.ToVector3D(),p1.ToVector3D()));
-            transformGroup.Children.Add(new TranslateTransform3D(p1.X + (r.SizeX/2), p1.Y + (r.SizeY / 2), p1.Z + (r.SizeZ/2)));
+            Console.WriteLine(Vector3D.DotProduct(p0.ToVector3D(), p1.ToVector3D()));
+            transformGroup.Children.Add(new TranslateTransform3D(p1.X + (r.SizeX / 2), p1.Y + (r.SizeY / 2), p1.Z + (r.SizeZ / 2)));
             this.Transform = transformGroup;
             //*/
+        }
+
+        internal void sample(Color color)
+        {
+            sample(MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Blue)));
         }
 
 

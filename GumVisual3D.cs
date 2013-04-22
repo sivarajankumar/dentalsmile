@@ -130,26 +130,7 @@ namespace smileUp
         {
             if (selectedTeeth != null)
             {
-                BraceVisual3D brace = null;
-                braceDictionaries.TryGetValue(selectedTeeth.Id, out brace);
-                //TODO: If multiple brace in one teeth?
-                
-                if (brace == null)
-                {
-                    brace = new BraceVisual3D(Colors.Yellow, selectedTeeth);
-                    selectedTeeth.Children.Add(brace);
-                    braces.Add(brace);
-                    
-                    braceDictionaries.Add(selectedTeeth.Id, brace);
-                    /*if (selectedPoint != null)
-                    {
-                        Transform3DGroup transformGroup = new Transform3DGroup();
-                        transformGroup.Children.Add(new TranslateTransform3D(ToWorld(selectedPoint.ToVector3D())));
-                        brace.Transform = transformGroup;
-                    }*/
-                }
-
-                return brace;
+                return selectedTeeth.addBrace();
             }
             return null;
         }
@@ -158,18 +139,7 @@ namespace smileUp
         {
             if (selectedTeeth != null)
             {
-                BraceVisual3D brace = null;
-                braceDictionaries.TryGetValue(selectedTeeth.Id, out brace);
-                //TODO: If multiple brace in one teeth?
-
-                if (brace != null)
-                {
-                    clearManipulator();
-                    selectedTeeth.Children.Remove(brace);
-                    braces.Remove(brace);
-                    braceDictionaries.Remove(selectedTeeth.Id);
-                    brace = null;
-                }
+                selectedTeeth.removeBrace();
             }
         }
 
@@ -189,6 +159,19 @@ namespace smileUp
         {
             selectedTeeth = addTeeth(model.Material);
             selectedTeeth.Content = model;
+        }
+
+
+        internal void addAllBrace()
+        {
+            List<Visual3D> childs = this.Children.ToList();
+            foreach (var m in childs)
+            {
+                if (m is TeethVisual3D)
+                {
+                    ((TeethVisual3D)m).addBrace();
+                }
+            }
         }
     }
 }

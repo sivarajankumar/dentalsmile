@@ -16,6 +16,7 @@ namespace smileUp
     using System.Windows.Media.Imaging;
     using System.Windows.Media.Media3D;
     using HelixToolkit.Wpf;
+    using System.Text.RegularExpressions;
 
         /// <summary>
         /// A Wavefront .obj file reader.
@@ -741,7 +742,7 @@ namespace smileUp
                                 {
                                     teeth = getTeethVisualFromGum(gs[2], gum);
 
-                                    BraceVisual3D brace = new BraceVisual3D(teeth);
+                                    BraceVisual3D brace = new BraceVisual3D(teeth, false);
                                     brace.Id = gs[1] + "_" + gs[2] + "_" + gs[3];
 
                                     var mg = new Model3DGroup();
@@ -793,7 +794,7 @@ namespace smileUp
                             {
                                 teeth = getTeethVisualFromGum(gs[1], gum);
 
-                                BraceVisual3D brace = new BraceVisual3D(teeth);
+                                BraceVisual3D brace = new BraceVisual3D(teeth, false);
                                 brace.Id = gs[1] + "_" + gs[2] + "_" + gs[3];
 
                                 var mg = new Model3DGroup();
@@ -845,7 +846,7 @@ namespace smileUp
                                 teeth = getTeethVisualFromGum(gs[2], gum);
                             }
                             
-                            BraceVisual3D brace = new BraceVisual3D(teeth);
+                            BraceVisual3D brace = new BraceVisual3D(teeth, false);
                             brace.Id = gs[1] + "_" + gs[2] + "_"+gs[3];
 
                             var modelGroup = new Model3DGroup();
@@ -858,6 +859,7 @@ namespace smileUp
                         }
                     }
                 }
+
                 return jaw;
             }
             private TeethVisual3D getTeethVisualFromGum(String gs, GumVisual3D gum)
@@ -867,14 +869,13 @@ namespace smileUp
                 foreach (var t in gum.Children)
                 {
                     TeethVisual3D tt = (TeethVisual3D)t;
-                    Console.WriteLine(tt.Id);
-                    if (tt.Id.StartsWith(dp[0]))
+                    //if (tt.Id.StartsWith(dp[0]))
+                    if (Regex.IsMatch(tt.Id, @""+dp[0]))
                     {
                         teeth = tt;
                         break;
                     }
                 }
-
                 return teeth;
             }
             private GumVisual3D getGumVisualFromJaw(string p, JawVisual3D jaw)
@@ -885,6 +886,7 @@ namespace smileUp
                 {
                     gum = new GumVisual3D(jaw);
                     jaw.gums.Add(p, gum);
+                    jaw.selectedGum = gum;
                     jaw.Children.Add(gum);
                 }
                 return gum;

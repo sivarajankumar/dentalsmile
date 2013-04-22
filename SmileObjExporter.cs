@@ -348,6 +348,10 @@ namespace smileUp
                     BraceVisual3D t = (BraceVisual3D)visual;
                     this.writer.WriteLine(string.Format("g jaw_{0}", t.Id));
                 }
+                else if (visual is WireVisual3D)
+                {
+
+                }
                 else
                 {
                     this.writer.WriteLine(string.Format("g jaw_group{0}", this.groupNo++));
