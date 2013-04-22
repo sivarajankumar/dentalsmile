@@ -94,6 +94,10 @@
                                     </ModelVisual3D>
 
                                 </helix:HelixViewport3D>
+                                <Canvas IsHitTestVisible="true" Visibility="Hidden" Width="150" Height="200" Margin="6,15,362,205" x:Name="canvasShortcut">
+
+                                    <TextBlock Height="27" Foreground="Black" Background="Beige" HorizontalAlignment="Left" Name="text1" VerticalAlignment="Bottom" Width="150" />
+                                </Canvas>
                             </Grid>
                             
                             

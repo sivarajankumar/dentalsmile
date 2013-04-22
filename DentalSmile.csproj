@@ -42,8 +42,18 @@
     <Reference Include="Jitter">
       <HintPath>.\Jitter.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,16 +80,41 @@
     <Compile Include="BaseMarker.cs" />
     <Compile Include="BraceVisual3D.cs" />
     <Compile Include="Brace.cs" />
-    <Compile Include="BraceContainer.cs" />
-    <Compile Include="WireContainer.cs" />
-    <Compile Include="ToothContainer.cs" />
-    <Compile Include="GumContainer.cs" />
     <Compile Include="CustomEditors\TeethMappingItemSource.cs" />
+    <Compile Include="DBConnect.cs" />
     <Compile Include="EllipticalLayoutPanel.cs" />
     <Compile Include="ImageToggleButton.cs" />
+    <Compile Include="MeasurementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MeasurementForm.designer.cs">
+      <DependentUpon>MeasurementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orthoprojectDataSet.Designer.cs" />
+    <Compile Include="Overlay.cs" />
+    <Compile Include="PatientRecordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatientRecordForm.Designer.cs">
+      <DependentUpon>PatientRecordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScanningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScanningForm.Designer.cs">
+      <DependentUpon>ScanningForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPatient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchPatient.Designer.cs">
+      <DependentUpon>SearchPatient.cs</DependentUpon>
+    </Compile>
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TeethTextItem.cs" />
+    <Compile Include="TextItem.cs" />
     <Compile Include="WireVisual3D.cs" />
     <Compile Include="CustomEditors\CustomAttributeEditorWire.cs" />
     <Compile Include="Wire.cs" />
@@ -139,15 +174,35 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="MeasurementForm.resx">
+      <DependentUpon>MeasurementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatientRecordForm.resx">
+      <DependentUpon>PatientRecordForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScanningForm.resx">
+      <DependentUpon>ScanningForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchPatient.resx">
+      <DependentUpon>SearchPatient.cs</DependentUpon>
     </EmbeddedResource>
     <Resource Include="Helps\SampleText.rtf" />
     <Resource Include="Helps\CutText.rtf" />
     <Resource Include="Helps\SlicesText.rtf" />
     <Resource Include="Helps\WireText.rtf" />
     <Resource Include="Helps\WireDrawedText.rtf" />
+    <None Include="app.config" />
+    <None Include="orthoprojectDataSet.xsc">
+      <DependentUpon>orthoprojectDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="orthoprojectDataSet.xsd" />
+    <None Include="orthoprojectDataSet.xss">
+      <DependentUpon>orthoprojectDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

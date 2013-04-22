@@ -1211,6 +1211,18 @@ namespace smileUp
             view1.Children.Add(group);
             mpoints.Clear();
         }
+
+         private void SearchPatient_Click(object sender, RoutedEventArgs e)
+         {
+             SearchPatient a = new SearchPatient();
+             a.Show();
+         }
+
+         private void Patient_Click(object sender, RoutedEventArgs e)
+         {
+             PatientRecordForm a = new PatientRecordForm();
+             a.Show();
+         }
     }
 
 }

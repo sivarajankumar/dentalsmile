@@ -795,8 +795,6 @@ namespace smileUp
             return (new Point3D(x, y, z));
         }
 
-       
-    }
     }
 
     public interface IFileDialogService
