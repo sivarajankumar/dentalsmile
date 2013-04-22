@@ -34,12 +34,21 @@ namespace smileUp
 
         [XmlIgnore]
         public String Id { get; set; }
+
+        [XmlIgnore]
+        public double Length { get; set; }
         
         [XmlIgnore]
         public Patient Patient { get; set; }
 
         [XmlIgnore]
         public int TeethNumber { get; set; }
+
+        [XmlIgnore]
+        public double StartPosition { get; set; }
+
+        [XmlIgnore]
+        public double EndPosition { get; set; }
 
         public Teeth()
         {

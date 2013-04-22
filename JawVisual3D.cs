@@ -234,5 +234,86 @@ namespace smileUp
         {
             if (selectedGum != null && selectedGum.braces != null) drawWire(selectedGum.braces);
         }
+		
+		        //added by achie
+        //coba line
+        public static double EarthRadius = 0; // km
+        public static double DefaultCruisingAltitude = 300; // km  // real value is 12.5...
+        public static double DefaultTakeoffLength = 200; // km   // real value is much less..
+        public static double DefaultCruisingSpeed = 890; // km/h
+
+        public double CruisingSpeed { get; set; }
+        public double Distance { get; set; }
+
+        public JawVisual3D(Point3D p1, Point3D p2)
+        {
+
+            LineGeometry myLineGeometry = new LineGeometry();
+            var tube = new TubeVisual3D();
+            tube.Material = Materials.Blue;
+            tube.Fill = new SolidColorBrush(Color.FromArgb(80, 0, 0, 0));
+            Children.Add(tube);
+            Children.Add(new SphereVisual3D() { Center = p1, Radius = 0.07, Material = Materials.Red });
+            Children.Add(new SphereVisual3D() { Center = p2, Radius = 0.07, Material = Materials.Green });
+
+
+            //Point3DCollection pts = new Point3DCollection();
+
+
+            //pts.Add(p1);
+            //pts.Add(p2);
+
+            //LinesVisual3D ln = new LinesVisual3D();
+            //ln.Points = pts;
+            //ln.Color = Colors.Black;
+            //Children.Add(ln);
+
+            //added by achie
+            CruisingSpeed = DefaultCruisingSpeed;
+            double cruisingRadius = EarthRadius + DefaultCruisingAltitude;
+            double takeoffLength = DefaultTakeoffLength;
+            double groundRadius = EarthRadius;
+
+            var o = new Point3D(0, 0, 0);
+            var v1 = p1 - o;
+            var v2 = p2 - o;
+            var z = Vector3D.CrossProduct(v1, v2);
+            var x = v1;
+            var y = Vector3D.CrossProduct(x, z);
+            x.Normalize();
+            y.Normalize();
+            double v2X = Vector3D.DotProduct(v2, x);
+            double v2Y = Vector3D.DotProduct(v2, y);
+            double v2A = Math.Atan2(v2Y, v2X);
+
+            const int n = 100;
+
+            var pts = new Point3DCollection();
+
+            double da = v2A / (n - 1);
+
+            double distance = cruisingRadius * Math.Abs(v2A);
+            double landingLength = takeoffLength;
+
+            double l = 0;
+            for (int i = 0; i < n; i++)
+            {
+                double a = i * da;
+                Vector3D v = x * Math.Cos(a) + y * Math.Sin(a);
+                double r = cruisingRadius;
+
+                r = groundRadius + Math.Sin(Math.PI * i / (n - 1)) * (cruisingRadius - groundRadius);
+
+                var p = o + v * r;
+                //  Children.Add(new SphereVisual3D() { Center = p, Radius = 60, Material = Materials.Gray});
+
+                pts.Add(p);
+                l += Math.Abs(cruisingRadius * da);
+            }
+
+            Distance = distance;
+        }
+
+
     }
 }

@@ -45,7 +45,16 @@ namespace smileUp
         Point mousePoint;
 
         SmileVisual3D g;
-
+		
+		//added by achie
+        Boolean isAutoMeasure = false, isManMeasure = false;
+        int hit = 0;
+        private readonly List<Point3D> mpoints = new List<Point3D>();
+        public IList<TeethTextItem> TextItems { get; set; }
+        string type = "";
+		
+		MeasurementForm a = new MeasurementForm();
+		  
         private World world;
 
         /*
@@ -534,6 +543,47 @@ namespace smileUp
                 //TOOD: show enable icons/buttons
                 enableRemoveTeethButton(true);
                 showTeethProperty(teeth);
+				
+				
+				double length = 0;                 
+                //added by achie for measuring
+               
+                if (isAutoMeasure == true && isManMeasure == false)
+                {
+                    var centerPoint = vm.getCenterObject(teeth);
+                    length = centerPoint.X * 2;                
+                    teeth.Model.Length = vm.mm_converter(length);
+                    type = "auto";
+                }
+                else if (isAutoMeasure == false && isManMeasure == true)
+                {
+                    System.Windows.Point position = Mouse.GetPosition(this);
+                    HitTestResult resultM = VisualTreeHelper.HitTest(view1, position);
+                    RayMeshGeometry3DHitTestResult result3d = resultM as RayMeshGeometry3DHitTestResult;
+                    if (result3d != null)
+                    {
+                        if (hit == 0)
+                        {
+                            mpoints.Add(result3d.PointHit);hit++; this.Show(); 
+                        }
+                        else if(hit == 1)
+                        {
+                            mpoints.Add(result3d.PointHit); hit = 0;
+                            length = vm.calculate_distance(mpoints[0].X, mpoints[0].Y, mpoints[0].Z, mpoints[1].X, mpoints[1].Y, mpoints[1].Z);
+                           // teeth.Model.Length = Math.Round(vm.mm_converter(length), 4);    
+                            teeth.Model.Length = vm.mm_converter(length);
+                            teeth.Model.StartPosition = mpoints[0].X;
+                            teeth.Model.EndPosition = mpoints[1].X;
+                            createLine(mpoints[0], mpoints[1]);
+                            type = "auto";
+                        }
+                    }
+                }
+               
+                
+				//CreateText(teeth); 
+                if (type == "auto" || type == "man") { a.addRow(teeth, type); }
+ 
                 return;
             }
             else if (result is BraceVisual3D)
@@ -704,6 +754,16 @@ namespace smileUp
             {
                 Console.WriteLine("teeth");    
             }*/
+			
+			
+			double x = 0, y = 0, z = 0;
+            var pt = view1.FindNearestPoint(mousePoint);
+            if (pt.HasValue)
+            {
+                text1.Text = String.Format("X: {0:0.00} Y: {1:0.00} Z: {1:0.000}", pt.Value.X, pt.Value.Y, pt.Value.Z);
+            }
+            else { text1.Text = String.Format("X: {0:0.00} Y: {1:0.00} Z: {1:0.000}", x, y, z); }
+            return;
         }
 
         private void manip(object sender, MouseButtonEventArgs e)
@@ -1122,6 +1182,34 @@ namespace smileUp
             }
             
             vm.selectTeeth(p);
+        }
+		
+		 //added by Achie
+        private void MeasurementLineBtn_Click(object sender, RoutedEventArgs e)
+        {
+            isManMeasure = true;
+            isAutoMeasure = false;
+            if (a.IsDisposed) { a.Close(); }
+            a.Show();
+            a.TopMost = true;
+            a.AddColumnsManualMeasurement();
+        }
+
+        private void AutoMeasurementLineBtn_Click(object sender, RoutedEventArgs e)
+        {
+            isAutoMeasure = true;
+            isManMeasure = false;
+            if (a.IsDisposed) { a.Close(); }
+            a.Show();
+            a.TopMost = true;
+        }
+
+         internal void createLine(Point3D p1, Point3D p2)
+        {
+
+            var group = new JawVisual3D(p1, p2);
+            view1.Children.Add(group);
+            mpoints.Clear();
         }
     }
 

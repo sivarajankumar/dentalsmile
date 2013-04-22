@@ -27,9 +27,15 @@ namespace smileUp
                 
                 if (model == null) model = new Teeth();
                 model.Id = Id;
+                model.Length = 0.0;
 
                 sample(color);
 
+                //Adding Teeth Label
+                TextVisual3D text = new TextVisual3D();
+                text.Text = Id.ToString();
+                this.Children.Add(text);
+                
                 //showHideBoundingBox();
             }
         }

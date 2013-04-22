@@ -772,6 +772,31 @@ namespace smileUp
             showHideJawVisual();
             
         }
+		
+		internal double mm_converter(double length)
+        {
+            return length / 3.543307;
+        }
+
+        internal double calculate_distance(double x1, double y1, double z1, double x2, double y2, double z2)
+        {
+
+            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2) + Math.Pow(z2 - z1, 2));
+        }
+
+        internal Point3D getCenterObject(TeethVisual3D teeth)
+        {
+            var bounds = teeth.Content.Bounds;
+
+            var x = bounds.X + (bounds.SizeX / 2);
+            var y = bounds.Y + (bounds.SizeY / 2);
+            var z = bounds.Z + (bounds.SizeZ / 2);
+
+            return (new Point3D(x, y, z));
+        }
+
+       
+    }
     }
 
     public interface IFileDialogService

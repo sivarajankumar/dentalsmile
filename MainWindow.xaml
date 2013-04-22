@@ -19,6 +19,10 @@
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <Menu>
+			<MenuItem Header="_Patient">
+                <MenuItem Header="_New Patient" Click="Patient_Click"/>
+                <MenuItem Header="_Search Patient" Click="SearchPatient_Click"/>
+            </MenuItem>
             <MenuItem Header="_File">
                 <MenuItem Header="_Open..." Command="{Binding FileOpenCommand}"/>
                 <MenuItem Header="_Export..." Command="{Binding FileExportCommand}"/>
@@ -61,7 +65,8 @@
                 <ToggleButton Content="{smileUp:Image /Icons/202.png}" x:Name="TeethMarkerBtn"  ToolTip="Teeth Marker" Click="TeethMarkerBtn_Click" />
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">
-                <ToggleButton Content="{smileUp:Image /Icons/227.png}" x:Name="MeasurementLineBtn" ToolTip="Draw Measurement Line" />
+                <ToggleButton Content="{smileUp:Image /Icons/227.png}" x:Name="MeasurementLineBtn" ToolTip="Draw Measurement Line" Click="MeasurementLineBtn_Click" />
+                <ToggleButton Content="{smileUp:Image /Icons/227.png}" x:Name="AutoMeasurementLineBtn" ToolTip="Teeth Measurement" Click="AutoMeasurementLineBtn_Click"  />   
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">
                 <Button Content="{smileUp:Image /Icons/teeth.png}" x:Name="AddTeethBtn" ToolTip="AddTeeth" Click="AddTeethBtn_Click" />

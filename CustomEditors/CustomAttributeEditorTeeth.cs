@@ -14,14 +14,11 @@ namespace smileUp.CustomEditors
 {
     public class CustomAttributeEditorTeeth
     {
-        public static Teeth teeth;
-
         [Category("Information")]
         [DisplayName("Type")]
         [Description("This property uses a TextBox as the default editor.")]
         //This custom editor is a Class that implements the ITypeEditor interface
-        //[Editor(typeof(TextBoxEditor), typeof(TextBoxEditor))]
-        [ReadOnly(true)]
+        [Editor(typeof(TextBoxEditor), typeof(TextBoxEditor))]
         public string Type
         {
             get;
@@ -32,14 +29,12 @@ namespace smileUp.CustomEditors
         [DisplayName("Id")]
         [Description("This property uses a TextBox as the default editor.")]
         //This custom editor is a Class that implements the ITypeEditor interface
-        //[Editor(typeof(TextBoxEditor), typeof(TextBoxEditor))]
-        [ReadOnly(true)]
+        [Editor(typeof(TextBoxEditor), typeof(TextBoxEditor))]
         public string Id
         {
             get;
             set;
         }
-
 
         [Category("Information")]
         [DisplayName("TeethNumber")]
@@ -47,6 +42,15 @@ namespace smileUp.CustomEditors
         //[Editor(typeof(DropDownListEditor), typeof(DropDownListEditor))]
         [ItemsSource(typeof(TeethMappingItemSource))]
         public int TeethNumber
+        {
+            get;
+            set;
+        }
+
+        [Category("Measurement")]
+        [DisplayName("Length(mm)")]
+        [Editor(typeof(TextBoxEditor), typeof(TextBoxEditor))]
+        public double Length
         {
             get;
             set;
@@ -61,12 +65,16 @@ namespace smileUp.CustomEditors
             teeth.Id = model.Id;
             String tn = model.Id;
             Match mt = Regex.Match(tn, @"teeth\d\d");
-            if (mt != null)
-                tn = mt.Value.Substring("teeth".Length, 2);
+            if (mt.Value == "") { mt = Regex.Match(tn, @"teeth\d"); tn = mt.Value.Substring("teeth".Length, 1); }
+            else { tn = mt.Value.Substring("teeth".Length, 2); }
+
+            //tn = tn.Substring("teeth".Length, 2);
             int itn = 0;
             int.TryParse(tn, out itn);
             teeth.TeethNumber = itn;
-            
+
+            teeth.Length = model.Length;
+
             return teeth;
         }
 
