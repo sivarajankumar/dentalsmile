@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgTMeasurement = new System.Windows.Forms.DataGridView();
+            this.IdTeeth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TeethName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TeethLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toothlookupBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.orthoEntitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.orthoEntities = new smileUp.orthoprojectDataSet();
@@ -37,9 +40,6 @@
             this.teethfilesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.teeth_filesTableAdapter = new smileUp.orthoprojectDataSetTableAdapters.teeth_filesTableAdapter();
             this.tooth_lookupTableAdapter = new smileUp.orthoprojectDataSetTableAdapters.tooth_lookupTableAdapter();
-            this.IdTeeth = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TeethName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TeethLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgTMeasurement)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toothlookupBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orthoEntitiesBindingSource)).BeginInit();
@@ -59,6 +59,21 @@
             this.dgTMeasurement.Name = "dgTMeasurement";
             this.dgTMeasurement.Size = new System.Drawing.Size(347, 150);
             this.dgTMeasurement.TabIndex = 0;
+            // 
+            // IdTeeth
+            // 
+            this.IdTeeth.HeaderText = "Teeth Id";
+            this.IdTeeth.Name = "IdTeeth";
+            // 
+            // TeethName
+            // 
+            this.TeethName.HeaderText = "Teeth Name";
+            this.TeethName.Name = "TeethName";
+            // 
+            // TeethLength
+            // 
+            this.TeethLength.HeaderText = "Length(mm)";
+            this.TeethLength.Name = "TeethLength";
             // 
             // toothlookupBindingSource
             // 
@@ -99,30 +114,16 @@
             // 
             this.tooth_lookupTableAdapter.ClearBeforeFill = true;
             // 
-            // IdTeeth
-            // 
-            this.IdTeeth.HeaderText = "Teeth Id";
-            this.IdTeeth.Name = "IdTeeth";
-            // 
-            // TeethName
-            // 
-            this.TeethName.HeaderText = "Teeth Name";
-            this.TeethName.Name = "TeethName";
-            // 
-            // TeethLength
-            // 
-            this.TeethLength.HeaderText = "Length(mm)";
-            this.TeethLength.Name = "TeethLength";
-            // 
-            // ManMeasurementForm
+            // MeasurementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 274);
             this.Controls.Add(this.btn_saveMeasurement);
             this.Controls.Add(this.dgTMeasurement);
-            this.Name = "ManMeasurementForm";
+            this.Name = "MeasurementForm";
             this.Text = "MeasurementForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MeasurementForm_FormClosed);
             this.Load += new System.EventHandler(this.MeasurementForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgTMeasurement)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toothlookupBindingSource)).EndInit();

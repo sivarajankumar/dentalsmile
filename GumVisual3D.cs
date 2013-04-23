@@ -14,7 +14,11 @@ namespace smileUp
         public Dictionary<int, String> teethDictionaries;
         public Dictionary<String, BraceVisual3D> braceDictionaries;
         public List<BraceVisual3D> braces;
-       
+
+        public GumContainer gc;
+        public ToothContainer tc;
+        public BraceContainer bc;
+        public WireContainer wc;
 
         String id;
         public String Id
@@ -41,13 +45,19 @@ namespace smileUp
         public GumVisual3D(JawVisual3D p, Color color)
         {
             this.parent = p;
-            Id = "gum" +   p.gums.Count.ToString("00") +"."+p.patient.name;
+            gc = this.parent.gc;
+            tc = this.parent.tc;
+            bc = this.parent.bc;
+            wc = this.parent.wc;
+
+            Id = "gum" + p.gums.Count.ToString("00") + "." + p.patient.name;
 
             sample(color);
 
             teethDictionaries = new Dictionary<int, string>();
             braceDictionaries = new Dictionary<string, BraceVisual3D>();
             braces = new List<BraceVisual3D>();
+
         }
 
         void sample(Color color)
@@ -72,16 +82,25 @@ namespace smileUp
             //this.Children.Add(t9);
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="addNewTeeth"/>
+        /// </summary>
         public TeethVisual3D addTeeth()
         {
             Material material = MaterialHelper.CreateMaterial(Colors.PowderBlue);
             return addTeeth(material);        
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="addNewTeeth"/>
+        /// </summary>
         private TeethVisual3D addTeeth(Material material)
         {
             TeethVisual3D t = new TeethVisual3D(this);
-            ((GeometryModel3D)t.Content).Material = material;
             this.Children.Add(t);
 
             if (selectedPoint != null) {
@@ -92,6 +111,13 @@ namespace smileUp
 
             int intID = getTeethIDint(t.Id);
             teethDictionaries.Add(intID, t.Id);
+            
+            if (material == null)
+            {
+                material = MaterialHelper.CreateMaterial(TeethVisual3D.getTeethColor(intID));
+            }            
+            ((GeometryModel3D)t.Content).Material = material;
+            
             selectedTeeth = t;
             return t;
         }
@@ -112,6 +138,12 @@ namespace smileUp
             }
             return intID;
         }
+
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="deleteTeeth"/>
+        /// </summary>
         public void removeTeeth()
         {
             if (selectedTeeth != null)
@@ -126,6 +158,11 @@ namespace smileUp
             }
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="deleteBrace"/>
+        /// </summary>
         internal BraceVisual3D addBrace()
         {
             if (selectedTeeth != null)
@@ -135,6 +172,11 @@ namespace smileUp
             return null;
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="deleteBrace"/>
+        /// </summary>
         internal void removeBrace()
         {
             if (selectedTeeth != null)
@@ -143,6 +185,11 @@ namespace smileUp
             }
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="cleanManipulator"/>
+        /// </summary>
         internal void clearManipulator()
         {
             List<Visual3D> childs = this.Children.ToList();
@@ -155,13 +202,22 @@ namespace smileUp
             }
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="addNewTeeth"/>
+        /// </summary>
         internal void addTeeth(GeometryModel3D model)
         {
             selectedTeeth = addTeeth(model.Material);
             selectedTeeth.Content = model;
         }
 
-
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="addBraceToAllTooth"/>
+        /// </summary>
         internal void addAllBrace()
         {
             List<Visual3D> childs = this.Children.ToList();
@@ -173,5 +229,116 @@ namespace smileUp
                 }
             }
         }
+
+        //=============== using new Architecture (Container) ===========
+        internal TeethVisual3D addNewTeeth()
+        {
+            TeethVisual3D t = new TeethVisual3D(this);
+            tc.Children.Add(t);
+
+            if (selectedPoint != null)
+            {
+                Transform3DGroup transformGroup = new Transform3DGroup();
+                transformGroup.Children.Add(new TranslateTransform3D(selectedPoint.ToVector3D()));
+                t.Transform = transformGroup;
+            }
+
+            int intID = getTeethIDint(t.Id);
+            teethDictionaries.Add(intID, t.Id);
+
+            Material material = MaterialHelper.CreateMaterial(TeethVisual3D.getTeethColor(intID));
+            ((GeometryModel3D)t.Content).Material = material;
+
+            selectedTeeth = t;
+            return t;
+        }
+
+        internal TeethVisual3D addNewTeeth(Material material)
+        {
+            TeethVisual3D t = new TeethVisual3D(this);
+            tc.Children.Add(t);
+
+            if (selectedPoint != null)
+            {
+                Transform3DGroup transformGroup = new Transform3DGroup();
+                transformGroup.Children.Add(new TranslateTransform3D(selectedPoint.ToVector3D()));
+                t.Transform = transformGroup;
+            }
+
+            int intID = getTeethIDint(t.Id);
+            teethDictionaries.Add(intID, t.Id);
+
+            if (material == null)
+            {
+                material = MaterialHelper.CreateMaterial(TeethVisual3D.getTeethColor(intID));
+            }
+            ((GeometryModel3D)t.Content).Material = material;
+
+            selectedTeeth = t;
+            return t;
+        }
+
+
+        internal void addNewTeeth(GeometryModel3D model)
+        {
+            selectedTeeth = addNewTeeth(model.Material);
+            selectedTeeth.Content = model;
+        }
+
+        public void deleteTeeth()
+        {
+            if (selectedTeeth != null)
+            {
+                selectedTeeth.clearManipulator();
+                tc.Children.Remove(selectedTeeth);
+
+                int intID = getTeethIDint(selectedTeeth.Id);
+                teethDictionaries.Remove(intID);
+
+                selectedTeeth = null;
+            }
+        }
+
+        internal BraceVisual3D addNewBrace()
+        {
+            if (selectedTeeth != null)
+            {
+                return selectedTeeth.addNewBrace();
+            }
+            return null;
+        }
+
+        internal void deleteBrace()
+        {
+            if (selectedTeeth != null)
+            {
+                selectedTeeth.deleteBrace();
+            }
+        }
+
+        internal void addBraceToAllTooth()
+        {
+            List<Visual3D> childs = tc.Children.ToList();
+            foreach (var m in childs)
+            {
+                if (m is TeethVisual3D)
+                {
+                    ((TeethVisual3D)m).addNewBrace();
+                }
+            }
+        }
+
+        internal void cleanManipulator()
+        {
+            List<Visual3D> childs = tc.Children.ToList();
+            foreach (var m in childs)
+            {
+                if (m is TeethVisual3D)
+                {
+                    ((TeethVisual3D)m).cleanManipulator();
+                }
+            }
+        }
+
     }
 }

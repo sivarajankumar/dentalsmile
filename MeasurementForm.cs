@@ -11,9 +11,21 @@ namespace smileUp
 {
     public partial class MeasurementForm : Form
     {
-        public MeasurementForm()
+        MainWindow main;
+        public MeasurementForm(MainWindow main)
         {
             InitializeComponent();
+            this.main = main;
+        }
+
+        public void navigateToolBar(bool isEnabled){
+            main.MeasurementLineBtn.IsChecked = isEnabled;
+            main.AutoMeasurementLineBtn.IsChecked = isEnabled;
+        }
+
+        public void clear()
+        {
+            dgTMeasurement.Rows.Clear();
         }
 
         public void addRow(TeethVisual3D teeth, string type)
@@ -23,8 +35,12 @@ namespace smileUp
             double teeth_length = Math.Round(teeth.Model.Length, 2);
 
             if (type == "auto")
-            { this.dgTMeasurement.Rows.Add(teeth.Model.TeethNumber,teeth_name, teeth_length); }
-            else { this.dgTMeasurement.Rows.Add(teeth.Model.TeethNumber,teeth.Model.Id,teeth.Model.StartPosition,teeth.Model.EndPosition,teeth.Model.Length); }
+            { 
+                this.dgTMeasurement.Rows.Add(teeth.Model.TeethNumber,teeth_name, teeth_length); 
+            }
+            else { 
+                this.dgTMeasurement.Rows.Add(teeth.Model.TeethNumber,teeth.Model.Id,teeth.Model.StartPosition,teeth.Model.EndPosition,teeth.Model.Length); 
+            }
 
             return;
         }
@@ -43,8 +59,7 @@ namespace smileUp
             //string patient_name = patient_name.ToString();
 
            //dbConnect.Insert(name, dob, pob, sex, address, phone);
-            DialogResult result = MessageBox.Show("Data Measurement is saved successfully", "Continue?",
-            MessageBoxButtons.OK);
+            DialogResult result = MessageBox.Show("Data Measurement is saved successfully", "Continue?", MessageBoxButtons.OK);
             switch (result)
             {
                 case DialogResult.OK:
@@ -58,8 +73,7 @@ namespace smileUp
         }
 
         public void AddColumnsManualMeasurement()
-        {
-            
+        {            
             var col3 = new DataGridViewTextBoxColumn();
             var col4 = new DataGridViewTextBoxColumn();
 
@@ -70,6 +84,11 @@ namespace smileUp
             col4.Name = "EndPosition";
 
             dgTMeasurement.Columns.AddRange(new DataGridViewColumn[] { col3, col4 });
+        }
+
+        private void MeasurementForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            navigateToolBar(false);
         }
     }
 }

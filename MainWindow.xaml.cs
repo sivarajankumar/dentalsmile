@@ -47,13 +47,11 @@ namespace smileUp
         SmileVisual3D g;
 		
 		//added by achie
-        Boolean isAutoMeasure = false, isManMeasure = false;
         int hit = 0;
         private readonly List<Point3D> mpoints = new List<Point3D>();
         public IList<TeethTextItem> TextItems { get; set; }
-        string type = "";
-		
-		MeasurementForm a = new MeasurementForm();
+
+        private static MeasurementForm measurementForm;
 		  
         private World world;
 
@@ -83,6 +81,9 @@ namespace smileUp
             loadTeethNumberToChart();
 
             Loaded += new RoutedEventHandler(OnLoaded);
+            _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
+
+            measurementForm = new MeasurementForm(this);
         }
 
         private void OnLoaded(object sender, EventArgs e)
@@ -543,19 +544,8 @@ namespace smileUp
                 //TOOD: show enable icons/buttons
                 enableRemoveTeethButton(true);
                 showTeethProperty(teeth);
-				
-				
-				double length = 0;                 
-                //added by achie for measuring
-               
-                if (isAutoMeasure == true && isManMeasure == false)
-                {
-                    var centerPoint = vm.getCenterObject(teeth);
-                    length = centerPoint.X * 2;                
-                    teeth.Model.Length = vm.mm_converter(length);
-                    type = "auto";
-                }
-                else if (isAutoMeasure == false && isManMeasure == true)
+
+                if (MeasurementLineBtn.IsChecked == true)
                 {
                     System.Windows.Point position = Mouse.GetPosition(this);
                     HitTestResult resultM = VisualTreeHelper.HitTest(view1, position);
@@ -564,26 +554,31 @@ namespace smileUp
                     {
                         if (hit == 0)
                         {
-                            mpoints.Add(result3d.PointHit);hit++; this.Show(); 
+                            mpoints.Add(result3d.PointHit); hit++; this.Show();
                         }
-                        else if(hit == 1)
+                        else if (hit == 1)
                         {
                             mpoints.Add(result3d.PointHit); hit = 0;
-                            length = vm.calculate_distance(mpoints[0].X, mpoints[0].Y, mpoints[0].Z, mpoints[1].X, mpoints[1].Y, mpoints[1].Z);
-                           // teeth.Model.Length = Math.Round(vm.mm_converter(length), 4);    
-                            teeth.Model.Length = vm.mm_converter(length);
+                            double length = MathHelper.calculate_distance(mpoints[0].X, mpoints[0].Y, mpoints[0].Z, mpoints[1].X, mpoints[1].Y, mpoints[1].Z);
+
+                            //teeth.Model.Length = Math.Round(vm.mm_converter(length), 4);    
+                            teeth.Model.Length = MathHelper.mm_converter(length);
                             teeth.Model.StartPosition = mpoints[0].X;
                             teeth.Model.EndPosition = mpoints[1].X;
                             createLine(mpoints[0], mpoints[1]);
-                            type = "auto";
+                            measurementForm.addRow(teeth, "auto"); 
                         }
                     }
                 }
-               
-                
-				//CreateText(teeth); 
-                if (type == "auto" || type == "man") { a.addRow(teeth, type); }
- 
+                else if (AutoMeasurementLineBtn.IsChecked == true)
+                {
+                    var centerPoint = teeth.centroid();
+                    double length = centerPoint.X * 2;
+                    teeth.Model.Length = MathHelper.mm_converter(length);
+                    measurementForm.addRow(teeth, "auto");
+                }
+				
+	
                 return;
             }
             else if (result is BraceVisual3D)
@@ -689,7 +684,6 @@ namespace smileUp
         {
             _propertyGrid.Visibility = System.Windows.Visibility.Visible;
             _propertyGrid.SelectedObject = CustomAttributeEditorTeeth.CreateCustomAttributEditorTeeth(teeth.Model);
-            _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
         }
 
 
@@ -755,7 +749,7 @@ namespace smileUp
                 Console.WriteLine("teeth");    
             }*/
 			
-			
+			/*
 			double x = 0, y = 0, z = 0;
             var pt = view1.FindNearestPoint(mousePoint);
             if (pt.HasValue)
@@ -764,6 +758,7 @@ namespace smileUp
             }
             else { text1.Text = String.Format("X: {0:0.00} Y: {1:0.00} Z: {1:0.000}", x, y, z); }
             return;
+             */ 
         }
 
         private void manip(object sender, MouseButtonEventArgs e)
@@ -883,14 +878,15 @@ namespace smileUp
 
         private void ShowHideTeethVisualBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (ShowHideTeethVisualBtn.IsChecked == true)
-            {
-                vm.ShowHideTeethVisual(true);
-            }
-            else
-            {
-                vm.ShowHideTeethVisual(false);
-            }
+            vm.ShowHideTeethVisual(ShowHideTeethVisualBtn.IsChecked.Value);
+        }
+        private void ShowHideBraceVisualBtn_Click(object sender, RoutedEventArgs e)
+        {
+            vm.ShowHideBraceVisual(ShowHideBraceVisualBtn.IsChecked.Value);
+        }
+        private void ShowHideWireVisualBtn_Click(object sender, RoutedEventArgs e)
+        {
+            vm.ShowHideWireVisual(ShowHideWireVisualBtn.IsChecked.Value);
         }
 
         private void AddTeethBtn_Click(object sender, RoutedEventArgs e)
@@ -1155,7 +1151,8 @@ namespace smileUp
                 int p = 0; 
                 int.TryParse(btn.Text.Text, out p);
                 TeethVisual3D teeth = vm.selectTeeth(p);
-                teeth.showHideManipulator();
+                //teeth.showHideManipulator();
+                teeth.displayManipulator();
                 showTeethProperty(teeth);
             }
             //MessageBox.Show(""+e.ToString());
@@ -1187,24 +1184,36 @@ namespace smileUp
 		 //added by Achie
         private void MeasurementLineBtn_Click(object sender, RoutedEventArgs e)
         {
-            isManMeasure = true;
-            isAutoMeasure = false;
-            if (a.IsDisposed) { a.Close(); }
-            a.Show();
-            a.TopMost = true;
-            a.AddColumnsManualMeasurement();
+            if (MeasurementLineBtn.IsChecked == true)
+            {
+                AutoMeasurementLineBtn.IsChecked = false;
+                measurementForm.clear();
+                measurementForm.Show();
+                measurementForm.TopMost = true;
+                measurementForm.AddColumnsManualMeasurement();
+            }
+            else
+            {
+                measurementForm.Hide();
+            }
         }
 
         private void AutoMeasurementLineBtn_Click(object sender, RoutedEventArgs e)
         {
-            isAutoMeasure = true;
-            isManMeasure = false;
-            if (a.IsDisposed) { a.Close(); }
-            a.Show();
-            a.TopMost = true;
+            if (AutoMeasurementLineBtn.IsChecked == true)
+            {
+                MeasurementLineBtn.IsChecked = false;
+                measurementForm.clear();
+                measurementForm.Show();
+                measurementForm.TopMost = true;
+            }
+            else
+            {
+                measurementForm.Hide(); 
+            }
         }
 
-         internal void createLine(Point3D p1, Point3D p2)
+        internal void createLine(Point3D p1, Point3D p2)
         {
 
             var group = new JawVisual3D(p1, p2);

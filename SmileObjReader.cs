@@ -751,7 +751,8 @@ namespace smileUp
                                         mg.Children.Add(gm);
                                     }
                                     brace.Content = mg;
-                                    teeth.Children.Add(brace);
+                                    //teeth.Children.Add(brace);
+                                    teeth.bc.Children.Add(brace);
                                     gum.braces.Add(brace);
                                     gum.braceDictionaries.Add(teeth.Id, brace);
                                 }
@@ -766,7 +767,8 @@ namespace smileUp
                                         modelGroup.Children.Add(gm);
                                     }
                                     teeth.Content = modelGroup;
-                                    gum.Children.Add(teeth);                                
+                                    //gum.Children.Add(teeth);
+                                    gum.tc.Children.Add(teeth);
                                 }                                
                             }
                             else
@@ -803,7 +805,8 @@ namespace smileUp
                                     mg.Children.Add(gm);
                                 }
                                 brace.Content = mg;
-                                teeth.Children.Add(brace);
+                                //teeth.Children.Add(brace);
+                                teeth.bc.Children.Add(brace);
                                 gum.braces.Add(brace);
                                 gum.braceDictionaries.Add(teeth.Id, brace);
                             }
@@ -818,7 +821,8 @@ namespace smileUp
                                     modelGroup.Children.Add(gm);
                                 }
                                 teeth.Content = modelGroup;
-                                gum.Children.Add(teeth);
+                                //gum.Children.Add(teeth);
+                                gum.tc.Children.Add(teeth);
                             }
 
                         }
@@ -855,7 +859,8 @@ namespace smileUp
                                 modelGroup.Children.Add(gm);
                             }
                             brace.Content = modelGroup;
-                            teeth.Children.Add(brace);
+                            //teeth.Children.Add(brace);
+                            teeth.bc.Children.Add(brace);
                         }
                     }
                 }
@@ -866,7 +871,8 @@ namespace smileUp
             {
                 TeethVisual3D teeth = null;
                 var dp = gs.Split('.');
-                foreach (var t in gum.Children)
+                //foreach (var t in gum.Children)
+                foreach (var t in gum.tc.Children)
                 {
                     TeethVisual3D tt = (TeethVisual3D)t;
                     //if (tt.Id.StartsWith(dp[0]))
@@ -884,10 +890,8 @@ namespace smileUp
                 jaw.gums.TryGetValue(p, out gum);
                 if (gum == null)
                 {
-                    gum = new GumVisual3D(jaw);
-                    jaw.gums.Add(p, gum);
-                    jaw.selectedGum = gum;
-                    jaw.Children.Add(gum);
+                    gum = jaw.addNewGum();
+                    //jaw.Children.Add(gum);
                 }
                 return gum;
             }

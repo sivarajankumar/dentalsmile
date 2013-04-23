@@ -82,7 +82,7 @@ namespace smileUp
 
         private CombinedManipulator _manipulator;
         public CombinedManipulator Manipulator { get; set; }
-        Boolean showManipulator = false;
+
         String id;
         public String Id
         {
@@ -97,11 +97,14 @@ namespace smileUp
             get { return model; }
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="displayManipulator"/>
+        /// </summary>
         public void showHideManipulator()
         {
             this.brace1.clearManipulator();
-            //if (showManipulator)
-            //{
                 if (_manipulator == null)
                 {
                     Rect3D r = this.Content.Bounds;
@@ -115,18 +118,13 @@ namespace smileUp
                     _manipulator.Bind(this);
                 }
                 this.brace1.Children.Add(_manipulator);
-
-                //showManipulator = false;
-            //}
-            //else
-            //{
-            //    this.parent.Children.Remove(_manipulator);
-            //    showManipulator = true;
-            //}
-
-            //Console.WriteLine("ID: "+id);
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Not used anymore since changes in CONTAINER design.
+        /// <see cref="cleanManipulator"/>
+        /// </summary>
         internal void clearManipulator()
         {
             List<Visual3D> childs = this.brace1.Children.ToList();

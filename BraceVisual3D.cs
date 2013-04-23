@@ -13,7 +13,12 @@ namespace smileUp
 {
     public class BraceVisual3D : SmileVisual3D
     {
-        
+        public GumContainer gc;
+        public ToothContainer tc;
+        public BraceContainer bc;
+        public WireContainer wc;
+
+
         public BraceVisual3D(TeethVisual3D parent, bool generatedSample)
             : this(Colors.Pink, parent, generatedSample)
         {
@@ -23,7 +28,12 @@ namespace smileUp
             if (p != null)
             {
                 this.parent = p;
-                Id = p.Id + "_brace" + p.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.name; ;
+                gc = this.parent.gc;
+                tc = this.parent.tc;
+                bc = this.parent.bc;
+                wc = this.parent.wc;
+
+                Id = p.Id + "_brace" + bc.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.name; ;
                 
                 if (model == null) model = new Brace();
                 model.Id = Id;
@@ -52,6 +62,10 @@ namespace smileUp
 
                 //BindingOperations.SetBinding(this.Manipulator,CombinedManipulator.TargetTransformProperty,new Binding("TargetTransform") { Source = this });
 
+                gc = this.parent.gc;
+                tc = this.parent.tc;
+                bc = this.parent.bc;
+                wc = this.parent.wc;
             }
         }
 
@@ -69,7 +83,10 @@ namespace smileUp
             transformGroup.Children.Add(new ScaleTransform3D(2, 2, 2));
             Point3D p0 = new Point3D(0, 0, 0);
             Point3D p1 = this.parent.centroid();
-            Console.WriteLine(Vector3D.DotProduct(p0.ToVector3D(), p1.ToVector3D()));
+            
+            //TODO: locate brace in or out the teeth
+
+            //Console.WriteLine(Vector3D.DotProduct(p0.ToVector3D(), p1.ToVector3D()));
             transformGroup.Children.Add(new TranslateTransform3D(p1.X + (r.SizeX / 2), p1.Y + (r.SizeY / 2), p1.Z + (r.SizeZ / 2)));
             this.Transform = transformGroup;
             //*/
@@ -90,7 +107,6 @@ namespace smileUp
 
         private CombinedManipulator _manipulator;
         public CombinedManipulator Manipulator { get; set; }
-        Boolean showManipulator = false;
         String id;
         public String Id
         {
@@ -105,6 +121,11 @@ namespace smileUp
             get { return model; }
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Will be removed soon.
+        /// <see cref="displayManipulator"/>
+        /// </summary>
         public void showHideManipulator()
         {
             this.parent.clearManipulator();
@@ -124,17 +145,13 @@ namespace smileUp
                 }
                 this.parent.Children.Add(_manipulator);
 
-                //showManipulator = false;
-            //}
-            //else
-            //{
-                //this.parent.Children.Remove(_manipulator);
-                //showManipulator = true;
-            //}
-
-            //Console.WriteLine("ID: "+id);
         }
 
+        /// <summary>
+        /// @Deprecated
+        /// Will be removed soon.
+        /// <see cref="cleanManipulator"/>
+        /// </summary>
         public void clearManipulator()
         {
             List<Visual3D> childs = this.parent.Children.ToList();
@@ -157,5 +174,41 @@ namespace smileUp
             Point3D p = new Point3D(r.X + ((r.SizeX / 2)), r.Y + ((r.SizeY / 2)), r.Z + ((r.SizeZ / 2)));
             return p;
         }
+
+        //==============using Container ==========
+
+        public void cleanManipulator()
+        {
+            List<Visual3D> childs = bc.Children.ToList();
+            foreach (var m in childs)
+            {
+                if (m is CombinedManipulator)
+                {
+                    bc.Children.Remove(m);
+                }
+            }
+            _manipulator = null;
+        }
+
+        public void displayManipulator()
+        {
+            this.parent.cleanManipulator();
+            if (_manipulator == null)
+            {
+                Rect3D r = this.Content.Bounds;
+                _manipulator = new CombinedManipulator();
+                //_manipulator.Position = new Point3D(r.X + (r.SizeX/2),r.Y + (r.SizeY / 2),r.Z + (r.SizeZ/2));
+                _manipulator.Offset = new Vector3D(r.X + (r.SizeX / 2), r.Y + (r.SizeY / 2), r.Z + (r.SizeZ / 2));
+                _manipulator.Pivot = new Point3D(r.X + (r.SizeX / 2), r.Y + (r.SizeY / 2), r.Z + (r.SizeZ / 2));
+                //_manipulator.Pivot = new Point3D(0, 0, 0);
+                _manipulator.Diameter = Math.Max(r.SizeX, Math.Max(r.SizeY, r.SizeZ)) + 1;
+                _manipulator.Length = _manipulator.Diameter * 0.75;
+                _manipulator.Bind(this);
+            }
+            bc.Children.Add(_manipulator);
+
+        }
+
+
     }
 }

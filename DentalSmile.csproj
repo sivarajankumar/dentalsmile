@@ -78,11 +78,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BaseMarker.cs" />
+    <Compile Include="BraceContainer.cs" />
     <Compile Include="BraceVisual3D.cs" />
     <Compile Include="Brace.cs" />
     <Compile Include="CustomEditors\TeethMappingItemSource.cs" />
+    <Compile Include="Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DBConnect.cs" />
     <Compile Include="EllipticalLayoutPanel.cs" />
+    <Compile Include="GumContainer.cs" />
     <Compile Include="ImageToggleButton.cs" />
     <Compile Include="MeasurementForm.cs">
       <SubType>Form</SubType>
@@ -115,6 +120,8 @@
     </Compile>
     <Compile Include="TeethTextItem.cs" />
     <Compile Include="TextItem.cs" />
+    <Compile Include="ToothContainer.cs" />
+    <Compile Include="WireContainer.cs" />
     <Compile Include="WireVisual3D.cs" />
     <Compile Include="CustomEditors\CustomAttributeEditorWire.cs" />
     <Compile Include="Wire.cs" />
@@ -135,6 +142,10 @@
     <Compile Include="MathHelper.cs" />
     <Compile Include="Teeth.cs" />
     <Compile Include="TeethVisual3D.cs" />
+    <Page Include="Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\ProgressDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

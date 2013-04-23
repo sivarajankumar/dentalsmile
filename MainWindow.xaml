@@ -53,8 +53,10 @@
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">
                 <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideRawVisualBtn" ToolTip="Show Hide RawVisual" Click="ShowHideRawVisualBtn_Click" />
-                <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideJawVisualBtn" ToolTip="Show Hide JawVisual" Click="ShowHideJawVisualBtn_Click" />
-                <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideTeethVisualBtn" ToolTip="Show Hide Teeth Visual" Click="ShowHideTeethVisualBtn_Click" />
+                <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideJawVisualBtn" IsChecked="True" ToolTip="Show Hide JawVisual" Click="ShowHideJawVisualBtn_Click" />
+                <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideTeethVisualBtn" IsChecked="True" ToolTip="Show Hide Teeth Visual" Click="ShowHideTeethVisualBtn_Click" />
+                <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideBraceVisualBtn" IsChecked="True" ToolTip="Show Hide Brace Visual" Click="ShowHideBraceVisualBtn_Click" />
+                <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideWireVisualBtn" IsChecked="True" ToolTip="Show Hide Wire Visual" Click="ShowHideWireVisualBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/126.png}" x:Name="ShowVerticesBtn" ToolTip="Show Vertices" IsEnabled="False" Click="ShowVerticesBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/128.png}" x:Name="ShowSolidBtn" ToolTip="Show Solid" IsEnabled="False"/>
             </ToolBar>

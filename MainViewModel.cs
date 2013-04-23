@@ -141,8 +141,6 @@ namespace smileUp
 
         private ModelVisual3D _rootVisual;
 
-        private ModelVisual3D _tempVisual;
-
         MainWindow window;
             
         private IFileDialogService FileDialogService;
@@ -177,12 +175,6 @@ namespace smileUp
             set { _jawVisual = value; RaisePropertyChanged("JawVisual"); }
         }
 
-        public ModelVisual3D TempVisual
-        {
-            get { return _tempVisual; }
-            set { _tempVisual = value; RaisePropertyChanged("TempVisual"); }
-        }
-
         public List<VisualElement> Elements { get; set; }
 
 //        public MainViewModel(IFileDialogService fds, HelixViewport3D hv, ModelVisual3D rootModel)
@@ -212,9 +204,6 @@ namespace smileUp
             RootVisual = window.vmodel;
 
             RootVisual.Children.Add(JawVisual);
-
-            TempVisual = new ModelVisual3D();
-            RootVisual.Children.Add(TempVisual);
             this.window = window;
         }
 
@@ -616,7 +605,6 @@ namespace smileUp
         {
             RawVisual = null;
             JawVisual = null;
-            TempVisual = null;
             RootVisual.Children.Clear();
 
             //((HelixViewport3D)HelixView).Children.Clear();
@@ -657,7 +645,8 @@ namespace smileUp
             JawVisual.selectedGum = teeth.Parent;
             JawVisual.selectedGum.selectedTeeth = teeth;
 
-            teeth.showHideManipulator();
+            //teeth.showHideManipulator();
+            teeth.displayManipulator();
         }
 
         public string smileMode { get; set; }
@@ -666,7 +655,10 @@ namespace smileUp
         {
             TeethVisual3D r = null;
             if (JawVisual != null)
-                r = JawVisual.selectTeeth(p);
+            {
+                //r = JawVisual.selectTeeth(p);
+                r = JawVisual.findTeeth(p);
+            }
             return r;
         }
 
@@ -695,13 +687,15 @@ namespace smileUp
             JawVisual.selectedGum = brace.Parent.Parent;
             JawVisual.selectedGum.selectedTeeth = brace.Parent;
 
-            brace.showHideManipulator();        
+            //brace.showHideManipulator();
+            brace.displayManipulator();
         }
 
 
         internal void showHideManipulator(GumVisual3D gum)
         {
-            gum.clearManipulator();
+            //gum.clearManipulator();
+            gum.cleanManipulator();
         }
 
         internal void manualSegment(Point3DCollection points, Vector3DCollection vectors)
@@ -742,59 +736,26 @@ namespace smileUp
         {
             if (JawVisual.selectedGum != null)
             {
-                JawVisual.selectedGum.addAllBrace();
+                //JawVisual.selectedGum.addAllBrace();
+                JawVisual.selectedGum.addBraceToAllTooth();
             }
         }
         
         internal void ShowHideBraceVisual(bool f)
         {
- 
+            JawVisual.displayBraceContainer(f);
         }
 
         internal void ShowHideTeethVisual(bool f)
         {
-            if (f)
-            {
-                Visual3DCollection childs = JawVisual.selectedGum.Children;
-                foreach (var m in childs)
-                {
-                    //if (m is TeethVisual3D)
-                    //{
-                        //ModelVisual3D mv = (ModelVisual3D)m;
-                        //TempVisual.Children.Add(mv);
-                    //}
-                }
-            }
-            else
-            {
-                TempVisual.Children.Clear();
-            }
-            showHideJawVisual();
-            
+            JawVisual.displayTeethContainer(f);
+        }
+        
+        internal void ShowHideWireVisual(bool f)
+        {
+            JawVisual.displayWireContainer(f);
         }
 		
-		internal double mm_converter(double length)
-        {
-            return length / 3.543307;
-        }
-
-        internal double calculate_distance(double x1, double y1, double z1, double x2, double y2, double z2)
-        {
-
-            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2) + Math.Pow(z2 - z1, 2));
-        }
-
-        internal Point3D getCenterObject(TeethVisual3D teeth)
-        {
-            var bounds = teeth.Content.Bounds;
-
-            var x = bounds.X + (bounds.SizeX / 2);
-            var y = bounds.Y + (bounds.SizeY / 2);
-            var z = bounds.Z + (bounds.SizeZ / 2);
-
-            return (new Point3D(x, y, z));
-        }
-
     }
 
     public interface IFileDialogService
