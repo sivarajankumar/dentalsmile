@@ -32,6 +32,7 @@ namespace smileUp
             password = "";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            connectionString += "Convert Zero Datetime=True;";
 
             connection = new MySqlConnection(connectionString);
         }
@@ -84,7 +85,7 @@ namespace smileUp
         {
             string tableName = "PATIENT";
             string columns = "(id, fname, lname, birthdate, birthplace, gender,address1,address2,city,phone, created,createdBy)";
-            string values = "(" + p.Id + ",'" + p.FirstName + "','" + p.LastName + "'," + p.BirthDate + ",'" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "," + DateTime.Now + ",'USER')";
+            string values = "(" + p.Id + ",'" + p.FirstName + "','" + p.LastName + "'," + p.BirthDate.ToString("yyyy-MM-dd") + ",'" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "," + DateTime.Now + ",'USER')";
             string query = "INSERT INTO "+tableName + " "+ columns +" values "+ values +" ;";
 
             if (this.OpenConnection() == true)
@@ -97,7 +98,7 @@ namespace smileUp
         public void UpdatePatient(Patient p)
         {
             string tableName = "PATIENT";
-            string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now + "', modifiedBy= 'USER')";
+            string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString("yyyy-MM-dd") + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now + "', modifiedBy= 'USER')";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = "+p.Id;
 
             if (this.OpenConnection() == true)
@@ -108,11 +109,11 @@ namespace smileUp
             }
         }
 
-        public void InsertDoctor(Doctor p)
+        public bool InsertDentist (Dentist p)
         {
-            string tableName = "DOCTOR";
+            string tableName = "DENTIST";
             string columns = "(userid, fname, lname, birthdate, birthplace, gender,address1,address2,city,phone, created,createdBy)";
-            string values = "(" + p.UserId + ",'" + p.FirstName + "','" + p.LastName + "'," + p.BirthDate + ",'" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "," + DateTime.Now + ",'USER')";
+            string values = "('" + p.UserId + "','" + p.FirstName + "','" + p.LastName + "','" + p.BirthDate.ToString("yyyy-MM-dd") + "','" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:i:s") + "','USER')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -120,13 +121,16 @@ namespace smileUp
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.ExecuteNonQuery();
                 this.CloseConnection();
+                return true;
             }
+            
+            return false;
         }
 
-        public void UpdateDoctor(Doctor p)
+        public void UpdateDentist (Dentist p)
         {
-            string tableName = "DOCTOR";
-            string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now + "', modifiedBy= 'USER')";
+            string tableName = "DENTIST";
+            string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString("yyyy-MM-dd") + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now.ToLongDateString() + "', modifiedBy= 'USER')";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = " + p.UserId;
 
             if (this.OpenConnection() == true)
@@ -139,7 +143,7 @@ namespace smileUp
         
         public void SetPassword(string p, string userid)
         {
-            string tableName = "DOCTOR";
+            string tableName = "DENTIST";
             string setColumns = "password = '" + p + "', modified = '" + DateTime.Now + "', modifiedBy= 'USER')";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = " + userid;
 
@@ -155,8 +159,8 @@ namespace smileUp
         public void InsertTreatment(Treatment t)
         {
             string tableName = "TREATMENT";
-            string columns = "(id, phase, doctor, patient, tdate, ttime,room, created,createdBy)";
-            string values = "(" + t.Id + ",'" + t.Phase.Id + "','" + t.Doctor.UserId + "'," + t.Patient.Id + ",'" + t.TreatmentDate + "','" + t.TreatmentTime + "','" + t.Room + "'," + DateTime.Now + ",'USER')";
+            string columns = "(id, phase, dentist, patient, tdate, ttime,room, created,createdBy)";
+            string values = "(" + t.Id + ",'" + t.Phase.Id + "','" + t.Dentist.UserId + "'," + t.Patient.Id + ",'" + t.TreatmentDate + "','" + t.TreatmentTime + "','" + t.Room + "'," + DateTime.Now + ",'USER')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -169,7 +173,7 @@ namespace smileUp
         public void UpdateTreatment(Treatment t)
         {
             string tableName = "TREATMENT";
-            string setColumns = "phase ='" + t.Phase.Id + "', doctor='" + t.Doctor.UserId + "', patient='" + t.Patient.Id + "', tdate='" + t.TreatmentDate + "', ttime='" + t.TreatmentTime + "',room='" + t.Room + "', modified='" + DateTime.Now + "', modifiedBy='USER')";
+            string setColumns = "phase ='" + t.Phase.Id + "', dentist='" + t.Dentist.UserId + "', patient='" + t.Patient.Id + "', tdate='" + t.TreatmentDate + "', ttime='" + t.TreatmentTime + "',room='" + t.Room + "', modified='" + DateTime.Now + "', modifiedBy='USER')";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = " + t.Id;
 
             if (this.OpenConnection() == true)
@@ -194,6 +198,7 @@ namespace smileUp
                 this.CloseConnection();
             }
         }
+
         public void UpdateFileInfo(SmileFile t)
         {
             string tableName = "PFILE";
@@ -208,30 +213,39 @@ namespace smileUp
             }
         }
 
-        public List<Patient> SelectAllPatient()
+        public List<Dentist> findDentistsByOr(string userid, string firstname, string lastname)
         {
-            string query = "SELECT * FROM PATIENT";
-            List<Patient> list = null;
+            string query = "SELECT * FROM DENTIST ";
+            bool any = false;
+            string where = "";
+            if (userid != null)
+            {
+                where += " userid like '%" + userid + "%' ";
+                any = true;
+            }
+            if (firstname != null)
+            {
+                if (any) where += " or ";
+                where += " fname like '%" + firstname + "%' ";
+                any = true;
+            }
+            if (lastname != null)
+            {
+                if (any) where += " or ";
+                where += " or lname like '%" + lastname + "%' ";
+                any = true;
+            }
+            if (any) query += " WHERE " + where;
+
+            List<Dentist> list = null;
             if (this.OpenConnection() == true)
             {
+                list = new List<Dentist>();
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
-                list = new List<Patient>();
-                //Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    Patient p = new Patient();
-                    p.Id = (string)dataReader["id"];
-                    p.FirstName = (string)dataReader["fname"];
-                    p.LastName = (string)dataReader["lname"];
-                    p.BirthDate = (DateTime)dataReader["birtdate"];
-                    p.BirthPlace = (string)dataReader["birthplace"];
-                    p.Gender = (string)dataReader["gender"];
-                    p.Address1 = (string)dataReader["address1"];
-                    p.Address2 = (string)dataReader["address2"];
-                    p.City = (string)dataReader["city"];
-                    p.Phone = (string)dataReader["phone"];
-
+                    Dentist p = toDentist(dataReader);
                     list.Add(p);
                 }
                 dataReader.Close();
@@ -242,88 +256,160 @@ namespace smileUp
             return list;
         }
 
-        //Select statement
-        public List<string>[] Select()
+        public List<Dentist> findDentistsByAnd(string userid, string firstname, string lastname)
         {
-            string query = "SELECT * FROM patient";
+            string query = "SELECT * FROM DENTIST ";
+            bool any = false;
+            string where = "";
+            if (userid != null)
+            {
+                where += " userid like '%" + userid + "%' ";
+                any = true;
+            }
+            if (firstname != null)
+            {
+                if (any) where += " and ";
+                where += " fname like '%" + firstname + "%' ";
+                any = true;
+            }
+            if (lastname != null)
+            {
+                if (any) where += " and ";
+                where += " or lname like '%" + lastname + "%' ";
+                any = true;
+            }
+            if (any) query += " WHERE " + where;
 
-            //Create a list to store the result
-            List<string>[] list = new List<string>[3];
-            list[0] = new List<string>();
-            list[1] = new List<string>();
-            list[2] = new List<string>();
-
-            //Open connection
+            List<Dentist> list = null;
             if (this.OpenConnection() == true)
             {
-                //Create Command
+                list = new List<Dentist>();
                 MySqlCommand cmd = new MySqlCommand(query, connection);
-                //Create a data reader and Execute the command
                 MySqlDataReader dataReader = cmd.ExecuteReader();
-                
-                //Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    list[0].Add(dataReader["patient_id"] + "");
-                    list[1].Add(dataReader["patient_name"] + "");
-                    list[2].Add(dataReader["patient_placeofbirth"] + "");
+                    Dentist p = toDentist(dataReader);
+                    list.Add(p);
                 }
-
-                //close Data Reader
                 dataReader.Close();
-
-                //close Connection
                 this.CloseConnection();
 
-                //return list to be displayed
-                return list;
             }
-            else
-            {
-                return list;
-            }
+            return list;
         }
 
-        //Select Teeth lookup
-        public List<string>[] SelectTeeth()
+        public List<Dentist> SelectAllDentists()
         {
-            string query = "SELECT * FROM tooth_lookup";
-
-            //Create a list to store the result
-            List<string>[] list = new List<string>[3];
-            list[0] = new List<string>();
-            list[1] = new List<string>();
-            list[2] = new List<string>();
-
-            //Open connection
+            string query = "SELECT * FROM DENTIST";
+            List<Dentist> list = null;
             if (this.OpenConnection() == true)
             {
-                //Create Command
+                list = new List<Dentist>();
                 MySqlCommand cmd = new MySqlCommand(query, connection);
-                //Create a data reader and Execute the command
                 MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                //Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    list[0].Add(dataReader["tooth_id"] + "");
-                    list[1].Add(dataReader["tooth_type"] + "");
-                    list[2].Add(dataReader["tooth_name"] + "");
+                    Dentist p = toDentist(dataReader);
+                    list.Add(p);
                 }
-
-                //close Data Reader
                 dataReader.Close();
+                this.CloseConnection();
+            }
+            return list;
+        }
 
-                //close Connection
+        private Dentist toDentist(MySqlDataReader dataReader)
+        {
+            Dentist p = new Dentist();
+
+            p.UserId = dataReader.GetString("userid");
+            p.FirstName = dataReader.GetString("fname");
+            p.LastName = dataReader.GetString("lname");
+            p.BirthDate = dataReader.GetDateTime("birthdate");
+            p.BirthPlace = dataReader.GetString("birthplace");
+            p.Gender = dataReader.GetString("gender");
+            p.Address1 = dataReader.GetString("address1");
+            p.Address2 = dataReader.GetString("address2");
+            p.City = dataReader.GetString("city");
+            p.Phone = dataReader.GetString("phone");
+
+            return p;
+        }
+
+        private Patient toPatient(MySqlDataReader dataReader)
+        {
+            Patient p = new Patient();
+            
+            p.Id = dataReader.GetString("id");
+            p.FirstName = dataReader.GetString("fname");
+            p.LastName = dataReader.GetString("lname");
+            p.BirthDate = dataReader.GetDateTime("birtdate");
+            p.BirthPlace = dataReader.GetString("birthplace");
+            p.Gender = dataReader.GetString("gender");
+            p.Address1 = dataReader.GetString("address1");
+            p.Address2 = dataReader.GetString("address2");
+            p.City = dataReader.GetString("city");
+            p.Phone = dataReader.GetString("phone");
+            
+            return p;
+        }
+
+        private SmileFile toSmileFile(MySqlDataReader dataReader)
+        {
+            SmileFile p = new SmileFile();
+            
+            p.Id = dataReader.GetString("id");
+            p.FileName = dataReader.GetString("filename");
+            p.Description = dataReader.GetString("description");
+            p.Screenshot = dataReader.GetString("screenshot");
+            
+            p.Patient = findPatientById(dataReader.GetInt32("patient"));
+
+            return p;
+        }
+
+        private Patient findPatientById(int id)
+        {
+            string query = "SELECT * FROM PATIENT WHERE id = @id";
+            Patient p = null;
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.Add(new MySqlParameter("id", id));
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    p = toPatient(dataReader);
+                }
+                dataReader.Close();
                 this.CloseConnection();
 
-                //return list to be displayed
-                return list;
             }
-            else
+            return p;
+        }
+
+        public List<Patient> SelectAllPatient()
+        {
+            string query = "SELECT * FROM PATIENT";
+            List<Patient> list = null;
+            if (this.OpenConnection() == true)
             {
-                return list;
+                list = new List<Patient>();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    Patient p = toPatient(dataReader);
+                    list.Add(p);
+                }
+                dataReader.Close();
+
+                this.CloseConnection();
+
             }
+            return list;
         }
 
         //Count statement
@@ -476,5 +562,6 @@ namespace smileUp
                 this.CloseConnection();
             }
         }
+
     }
 }

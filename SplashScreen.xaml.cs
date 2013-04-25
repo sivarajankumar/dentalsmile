@@ -44,10 +44,10 @@ namespace smileUp
 
             if (cont > 2)
             {
-                MainWindow m = new MainWindow();
-                m.Show();
-                //WpfDashboard d = new WpfDashboard();
-                //d.Show();
+                //MainWindow m = new MainWindow();
+                //m.Show();
+                Dashboard d = new Dashboard();
+                d.Show();
                 this.Close();
                 _timer.Stop();
             }

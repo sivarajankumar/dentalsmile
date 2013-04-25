@@ -39,6 +39,9 @@
     <Reference Include="AvalonDock">
       <HintPath>.\AvalonDock.dll</HintPath>
     </Reference>
+    <Reference Include="cobaDatabase">
+      <HintPath>C:\Users\aspire\Documents\Visual Studio 2010\Projects\cobaDatabase\cobaDatabase\bin\Debug\cobaDatabase.exe</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -74,8 +77,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DentistForm.xaml.cs">
+      <DependentUpon>DentistForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DentistList.xaml.cs">
+      <DependentUpon>DentistList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Phase.cs" />
-    <Compile Include="Doctor.cs" />
+    <Compile Include="Dentist.cs" />
     <Compile Include="DentalSmileDB.cs" />
     <Compile Include="ListMenusControl.xaml.cs">
       <DependentUpon>ListMenusControl.xaml</DependentUpon>
@@ -160,6 +172,18 @@
     <Compile Include="MathHelper.cs" />
     <Compile Include="Teeth.cs" />
     <Compile Include="TeethVisual3D.cs" />
+    <Page Include="Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\DentistForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\DentistList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ListMenusControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
