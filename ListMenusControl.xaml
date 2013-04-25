@@ -1,0 +1,42 @@
+<UserControl 
+  x:Class="smileUp.ListMenusControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  >
+  <Border Style="{DynamicResource styleContentArea}">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+            <!-- AGENT SELECTOR HEADER -->
+            <Border Style="{DynamicResource styleContentAreaHeader}" Grid.Row="0" >
+                <StackPanel Orientation="Horizontal" >
+          <Image 
+            Margin="4,4,0,4" 
+            Source=".\Resources\Icons\agents.ico" 
+            />
+          <TextBlock 
+            FontSize="20" 
+            Padding="8" 
+            Text="Menus" 
+            VerticalAlignment="Center"
+            />
+        </StackPanel>
+      </Border>
+
+      <!-- AGENT SELECTION LIST -->
+      <ListBox
+        Background="Transparent"
+        BorderThickness="0"
+        Grid.Row="1" 
+        IsSynchronizedWithCurrentItem="True"
+        ItemsSource="{Binding }"
+        ItemTemplate="{DynamicResource agentListItemTemplate}"
+        ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+        />
+    </Grid>
+  </Border>
+</UserControl>

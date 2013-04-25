@@ -1,8 +1,0 @@
-﻿<Window x:Class="smileUp.Dashboard"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Dashboard" Height="300" Width="300" WindowStyle="SingleBorderWindow">
-    <DockPanel Height="183" HorizontalAlignment="Left" Margin="12,12,0,0" Name="dockPanel1" VerticalAlignment="Top" Width="266">
-        <TextBlock Text="DentalSmile" />
-    </DockPanel>
-</Window>

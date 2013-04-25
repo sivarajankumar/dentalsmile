@@ -720,8 +720,8 @@ namespace smileUp
                             
                             Patient p = new Patient();
                             if (dp.Length > 1)
-                                p.name = dp[1];
-                            else p.name = "Default";
+                                p.Name = dp[1];
+                            else p.Name = "Default";
                             jaw = new JawVisual3D(p);
                             jaws.Add(gs[0], jaw);
                         }

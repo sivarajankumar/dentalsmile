@@ -46,6 +46,8 @@ namespace smileUp
             {
                 MainWindow m = new MainWindow();
                 m.Show();
+                //WpfDashboard d = new WpfDashboard();
+                //d.Show();
                 this.Close();
                 _timer.Stop();
             }

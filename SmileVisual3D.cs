@@ -5,10 +5,6 @@ using System.Text;
 using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using HelixToolkit.Wpf;
-using Jitter.Collision.Shapes;
-using Jitter.Dynamics;
-using Jitter.Collision;
-using Jitter.LinearMath;
 using System.Windows;
 using System.Windows.Data;
 

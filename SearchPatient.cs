@@ -43,7 +43,7 @@ namespace smileUp
         {
             string name = (string)dgDisplay.CurrentRow.Cells[1].Value.ToString();
             Patient patient = new Patient();
-            patient.name = name;
+            patient.Name = name;
             ScanningForm scanform = new ScanningForm();
             scanform.Show();
 

@@ -1,0 +1,50 @@
+<UserControl 
+  x:Class="smileUp.ListFilesControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  >
+  <Border Style="{DynamicResource styleContentArea}">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Margin="4,4,0,4" Grid.Row="0" Grid.Column="0">
+                <RadioButton Content="Scanning" GroupName="chkType" Name="rdScanning" IsChecked="True" Checked="rdScanning_Checked" />
+                <RadioButton Content="Manipulation" GroupName="chkType" Name="rdManipulation" Checked="rdManipulation_Checked" />
+            </StackPanel>
+            <!-- AGENT SELECTOR HEADER -->
+            <Border Style="{DynamicResource styleContentAreaHeader}" Grid.Row="1" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Horizontal" >
+          <Image 
+            Margin="4,4,0,4" 
+            Source=".\Resources\Icons\agents.ico" 
+            />
+          <TextBlock 
+            FontSize="20" 
+            Padding="8" 
+            Text="Files" 
+            VerticalAlignment="Center"
+            />
+        </StackPanel>
+      </Border>
+
+      <!-- AGENT SELECTION LIST -->
+      <ListBox
+        Background="Transparent"
+        BorderThickness="0"
+        Grid.Row="2" Grid.ColumnSpan="2"
+        IsSynchronizedWithCurrentItem="True"
+        ItemsSource="{Binding Files}"
+        ItemTemplate="{DynamicResource fileListItemTemplate}"
+        ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+        />
+    </Grid>
+  </Border>
+</UserControl>

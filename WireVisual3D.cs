@@ -22,7 +22,7 @@ namespace smileUp
         {
             if (p1 != null)
             {
-                Id = p1.Id + "_wire" + p1.Children.Count.ToString("00") + "." + p1.Parent.Parent.Parent.patient.name;
+                Id = p1.Id + "_wire" + p1.Children.Count.ToString("00") + "." + p1.Parent.Parent.Parent.patient.Name;
 
                 brace1 = p1;
                 brace2 = p2;

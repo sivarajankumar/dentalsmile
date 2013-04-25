@@ -1,0 +1,75 @@
+<ResourceDictionary 
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  >
+  <Style TargetType="TextBlock">
+    <Setter Property="FontSize" Value="12" />
+  </Style>
+
+  <!-- AGENT IMAGE BORDER STYLE -->
+  <Style x:Key="styleAgentImageBorder_Base">
+    <Setter Property="Border.BorderBrush" Value="Black" />
+    <Setter Property="Border.BorderThickness" Value="2" />
+    <Setter Property="Border.Margin" Value="6" />
+  </Style>
+
+  <!-- The Blue and Black skins do not provide a Style for the Agent Image Border
+       so this one acts as the default Style for both of them. -->
+  <Style x:Key="styleAgentImageBorder" BasedOn="{StaticResource styleAgentImageBorder_Base}" />    
+      
+  <!-- CONTENT AREA STYLE -->
+  <Style x:Key="styleContentArea_Base">
+    <Setter Property="Border.BorderThickness" Value="1" />
+    <Setter Property="Border.CornerRadius" Value="10" />
+    <Setter Property="Border.Margin" Value="12" />
+  </Style>
+
+  <!-- CONTENT AREA HEADER STYLE -->
+  <Style x:Key="styleContentAreaHeader_Base">
+    <Setter Property="Border.CornerRadius" Value="10" />
+    <Setter Property="Control.Height" Value="40" />
+    <Setter Property="Control.Margin" Value="1,1,1,6" />
+  </Style>
+
+  <!-- INFO TEXT STYLE -->
+  <Style x:Key="styleInfoText">
+    <Setter Property="TextBlock.FontWeight" Value="Bold" />
+    <Setter Property="TextBlock.Foreground" Value="Gray" />
+    <Setter Property="TextBlock.Margin" Value="0,0,0,4" />
+    <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+    <Style.Triggers>
+      <!-- Check if the style is applied to a TextBlock that is part of a ListBoxItem.
+           If so, check if item is selected and has focus.  When that is true, set the foreground to white.-->
+      <MultiDataTrigger>
+        <MultiDataTrigger.Conditions>
+          <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True" />
+          <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsFocused}" Value="True" />
+        </MultiDataTrigger.Conditions>
+        <Setter Property="TextElement.Foreground" Value="White" />
+      </MultiDataTrigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- DATATEMPLATE FOR LISTBOXITEM -->
+  <DataTemplate x:Key="agentListItemTemplate">
+    <StackPanel Margin="4,8" Orientation="Horizontal">
+      <Image Height="20" Width="20" Margin="0,0,4,0" Source="..\Icons\agent.ico" VerticalAlignment="Center" />
+      <!-- Reset the Margin property on each TextBlock so that the styleInfoText's Margin setting is ignored. -->
+      <TextBlock Margin="0" Style="{StaticResource styleInfoText}" Text="{Binding XPath=Name/Last}" />
+      <TextBlock Margin="0" Style="{StaticResource styleInfoText}" Text=", " />
+      <TextBlock Margin="0" Style="{StaticResource styleInfoText}" Text="{Binding XPath=Name/First}" />
+    </StackPanel>
+  </DataTemplate>
+    <DataTemplate x:Key="fileListItemTemplate">
+        <StackPanel Margin="4,8" Orientation="Horizontal">
+            <Image Height="20" Width="20" Margin="0,0,4,0" Source="..\Icons\agent.ico" VerticalAlignment="Center" />
+            <!-- Reset the Margin property on each TextBlock so that the styleInfoText's Margin setting is ignored. -->
+            <TextBlock Margin="0" Style="{StaticResource styleInfoText}" Text="{Binding Type}" />
+            <TextBlock Margin="0" Style="{StaticResource styleInfoText}" Text=" - " />
+            <TextBlock Margin="0" Style="{StaticResource styleInfoText}" Text="{Binding GetFile}" />
+            <TextBlock Margin="0" Style="{StaticResource styleInfoText}" Text=", " />
+            <TextBlock Margin="0" Style="{StaticResource styleInfoText}" Text="{Binding GetScreenshot}" />
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

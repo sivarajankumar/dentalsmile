@@ -19,11 +19,6 @@ using HelixToolkit.Wpf;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
-using Jitter;
-using Jitter.Collision;
-using Jitter.LinearMath;
-using Jitter.Collision.Shapes;
-using Jitter.Dynamics;
 using System.Diagnostics;
 using smileUp.CustomEditors;
 using System.Text.RegularExpressions;
@@ -53,8 +48,6 @@ namespace smileUp
 
         private static MeasurementForm measurementForm;
 		  
-        private World world;
-
         /*
         public static MainWindow GetMainWindow(DependencyObject obj)
         {
@@ -141,15 +134,6 @@ namespace smileUp
         private void tester()
         {
             
-            BoxShape shape = new BoxShape( new JVector(300, 300, 1));
-            RigidBody body = new RigidBody(shape);
-            world.AddBody(body);
-            body.Position = new JVector(0, 0, -0.5f);
-            body.Material.Restitution = 0.0f;
-            body.LinearVelocity = JVector.Zero;
-            body.IsActive = false;
-            body.IsStatic = true;
-            body.Tag = false;
 
             /* Wiring Brace */
             Point3D p0 = new Point3D(-0.849706889491251, -3.41818201148931, -3.45752298819413);

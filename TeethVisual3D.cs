@@ -32,7 +32,7 @@ namespace smileUp
                 bc = this.parent.bc;
                 wc = this.parent.wc;
 
-                Id = p.Id + "_teeth" + tc.Children.Count.ToString("00") + "." + p.Parent.patient.name;
+                Id = p.Id + "_teeth" + tc.Children.Count.ToString("00") + "." + p.Parent.patient.Name;
                 
                 if (model == null) model = new Teeth();
                 model.Id = Id;

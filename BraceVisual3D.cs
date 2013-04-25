@@ -33,7 +33,7 @@ namespace smileUp
                 bc = this.parent.bc;
                 wc = this.parent.wc;
 
-                Id = p.Id + "_brace" + bc.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.name; ;
+                Id = p.Id + "_brace" + bc.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.Name; ;
                 
                 if (model == null) model = new Brace();
                 model.Id = Id;
@@ -51,7 +51,7 @@ namespace smileUp
             if (p != null)
             {
                 this.parent = p;
-                Id = p.Id + "_brace" + p.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.name; ;
+                Id = p.Id + "_brace" + p.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.Name; ;
 
                 if (model == null) model = new Brace();
                 model.Id = Id;

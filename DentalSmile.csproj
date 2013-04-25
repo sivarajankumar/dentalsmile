@@ -39,9 +39,6 @@
     <Reference Include="AvalonDock">
       <HintPath>.\AvalonDock.dll</HintPath>
     </Reference>
-    <Reference Include="Jitter">
-      <HintPath>.\Jitter.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -77,13 +74,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Phase.cs" />
+    <Compile Include="Doctor.cs" />
+    <Compile Include="DentalSmileDB.cs" />
+    <Compile Include="ListMenusControl.xaml.cs">
+      <DependentUpon>ListMenusControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Smile.cs" />
+    <Compile Include="SmileFile.cs" />
+    <Compile Include="ListFilesControl.xaml.cs">
+      <DependentUpon>ListFilesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NavigationControl.xaml.cs">
+      <DependentUpon>NavigationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPatientControl.xaml.cs">
+      <DependentUpon>SearchPatientControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PatientDetailsControl.xaml.cs">
+      <DependentUpon>PatientDetailsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaseMarker.cs" />
     <Compile Include="BraceContainer.cs" />
     <Compile Include="BraceVisual3D.cs" />
     <Compile Include="Brace.cs" />
     <Compile Include="CustomEditors\TeethMappingItemSource.cs" />
-    <Compile Include="Dashboard.xaml.cs">
-      <DependentUpon>Dashboard.xaml</DependentUpon>
+    <Compile Include="Treatment.cs" />
+    <Compile Include="WpfDashboard.xaml.cs">
+      <DependentUpon>WpfDashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="DBConnect.cs" />
     <Compile Include="EllipticalLayoutPanel.cs" />
@@ -142,7 +160,27 @@
     <Compile Include="MathHelper.cs" />
     <Compile Include="Teeth.cs" />
     <Compile Include="TeethVisual3D.cs" />
-    <Page Include="Dashboard.xaml">
+    <Page Include="ListMenusControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ListFilesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NavigationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchPatientControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PatientDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WpfDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,6 +203,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\Skins\BaseSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Skins\BlackSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -294,6 +340,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\cooltext989270166.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\agent.ico" />
+    <Resource Include="Resources\Icons\agents.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\ManipulatedFiles\" />
+    <Folder Include="Resources\ScannedFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Photos\default.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
