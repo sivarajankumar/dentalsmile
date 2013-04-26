@@ -3,23 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="DentistList" Height="300" Width="575" >
     <Grid>
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="204" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="0,70,0,0" Name="dentistDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="580">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="false" Height="204" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="0,70,0,0" Name="dentistDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="580" SelectionChanged="dentistDataGrid_SelectionChanged"
+                  SelectedValuePath="UserId">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="useridColumn" Binding="{Binding Path=UserId}" Header="User ID" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="fnameColumn" Binding="{Binding Path=FirstName}" Header="First Name" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="lnameColumn" Binding="{Binding Path=LastName}" Header="Last Name" Width="SizeToHeader" />
-                <DataGridTemplateColumn x:Name="birthdateColumn" Header="Date of Birth" Width="SizeToHeader">
+                <DataGridTextColumn x:Name="useridColumn" Binding="{Binding Path=UserId}" Header="User ID" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="fnameColumn" Binding="{Binding Path=FirstName}" Header="First Name" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="lnameColumn" Binding="{Binding Path=LastName}" Header="Last Name" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTemplateColumn x:Name="birthdateColumn" Header="Date of Birth" Width="SizeToHeader" IsReadOnly="True" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <DatePicker SelectedDate="{Binding Path=BirthDate, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn x:Name="birthplaceColumn" Binding="{Binding Path=BirthPlace}" Header="Place of Birth" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="address1Column" Binding="{Binding Path=Address1}" Header="Address 1" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="address2Column" Binding="{Binding Path=Address2}" Header="Address 2" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="cityColumn" Binding="{Binding Path=City}" Header="City" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding Path=Phone}" Header="Phone" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="birthplaceColumn" Binding="{Binding Path=BirthPlace}" Header="Place of Birth" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="address1Column" Binding="{Binding Path=Address1}" Header="Address 1" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="address2Column" Binding="{Binding Path=Address2}" Header="Address 2" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="cityColumn" Binding="{Binding Path=City}" Header="City" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding Path=Phone}" Header="Phone" Width="SizeToHeader" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="New" Height="23" HorizontalAlignment="Left" Margin="0,12,0,0" Name="btnNew" VerticalAlignment="Top" Width="75" Click="btnNew_Click" />

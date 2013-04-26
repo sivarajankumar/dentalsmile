@@ -16,6 +16,10 @@ namespace smileUp
         public const int MANIPULATION = 2;
         public const int PRINTING = 3;
 
+        public static string DATE_FORMAT = "yyyy-MM-dd";
+        public static string TIME_FORMAT = "hh:i:s";
+        public static string LONG_DATE_FORMAT = DATE_FORMAT + " " + TIME_FORMAT;
+
         public bool writeFile(int type, string filename)
         {
             return false;

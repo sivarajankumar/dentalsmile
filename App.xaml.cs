@@ -13,6 +13,9 @@ namespace smileUp
     /// </summary>
     public partial class App : Application
     {
+        public SmileUser user;
+        public Patient patient;
+
         public void ApplySkin(Uri skinDictionaryUri)
         {
             // Load the ResourceDictionary into memory.

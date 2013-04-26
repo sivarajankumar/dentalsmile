@@ -16,11 +16,11 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`dentalsmile` /*!40100 DEFAULT CHARACTER
 
 USE `dentalsmile`;
 
-/*Table structure for table `doctor` */
+/*Table structure for table `dentist` */
 
-DROP TABLE IF EXISTS `doctor`;
+DROP TABLE IF EXISTS `dentist`;
 
-CREATE TABLE `doctor` (
+CREATE TABLE `dentist` (
   `userid` varchar(15) NOT NULL,
   `password` varchar(15) NOT NULL,
   `fname` varchar(45) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `doctor` (
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
-/*Data for the table `doctor` */
+/*Data for the table `dentist` */
 
 /*Table structure for table `measurement` */
 
@@ -146,7 +146,7 @@ CREATE TABLE `treatment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `PHASE` int(1) DEFAULT NULL,
   `PATIENT` int(11) DEFAULT NULL,
-  `DOCTOR` varchar(15) DEFAULT NULL,
+  `dentist` varchar(15) DEFAULT NULL,
   `tdate` date DEFAULT NULL,
   `ttime` time DEFAULT NULL,
   `room` varchar(45) DEFAULT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE `treatment` (
   `modifiedBy` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_TREATMENT_PATIENT` (`PATIENT`),
-  KEY `fk_TREATMENT_DOCTOR` (`DOCTOR`),
+  KEY `fk_TREATMENT_dentist` (`dentist`),
   KEY `fk_TREATMENT_PHASE` (`PHASE`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

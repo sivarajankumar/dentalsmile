@@ -60,6 +60,11 @@ namespace smileUp.Forms
             d.ShowDialog();
         }
 
+        private void dentistDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //MessageBox.Show("" + dentistDataGrid.SelectedValue);
+        }
+
 
     }
 }
