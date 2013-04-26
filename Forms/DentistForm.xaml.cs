@@ -39,7 +39,6 @@ namespace smileUp.Forms
         {
             Dentist d = new Dentist();
             d.UserId = useridTextBox.Text.ToString();
-            d.Password = passwordTextBox.Text.ToString();
             d.FirstName = fnameTextBox.Text.ToString();
             d.LastName = lnameTextBox.Text.ToString();
             d.BirthDate = birthdateDatePicker.DisplayDate;
@@ -60,7 +59,6 @@ namespace smileUp.Forms
         private void clear()
         {
             useridTextBox.Text = "";
-            passwordTextBox.Text = "";
             fnameTextBox.Text = "";
             lnameTextBox.Text = "";
             birthdateDatePicker.Text = "";

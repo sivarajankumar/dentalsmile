@@ -36,8 +36,6 @@
                 </Grid.RowDefinitions>
                 <Label Content="userid:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                 <TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3" Name="useridTextBox" Text="{Binding Path=userid, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
-                <Label Content="password:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                <TextBox Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3" Name="passwordTextBox" Text="{Binding Path=password, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
                 <Label Content="fname:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                 <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3" Name="fnameTextBox" Text="{Binding Path=fname, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
                 <Label Content="lname:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />

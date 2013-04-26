@@ -5,7 +5,7 @@ using System.Text;
 
 namespace smileUp
 {
-    class Dentist : Person
+    public class Dentist : Person
     {
         public string UserId { get; set; }
 
