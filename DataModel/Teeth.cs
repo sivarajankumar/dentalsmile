@@ -4,7 +4,7 @@ using System.Windows.Media.Media3D;
 using System.Xml.Serialization;
 using System;
 
-namespace smileUp
+namespace smileUp.DataModel
 {
     public class Teeth
     {
@@ -45,10 +45,10 @@ namespace smileUp
         public int TeethNumber { get; set; }
 
         [XmlIgnore]
-        public double StartPosition { get; set; }
+        public string StartPosition { get; set; }
 
         [XmlIgnore]
-        public double EndPosition { get; set; }
+        public string EndPosition { get; set; }
 
         public Teeth()
         {

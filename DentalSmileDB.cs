@@ -4,18 +4,29 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+
 //Add MySql Library
 using MySql.Data.MySqlClient;
+using smileUp.DataModel;
+using System.Data;
 
 namespace smileUp
 {
-    class DentalSmileDB
+   public class DentalSmileDB
     {
         private MySqlConnection connection;
+        private MySqlConnection patientConnection;
+        private MySqlConnection dentistConnection;
+        private MySqlConnection phaseConnection;
+        private MySqlConnection fileConnection;
+
         private string server;
         private string database;
         private string uid;
         private string password;
+
+        private string user = "USER";
+        public string User { get { return user; } set { this.user = value; } }
 
         //Constructor
         public DentalSmileDB()
@@ -35,6 +46,10 @@ namespace smileUp
             connectionString += "Convert Zero Datetime=True;";
 
             connection = new MySqlConnection(connectionString);
+            patientConnection = new MySqlConnection(connectionString);
+            dentistConnection = new MySqlConnection(connectionString);
+            phaseConnection = new MySqlConnection(connectionString);
+            fileConnection = new MySqlConnection(connectionString);
         }
 
 
@@ -81,31 +96,183 @@ namespace smileUp
             }
         }
 
+        private bool OpenPatientConnection()
+        {
+            try
+            {
+                patientConnection.Open();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                switch (ex.Number)
+                {
+                    case 0:
+                        MessageBox.Show("Cannot connect to server.  Contact administrator");
+                        break;
+
+                    case 1045:
+                        MessageBox.Show("Invalid username/password, please try again");
+                        break;
+                }
+                return false;
+            }
+        }
+
+        //Close connection
+        private bool ClosePatientConnection()
+        {
+            try
+            {
+                patientConnection.Close();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        private bool OpenDentistConnection()
+        {
+            try
+            {
+                dentistConnection.Open();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                switch (ex.Number)
+                {
+                    case 0:
+                        MessageBox.Show("Cannot connect to server.  Contact administrator");
+                        break;
+
+                    case 1045:
+                        MessageBox.Show("Invalid username/password, please try again");
+                        break;
+                }
+                return false;
+            }
+        }
+
+        //Close connection
+        private bool CloseDentistConnection()
+        {
+            try
+            {
+                dentistConnection.Close();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        private bool OpenPhaseConnection()
+        {
+            try
+            {
+                phaseConnection.Open();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                switch (ex.Number)
+                {
+                    case 0:
+                        MessageBox.Show("Cannot connect to server.  Contact administrator");
+                        break;
+
+                    case 1045:
+                        MessageBox.Show("Invalid username/password, please try again");
+                        break;
+                }
+                return false;
+            }
+        }
+
+        //Close connection
+        private bool ClosePhaseConnection()
+        {
+            try
+            {
+                phaseConnection.Close();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        private bool OpenFileConnection()
+        {
+            try
+            {
+                fileConnection.Open();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                switch (ex.Number)
+                {
+                    case 0:
+                        MessageBox.Show("Cannot connect to server.  Contact administrator");
+                        break;
+
+                    case 1045:
+                        MessageBox.Show("Invalid username/password, please try again");
+                        break;
+                }
+                return false;
+            }
+        }
+
+        //Close connection
+        private bool CloseFileConnection()
+        {
+            try
+            {
+                fileConnection.Close();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+        
         public void InsertPatient(Patient p)
         {
             string tableName = "PATIENT";
             string columns = "(id, fname, lname, birthdate, birthplace, gender,address1,address2,city,phone, created,createdBy)";
-            string values = "(" + p.Id + ",'" + p.FirstName + "','" + p.LastName + "'," + p.BirthDate.ToString("yyyy-MM-dd") + ",'" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "," + DateTime.Now + ",'USER')";
+            string values = "('" + p.Id + "','" + p.FirstName + "','" + p.LastName + "'," + p.BirthDate.ToString(Smile.DATE_FORMAT) + ",'" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "," + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + ",'"+User+"')";
             string query = "INSERT INTO "+tableName + " "+ columns +" values "+ values +" ;";
 
-            if (this.OpenConnection() == true)
+            if (this.OpenPatientConnection() == true)
             {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, patientConnection);
                 cmd.ExecuteNonQuery();
-                this.CloseConnection();
+                this.ClosePatientConnection();
             }
         }
         public void UpdatePatient(Patient p)
         {
             string tableName = "PATIENT";
-            string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString("yyyy-MM-dd") + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now + "', modifiedBy= 'USER')";
-            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = "+p.Id;
+            string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
+            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = '"+p.Id+"'";
 
-            if (this.OpenConnection() == true)
+            if (this.OpenPatientConnection() == true)
             {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, patientConnection);
                 cmd.ExecuteNonQuery();
-                this.CloseConnection();
+                this.ClosePatientConnection();
             }
         }
 
@@ -113,14 +280,14 @@ namespace smileUp
         {
             string tableName = "DENTIST";
             string columns = "(userid, fname, lname, birthdate, birthplace, gender,address1,address2,city,phone, created,createdBy)";
-            string values = "('" + p.UserId + "','" + p.FirstName + "','" + p.LastName + "','" + p.BirthDate.ToString("yyyy-MM-dd") + "','" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:i:s") + "','USER')";
+            string values = "('" + p.UserId + "','" + p.FirstName + "','" + p.LastName + "','" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "','" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
-            if (this.OpenConnection() == true)
+            if (this.OpenDentistConnection() == true)
             {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
                 cmd.ExecuteNonQuery();
-                this.CloseConnection();
+                this.CloseDentistConnection();
                 return true;
             }
             
@@ -130,14 +297,14 @@ namespace smileUp
         public void UpdateDentist (Dentist p)
         {
             string tableName = "DENTIST";
-            string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString("yyyy-MM-dd") + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now.ToLongDateString() + "', modifiedBy= 'USER')";
+            string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = " + p.UserId;
 
-            if (this.OpenConnection() == true)
+            if (this.OpenDentistConnection() == true)
             {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
                 cmd.ExecuteNonQuery();
-                this.CloseConnection();
+                this.CloseDentistConnection();
             }
         }
 
@@ -145,7 +312,7 @@ namespace smileUp
         {
             string tableName = "SmileUser";
             string columns = "(userid, password, created,createdBy)";
-            string values = "('" + p.UserId + "','" + p.Password+ "','" + DateTime.Now.ToString("yyyy-MM-dd hh:i:s") + "','USER')";
+            string values = "('" + p.UserId + "','" + p.Password+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -162,7 +329,7 @@ namespace smileUp
         public void SetPassword(string md5generated, string userid)
         {
             string tableName = "SmileUser";
-            string setColumns = "password = '" + md5generated + "', modified = '" + DateTime.Now + "', modifiedBy= 'USER')";
+            string setColumns = "password = '" + md5generated + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = " + userid;
 
             if (this.OpenConnection() == true)
@@ -176,7 +343,7 @@ namespace smileUp
         public void SetAdmin(bool p, string userid)
         {
             string tableName = "SmileUser";
-            string setColumns = "admin= '" + p + "', modified = '" + DateTime.Now + "', modifiedBy= 'USER')";
+            string setColumns = "admin= '" + p + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = " + userid;
 
             if (this.OpenConnection() == true)
@@ -191,8 +358,8 @@ namespace smileUp
         public bool InsertTreatment(Treatment t)
         {
             string tableName = "TREATMENT";
-            string columns = "(id, phase, dentist, patient, tdate, ttime,room, created,createdBy)";
-            string values = "(" + t.Id + ",'" + t.Phase.Id + "','" + t.Dentist.UserId + "'," + t.Patient.Id + ",'" + t.TreatmentDate + "','" + t.TreatmentTime + "','" + t.Room + "'," + DateTime.Now + ",'USER')";
+            string columns = "(id, phase, dentist, patient, tdate, ttime, room, tref, created,createdBy)";
+            string values = "('" + t.Id + "'," + t.Phase.Id + ",'" + t.Dentist.UserId + "','" + t.Patient.Id + "','" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "','" + t.TreatmentTime + "','" + t.Room + "','" + "','" + t.TRefId+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -208,8 +375,8 @@ namespace smileUp
         public void UpdateTreatment(Treatment t)
         {
             string tableName = "TREATMENT";
-            string setColumns = "phase ='" + t.Phase.Id + "', dentist='" + t.Dentist.UserId + "', patient='" + t.Patient.Id + "', tdate='" + t.TreatmentDate + "', ttime='" + t.TreatmentTime + "',room='" + t.Room + "', modified='" + DateTime.Now + "', modifiedBy='USER')";
-            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = " + t.Id;
+            string setColumns = "phase =" + t.Phase.Id + ", dentist='" + t.Dentist.UserId + "', patient='" + t.Patient.Id + "', tdate='" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "', ttime='" + t.TreatmentTime + "',room='" + t.Room + "',tref='" + t.TRefId+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
+            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = '" + t.Id + "'";
 
             if (this.OpenConnection() == true)
             {
@@ -223,7 +390,7 @@ namespace smileUp
         {
             string tableName = "PFILE";
             string columns = "(id, filename, description, patient, screenshot, type, created,createdBy)";
-            string values = "(" + t.Id + ",'" + t.FileName + "','" + t.Description + "'," + t.Patient.Id + ",'" + t.Screenshot + "','" + t.Type + "'," + DateTime.Now + ",'USER')";
+            string values = "('" + t.Id + "','" + t.FileName + "','" + t.Description + "','" + t.Patient.Id + "','" + t.Screenshot + "'," + t.Type + ",'" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -240,8 +407,8 @@ namespace smileUp
         public void UpdateFileInfo(SmileFile t)
         {
             string tableName = "PFILE";
-            string setColumns = "filename='" + t.FileName + "', description='" + t.Description + "', patient='" + t.Patient.Id + "', screenshot='" + t.Screenshot + "', type='" + t.Type + "', modified='" + DateTime.Now + "', modifiedBy='USER')";
-            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = " + t.Id;
+            string setColumns = "filename='" + t.FileName + "', description='" + t.Description + "', patient='" + t.Patient.Id + "', screenshot='" + t.Screenshot + "', type=" + t.Type + ", modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='"+User+"' ";
+            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = '" + t.Id + "'";
 
             if (this.OpenConnection() == true)
             {
@@ -270,16 +437,16 @@ namespace smileUp
             if (lastname != null)
             {
                 if (any) where += " or ";
-                where += " or lname like '%" + lastname + "%' ";
+                where += " lname like '%" + lastname + "%' ";
                 any = true;
             }
             if (any) query += " WHERE " + where;
 
             List<Dentist> list = null;
-            if (this.OpenConnection() == true)
+            if (this.OpenDentistConnection() == true)
             {
                 list = new List<Dentist>();
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -288,7 +455,7 @@ namespace smileUp
                 }
                 dataReader.Close();
 
-                this.CloseConnection();
+                this.CloseDentistConnection();
 
             }
             return list;
@@ -313,16 +480,16 @@ namespace smileUp
             if (lastname != null)
             {
                 if (any) where += " and ";
-                where += " or lname like '%" + lastname + "%' ";
+                where += " lname like '%" + lastname + "%' ";
                 any = true;
             }
             if (any) query += " WHERE " + where;
 
             List<Dentist> list = null;
-            if (this.OpenConnection() == true)
+            if (this.OpenDentistConnection() == true)
             {
                 list = new List<Dentist>();
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -330,7 +497,7 @@ namespace smileUp
                     list.Add(p);
                 }
                 dataReader.Close();
-                this.CloseConnection();
+                this.CloseDentistConnection();
 
             }
             return list;
@@ -340,10 +507,10 @@ namespace smileUp
         {
             string query = "SELECT * FROM DENTIST";
             List<Dentist> list = null;
-            if (this.OpenConnection() == true)
+            if (this.OpenDentistConnection() == true)
             {
                 list = new List<Dentist>();
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -351,7 +518,7 @@ namespace smileUp
                     list.Add(p);
                 }
                 dataReader.Close();
-                this.CloseConnection();
+                this.CloseDentistConnection();
             }
             return list;
         }
@@ -360,16 +527,16 @@ namespace smileUp
         {
             Dentist p = new Dentist();
 
-            p.UserId = dataReader.GetString("userid");
-            p.FirstName = dataReader.GetString("fname");
-            p.LastName = dataReader.GetString("lname");
+            p.UserId = GetStringSafe(dataReader, "userid");
+            p.FirstName = GetStringSafe(dataReader, "fname");
+            p.LastName = GetStringSafe(dataReader, "lname");
             p.BirthDate = dataReader.GetDateTime("birthdate");
-            p.BirthPlace = dataReader.GetString("birthplace");
-            p.Gender = dataReader.GetString("gender");
-            p.Address1 = dataReader.GetString("address1");
-            p.Address2 = dataReader.GetString("address2");
-            p.City = dataReader.GetString("city");
-            p.Phone = dataReader.GetString("phone");
+            p.BirthPlace = GetStringSafe(dataReader, "birthplace");
+            p.Gender = GetStringSafe(dataReader, "gender");
+            p.Address1 = GetStringSafe(dataReader, "address1");
+            p.Address2 = GetStringSafe(dataReader, "address2");
+            p.City = GetStringSafe(dataReader, "city");
+            p.Phone = GetStringSafe(dataReader, "phone");
 
             return p;
         }
@@ -377,31 +544,32 @@ namespace smileUp
         private Patient toPatient(MySqlDataReader dataReader)
         {
             Patient p = new Patient();
-            
-            p.Id = dataReader.GetString("id");
-            p.FirstName = dataReader.GetString("fname");
-            p.LastName = dataReader.GetString("lname");
-            p.BirthDate = dataReader.GetDateTime("birtdate");
-            p.BirthPlace = dataReader.GetString("birthplace");
-            p.Gender = dataReader.GetString("gender");
-            p.Address1 = dataReader.GetString("address1");
-            p.Address2 = dataReader.GetString("address2");
-            p.City = dataReader.GetString("city");
-            p.Phone = dataReader.GetString("phone");
+
+            p.Id = GetStringSafe(dataReader, "id");
+            p.FirstName = GetStringSafe(dataReader, "fname");
+            p.LastName = GetStringSafe(dataReader, "lname");
+            p.BirthDate = dataReader.GetDateTime("birthdate");
+            p.BirthPlace = GetStringSafe(dataReader, "birthplace");
+            p.Gender = GetStringSafe(dataReader, "gender");
+            p.Address1 = GetStringSafe(dataReader, "address1");
+            p.Address2 = GetStringSafe(dataReader, "address2");
+            p.City = GetStringSafe(dataReader, "city");
+            p.Phone = GetStringSafe(dataReader, "phone");
             
             return p;
         }
 
-        private SmileFile toSmileFile(MySqlDataReader dataReader)
+        private SmileFile toSmileFile(MySqlDataReader dataReader, bool nested)
         {
             SmileFile p = new SmileFile();
             
-            p.Id = dataReader.GetString("id");
-            p.FileName = dataReader.GetString("filename");
-            p.Description = dataReader.GetString("description");
-            p.Screenshot = dataReader.GetString("screenshot");
+            p.Id = GetStringSafe(dataReader, "id");
+            p.FileName = GetStringSafe(dataReader, "filename");
+            p.Description = GetStringSafe(dataReader, "description");
+            p.Screenshot = GetStringSafe(dataReader, "screenshot");
+            p.Type = dataReader.GetInt32("type");
             
-            p.Patient = findPatientById(dataReader.GetInt32("patient"));
+            if(nested) p.Patient = findPatientById(GetStringSafe(dataReader, "patient"));
 
             return p;
         }
@@ -410,11 +578,32 @@ namespace smileUp
         {
             Phase p = new Phase();
             
-            p.Id = dataReader.GetString("id");
+            p.Id = dataReader.GetInt32("id");
             p.Name= dataReader.GetString("name");
 
             return p;
         }
+
+        private Treatment toTreatment(MySqlDataReader dataReader)
+        {
+            Treatment p = new Treatment();
+
+            p.Id = GetStringSafe(dataReader, "id");
+            p.Room = GetStringSafe(dataReader, "room");
+            p.TreatmentDate = dataReader.GetDateTime("tdate");
+            p.TreatmentTime = GetStringSafe(dataReader, "ttime");
+            p.TRefId = GetStringSafe(dataReader, "tref");
+
+            p.Patient = findPatientById(GetStringSafe(dataReader, "patient"));
+            //p.Phase = findPhaseById(dataReader.GetInt32("phase"));
+            p.Phase = Smile.GetPhase(dataReader.GetInt32("phase"));
+            p.Dentist = findDentistByUserId(GetStringSafe(dataReader, "dentist"));
+
+            p.Files = findSmileFilesByTreatmentId(p.Id);
+            return p;
+        }
+
+
         private SmileUser toSmileUser(MySqlDataReader dataReader)
         {
             SmileUser p = new SmileUser();
@@ -425,13 +614,34 @@ namespace smileUp
             return p;
         }
 
+        private Phase findPhaseById(int id)
+        {
+            string query = "SELECT * FROM Phase WHERE id= @id";
+            Phase p = null;
+            if (this.OpenPhaseConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, phaseConnection);
+                cmd.Parameters.Add(new MySqlParameter("id", id));
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    p = toPhase(dataReader);
+                }
+                dataReader.Close();
+                this.ClosePhaseConnection();
+
+            }
+            return p;
+        }
+
         private Dentist findDentistByUserId(string id)
         {
             string query = "SELECT * FROM DENTIST WHERE userid = @userid";
             Dentist p = null;
-            if (this.OpenConnection() == true)
+            if (this.OpenDentistConnection() == true)
             {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
                 cmd.Parameters.Add(new MySqlParameter("userid", id));
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -440,7 +650,7 @@ namespace smileUp
                     p = toDentist(dataReader);
                 }
                 dataReader.Close();
-                this.CloseConnection();
+                this.CloseDentistConnection();
 
             }
             return p;
@@ -460,8 +670,8 @@ namespace smileUp
                 {
                     p = new SmileUser();
 
-                    p.UserId = dataReader.GetString("userid");
-                    p.Password = dataReader.GetString("password");
+                    p.UserId = GetStringSafe(dataReader, "userid");
+                    p.Password = GetStringSafe(dataReader, "password");
                     //p.Person = findDentistByUserId(dataReader.GetString("userid"));
                 }
                 dataReader.Close();
@@ -496,14 +706,36 @@ namespace smileUp
             }
             return p;
         }
+        
+        private List<SmileFile> findSmileFilesByTreatmentId(string treatmentId)
+        {
+            string query = "SELECT f.* FROM TREATMENT_PFILE t, PFILE f WHERE t.Treatment = @id AND t.Pfile = f.Id";
+            List<SmileFile> list = null;
+            if (this.OpenFileConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, fileConnection);
+                cmd.Parameters.Add(new MySqlParameter("id", treatmentId));
+                list = new List<SmileFile>();
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    SmileFile p = toSmileFile(dataReader, false);
+                    list.Add(p);
+                }
+                dataReader.Close();
+                this.CloseFileConnection();
 
-        private Patient findPatientById(int id)
+            }
+            return list;
+        }
+
+        private Patient findPatientById(string id)
         {
             string query = "SELECT * FROM PATIENT WHERE id = @id";
             Patient p = null;
-            if (this.OpenConnection() == true)
+            if (this.OpenPatientConnection() == true)
             {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, patientConnection);
                 cmd.Parameters.Add(new MySqlParameter("id", id));
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -512,7 +744,7 @@ namespace smileUp
                     p = toPatient(dataReader);
                 }
                 dataReader.Close();
-                this.CloseConnection();
+                this.ClosePatientConnection();
 
             }
             return p;
@@ -522,11 +754,11 @@ namespace smileUp
         {
             string query = "SELECT * FROM PATIENT";
             List<Patient> list = null;
-            if (this.OpenConnection() == true)
+            if (this.OpenPatientConnection() == true)
             {
                 list = new List<Patient>();
 
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, patientConnection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -535,7 +767,7 @@ namespace smileUp
                 }
                 dataReader.Close();
 
-                this.CloseConnection();
+                this.ClosePatientConnection();
 
             }
             return list;
@@ -696,10 +928,10 @@ namespace smileUp
         {
             string query = "SELECT * FROM PHASE";
             List<Phase> list = null;
-            if (this.OpenConnection() == true)
+            if (this.OpenPhaseConnection() == true)
             {
                 list = new List<Phase>();
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, phaseConnection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -707,7 +939,7 @@ namespace smileUp
                     list.Add(p);
                 }
                 dataReader.Close();
-                this.CloseConnection();
+                this.ClosePhaseConnection();
             }
             return list;
         }
@@ -716,7 +948,7 @@ namespace smileUp
         {
             string tableName = "TREATMENT_PFILE";
             string columns = "(TREATMENT, PFILE)";
-            string values = "(" + treatment.Id + ",'" + file.Id+ "')";
+            string values = "('" + treatment.Id + "','" + file.Id+ "')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -730,5 +962,233 @@ namespace smileUp
             return false;
         }
 
+        public string getSmileFileNewId(string patientid)
+        {
+            string query = "SELECT MAX(SUBSTR(id, 14)) id FROM PFILE WHERE patient = @patient";
+            int p = 0;
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.Add(new MySqlParameter("patient", patientid));
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    p = dataReader.GetInt32("id"); ;
+                }
+                dataReader.Close();
+                this.CloseConnection();
+            }
+            
+            p = p + 1; //newid
+            string r = patientid +""+p.ToString("000");
+            return r;
+        }
+
+        public string getTreatmentNewId(string patientid)
+        {
+            string query = "SELECT MAX(SUBSTR(id, 14)) id FROM TREATMENT WHERE patient = @patient";
+            int p = 0;
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.Add(new MySqlParameter("patient", patientid));
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    p = dataReader.GetInt32("id"); ;
+                }
+                dataReader.Close();
+                this.CloseConnection();
+            }
+
+            p = p + 1; //newid
+            string r = patientid + "" + p.ToString("000");
+            return r;
+        }
+
+
+
+        public List<Treatment> findTreatmentsByPatientId(string patientid)
+        {
+            string query = "SELECT * FROM TREATMENT WHERE patient = @id";
+            List<Treatment> list = null;
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.Add(new MySqlParameter("id", patientid));
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                list = new List<Treatment>(); 
+                while (dataReader.Read())
+                {
+                    Treatment p = toTreatment(dataReader);
+                    list.Add(p);
+                }
+                dataReader.Close();
+                this.CloseConnection();
+            }
+            return list;
+        }
+
+        public List<Treatment> findTreatments()
+        {
+            string query = "SELECT * FROM TREATMENT";
+            List<Treatment> list = null;
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                list = new List<Treatment>();
+                while (dataReader.Read())
+                {
+                    Treatment p = toTreatment(dataReader);
+                    list.Add(p);
+                }
+                dataReader.Close();
+                this.CloseConnection();
+            }
+            return list;
+        }
+
+        internal bool insertMeasurementTeeth(Measurement measurement, List<MeasurementTeeth> results)
+        {
+            if (this.OpenConnection() == true)
+            {
+                string tableName = "MeasurementTeeth";
+                string columns = "(measurementid, teethId, length, spoint, epoint,type)";
+                string values = "";
+                foreach (MeasurementTeeth m in results)
+                {
+                    values = "(" + measurement.Id + ",'" + m.Identity + "'," + m.Length + ",'" + m.SPoint + "','" + m.EPoint + "','" + m.Type+ "')";
+                    string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.ExecuteNonQuery();
+                    m.Id = (int)cmd.LastInsertedId;
+                }
+                
+                this.CloseConnection();
+                return true;
+            }
+            return false;
+        }
+
+        internal bool insertMeasurement(Measurement measurement)
+        {
+            if (this.OpenConnection() == true)
+            {
+                string tableName = "Measurement";
+                string columns = "(patient, treatment, pfile, type, created, createdBy)";
+                string values = "";
+                values = "('" + measurement.Patient + "','" + measurement.Treatment + "','" + measurement.Pfile + "'," + measurement.Type + ",'" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
+                string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                measurement.Id = (int) cmd.LastInsertedId;
+
+                this.CloseConnection();
+
+                return true;
+            }
+            return false;
+        }
+
+
+        internal List<Treatment> findTreatmentsByOr(string id, string tdate, string patient, string dentist)
+        {
+            string query = "SELECT * FROM TREATMENT ";
+            bool any = false;
+            string where = "";
+            if (id != null)
+            {
+                where += " id like '%" + id + "%' ";
+                any = true;
+            }
+            if (tdate != null)
+            {
+                if (any) where += " or";
+                where += " tdate = '" + tdate+ "' ";
+                any = true;
+            }
+            if (patient!= null)
+            {
+                if (any) where += " or ";
+                where += " patient like '%" + patient+ "%' ";
+                any = true;
+            }
+            
+            if (dentist!= null)
+            {
+                if (any) where += " or ";
+                where += " dentist like '%" + dentist + "%' ";
+                any = true;
+            }
+
+            if (any) query += " WHERE " + where;
+
+            List<Treatment> list = null;
+            if (this.OpenConnection() == true)
+            {
+                list = new List<Treatment>();
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    Treatment p = toTreatment(dataReader);
+                    list.Add(p);
+                }
+                dataReader.Close();
+                this.CloseConnection();
+
+            }
+            return list;
+        }
+
+        internal bool insertTreatmentNotes(Treatment treatment, string resume, SmileFile file, string description)
+        {
+            if (this.OpenConnection() == true)
+            {
+                string tableName = "Treatment_Notes";
+                string columns = "(treatment, notes, pfile, description, created, createdBy)";
+                string values = "";
+                values = "('" + treatment.Id + "','" + resume + "','" + file.Id + "','" + description+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
+                string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+
+                this.CloseConnection();
+
+                return true;
+            }
+            return false;
+        }
+
+        public static string GetStringSafe(IDataReader reader, int colIndex)
+        {
+            return GetStringSafe(reader, colIndex, string.Empty);
+        }
+
+        public static string GetStringSafe(IDataReader reader, int colIndex, string defaultValue)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetString(colIndex);
+            else
+                return defaultValue;
+        }
+
+        public static string GetStringSafe(IDataReader reader, string indexName)
+        {
+            return GetStringSafe(reader, reader.GetOrdinal(indexName));
+        }
+
+        public static string GetStringSafe(IDataReader reader, string indexName, string defaultValue)
+        {
+            return GetStringSafe(reader, reader.GetOrdinal(indexName), defaultValue);
+        }
     }
 }

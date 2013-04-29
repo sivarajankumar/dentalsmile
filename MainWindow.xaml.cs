@@ -23,6 +23,7 @@ using System.Diagnostics;
 using smileUp.CustomEditors;
 using System.Text.RegularExpressions;
 using System.Windows.Controls.Primitives;
+using smileUp.DataModel;
 
 namespace smileUp
 {
@@ -47,6 +48,7 @@ namespace smileUp
         public IList<TeethTextItem> TextItems { get; set; }
 
         private static MeasurementForm measurementForm;
+        private static Forms.MeasurementForm mForm;
 		  
         /*
         public static MainWindow GetMainWindow(DependencyObject obj)
@@ -65,6 +67,9 @@ namespace smileUp
         DispatcherTimer _timer = new DispatcherTimer();
         int cont = 0;
 
+        App app;
+        
+        //Stand Alone
         public MainWindow()
         {
             InitializeComponent();
@@ -77,6 +82,43 @@ namespace smileUp
             _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
 
             measurementForm = new MeasurementForm(this);
+            app = Application.Current as App;
+            
+            //mForm = new Forms.MeasurementForm(new Treatment(), new SmileFile());
+        }
+
+        //INTEGRATION with Dashboard
+        public MainWindow(Treatment treatment, SmileFile file, bool duplicate)
+        {
+            InitializeComponent();
+
+            app = Application.Current as App;
+
+            if (app.patient == null)
+            {
+                MessageBox.Show("Select Patient First!");
+                //show PatientForm
+                this.Close();
+                return;
+            }
+            if (file == null)
+            {
+                MessageBox.Show("Select Raw File !");
+                //show File List
+                this.Close();
+                return;
+            }
+
+            vm = new MainViewModel(new FileDialogService(), view1, treatment, file, duplicate, this);
+            DataContext = vm;
+
+            loadTeethNumberToChart();
+
+            Loaded += new RoutedEventHandler(OnLoaded);
+            _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
+
+            mForm = new Forms.MeasurementForm(treatment,file);
+            
         }
 
         private void OnLoaded(object sender, EventArgs e)
@@ -521,47 +563,50 @@ namespace smileUp
 
 
             if (result is TeethVisual3D)
-            {
+            {                
                 TeethVisual3D teeth = (TeethVisual3D)result;
-                vm.showHideManipulator(teeth);
-                selectTeethChart(teeth.Model.Id);
-                //TOOD: show enable icons/buttons
-                enableRemoveTeethButton(true);
-                showTeethProperty(teeth);
 
                 if (MeasurementLineBtn.IsChecked == true)
                 {
-                    System.Windows.Point position = Mouse.GetPosition(this);
-                    HitTestResult resultM = VisualTreeHelper.HitTest(view1, position);
-                    RayMeshGeometry3DHitTestResult result3d = resultM as RayMeshGeometry3DHitTestResult;
-                    if (result3d != null)
+                    var pt = view1.FindNearestPoint(mousePoint);
+                    if (pt != null)
                     {
                         if (hit == 0)
                         {
-                            mpoints.Add(result3d.PointHit); hit++; this.Show();
+                            mpoints.Add((Point3D) pt); hit++; this.Show();
                         }
                         else if (hit == 1)
                         {
-                            mpoints.Add(result3d.PointHit); hit = 0;
+                            mpoints.Add((Point3D)pt); hit = 0;
                             double length = MathHelper.calculate_distance(mpoints[0].X, mpoints[0].Y, mpoints[0].Z, mpoints[1].X, mpoints[1].Y, mpoints[1].Z);
+                            Console.WriteLine(mpoints[0].DistanceTo(mpoints[1]));
 
                             //teeth.Model.Length = Math.Round(vm.mm_converter(length), 4);    
                             teeth.Model.Length = MathHelper.mm_converter(length);
-                            teeth.Model.StartPosition = mpoints[0].X;
-                            teeth.Model.EndPosition = mpoints[1].X;
+                            teeth.Model.StartPosition = mpoints[0].ToString();
+                            teeth.Model.EndPosition = mpoints[1].ToString();
                             createLine(mpoints[0], mpoints[1]);
-                            measurementForm.addRow(teeth, "auto"); 
+                            //measurementForm.addRow(teeth, "auto");
+                            mForm.addRowTeeth(teeth, "man");
                         }
                     }
+                    return;
                 }
                 else if (AutoMeasurementLineBtn.IsChecked == true)
                 {
                     var centerPoint = teeth.centroid();
                     double length = centerPoint.X * 2;
                     teeth.Model.Length = MathHelper.mm_converter(length);
-                    measurementForm.addRow(teeth, "auto");
+                    //measurementForm.addRow(teeth, "auto");
+                    mForm.addRowTeeth(teeth, "auto");
+                    return;
                 }
-				
+
+                vm.showHideManipulator(teeth);
+                selectTeethChart(teeth.Model.Id);
+                //TOOD: show enable icons/buttons
+                enableRemoveTeethButton(true);
+                showTeethProperty(teeth);				
 	
                 return;
             }
@@ -571,9 +616,7 @@ namespace smileUp
                 
                 //TOOD: show enable icons/buttons
                 enableRemoveBraceButton(true);
-
-                _propertyGrid.Visibility = System.Windows.Visibility.Visible;                
-                _propertyGrid.SelectedObject = CustomAttributeEditorBrace.CreateCustomAttributEditorBrace(brace.Model);
+                showBraceProperty(brace);
 
                 if (MakeWireBtn.IsChecked == true)
                 {
@@ -688,9 +731,26 @@ namespace smileUp
                 
                 //TODO: save to DB
             }
+            if (item.DisplayName == "Location")
+            {
+                CustomAttributeEditorBrace t = (CustomAttributeEditorBrace)_propertyGrid.SelectedObject;
+                int oldLocation = t.Location;
+                int newValue = (int)e.NewValue;
+                t.Location = newValue;
+                
+                _propertyGrid.SelectedObject = null;
+                _propertyGrid.SelectedObject = t;
+
+                vm.updateBraceLocation(t.Id, oldLocation, newValue);
+            }
 
         }
 
+        private void showBraceProperty(BraceVisual3D brace)
+        {
+            _propertyGrid.Visibility = System.Windows.Visibility.Visible;
+            _propertyGrid.SelectedObject = CustomAttributeEditorBrace.CreateCustomAttributEditorBrace(brace.Model);
+        }
 
         private void enableAddBraceButton(bool b)
         {
@@ -718,8 +778,15 @@ namespace smileUp
         private void view1_MouseMove(object sender, MouseEventArgs e)
         {
             mousePoint = e.GetPosition(view1);
-            //var pt = view1.FindNearestPoint(e.GetPosition(view1));
-            
+            var pt = view1.FindNearestPoint(e.GetPosition(view1));
+
+
+            if (MeasurementLineBtn.IsChecked == true)
+            {
+                if (mpoints.Count > 0 && pt != null)
+                    vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt);
+            }
+ 
             //TODO: detect collision between visual3d
             /*ModelVisual3D result = GetHitTestResult(mousePoint);
             if (result == null)
@@ -852,12 +919,12 @@ namespace smileUp
 
         private void ShowHideRawVisualBtn_Click(object sender, RoutedEventArgs e)
         {
-            vm.showHideRawVisual();
+            vm.showHideRawVisual(ShowHideRawVisualBtn.IsChecked.Value);
         }
 
         private void ShowHideJawVisualBtn_Click(object sender, RoutedEventArgs e)
         {
-            vm.showHideJawVisual();
+            vm.showHideJawVisual(ShowHideJawVisualBtn.IsChecked.Value);
         }
 
         private void ShowHideTeethVisualBtn_Click(object sender, RoutedEventArgs e)
@@ -1171,14 +1238,20 @@ namespace smileUp
             if (MeasurementLineBtn.IsChecked == true)
             {
                 AutoMeasurementLineBtn.IsChecked = false;
-                measurementForm.clear();
+                mForm.Clear();
+                mForm.Show();
+                mForm.Topmost = true;
+
+                /*measurementForm.clear();
                 measurementForm.Show();
                 measurementForm.TopMost = true;
                 measurementForm.AddColumnsManualMeasurement();
+                */
             }
             else
             {
-                measurementForm.Hide();
+                //measurementForm.Hide();
+                mForm.Hide();
             }
         }
 
@@ -1187,21 +1260,29 @@ namespace smileUp
             if (AutoMeasurementLineBtn.IsChecked == true)
             {
                 MeasurementLineBtn.IsChecked = false;
+                mForm.Clear();
+                mForm.Show();
+                mForm.Topmost = true;
+
+                /*
                 measurementForm.clear();
                 measurementForm.Show();
                 measurementForm.TopMost = true;
+                 */ 
             }
             else
             {
-                measurementForm.Hide(); 
+                mForm.Hide();
+                //measurementForm.Hide(); 
             }
         }
 
         internal void createLine(Point3D p1, Point3D p2)
         {
 
-            var group = new JawVisual3D(p1, p2);
-            view1.Children.Add(group);
+            //var group = new JawVisual3D(p1, p2);
+            //view1.Children.Add(group);
+            vm.JawVisual.mc.drawLine(p1, p2);
             mpoints.Clear();
         }
 
@@ -1215,6 +1296,27 @@ namespace smileUp
          {
              PatientRecordForm a = new PatientRecordForm();
              a.Show();
+         }
+
+         private void Window_Unloaded(object sender, RoutedEventArgs e)
+         {
+             this.Close();
+             //app.Shutdown();//TODO
+
+         }
+
+         private void printBtn_Click(object sender, RoutedEventArgs e)
+         {
+             PrintDialog dlg = new PrintDialog();
+             if ((bool)dlg.ShowDialog().GetValueOrDefault())
+             {
+                 dlg.PrintVisual(view1, "DentalSmile - Screenshot");
+             }
+         }
+
+         private void print3dBtn_Click(object sender, RoutedEventArgs e)
+         {
+             MessageBox.Show("I'm sorry, this feature isn't implemented yet.");
          }
     }
 

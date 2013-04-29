@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace smileUp
+namespace smileUp.DataModel
 {
-    class Treatment
+    public class Treatment
     {
         public string Id { get; set; }
         public Phase Phase { get; set; }
@@ -14,6 +14,8 @@ namespace smileUp
         public DateTime TreatmentDate { get; set; }
         public string TreatmentTime { get; set; }
         public string Room { get; set; }
-
+        
+        public List<SmileFile> Files { get; set; }
+        public string TRefId { get; set; }
     }
 }

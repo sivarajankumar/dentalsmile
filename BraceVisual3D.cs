@@ -7,6 +7,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using System.Windows.Controls;
 using HelixToolkit.Wpf;
+using smileUp.DataModel;
 
 
 namespace smileUp
@@ -18,7 +19,8 @@ namespace smileUp
         public BraceContainer bc;
         public WireContainer wc;
 
-
+        public static readonly DependencyProperty OuterBraceProperty = DependencyProperty.Register("OuterBrace", typeof(bool), typeof(BraceVisual3D), new UIPropertyMetadata(true, OuterBraceChanged));
+        
         public BraceVisual3D(TeethVisual3D parent, bool generatedSample)
             : this(Colors.Pink, parent, generatedSample)
         {
@@ -33,15 +35,15 @@ namespace smileUp
                 bc = this.parent.bc;
                 wc = this.parent.wc;
 
-                Id = p.Id + "_brace" + bc.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.Name; ;
+                Id = p.Id + "_brace" + bc.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.Id; ;
                 
                 if (model == null) model = new Brace();
                 model.Id = Id;
+                model.Location = (IsOuterBrace ? Smile.OUTERBRACE : Smile.INNERBRACE);
                 
                 if(generatedSample) sample(color);
 
                 //BindingOperations.SetBinding(this, TransformProperty, new Binding("TargetTransform") { Source = this });
-
                 //BindingOperations.SetBinding(this.Manipulator,CombinedManipulator.TargetTransformProperty,new Binding("TargetTransform") { Source = this });
 
             }
@@ -51,51 +53,94 @@ namespace smileUp
             if (p != null)
             {
                 this.parent = p;
-                Id = p.Id + "_brace" + p.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.Name; ;
-
-                if (model == null) model = new Brace();
-                model.Id = Id;
-
-                //sample(material);
-
-                //BindingOperations.SetBinding(this, TransformProperty, new Binding("TargetTransform") { Source = this });
-
-                //BindingOperations.SetBinding(this.Manipulator,CombinedManipulator.TargetTransformProperty,new Binding("TargetTransform") { Source = this });
-
                 gc = this.parent.gc;
                 tc = this.parent.tc;
                 bc = this.parent.bc;
                 wc = this.parent.wc;
+
+                Id = p.Id + "_brace" + p.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.Id; ;
+
+                if (model == null) model = new Brace();
+                model.Id = Id;
+                model.Location = (IsOuterBrace ? Smile.OUTERBRACE : Smile.INNERBRACE);
+
+                //sample(material);
+                //BindingOperations.SetBinding(this, TransformProperty, new Binding("TargetTransform") { Source = this });
+                //BindingOperations.SetBinding(this.Manipulator,CombinedManipulator.TargetTransformProperty,new Binding("TargetTransform") { Source = this });
+
             }
         }
 
         internal void sample(Material material)
         {
             ///*
-            GeometryModel3D bigCubeModel = GeometryGenerator.CreateCubeModel();
+            GeometryModel3D bigCubeModel = GeometryGenerator.CreateBraceModel(1);
             bigCubeModel.Material = material;
             
             this.Content = bigCubeModel;
 
+            //Transform3DGroup transformGroup = new Transform3DGroup();
+            //transformGroup.Children.Add(scaleBrace());
+            //transformGroup.Children.Add(locateBrace());            
+            //this.Transform = transformGroup;
+
+            scaleBrace();
+            locateBrace();
+        }
+
+        private void scaleBrace()
+        {
+            int part = 5;
             Rect3D r = this.parent.Content.Bounds;
+            double X = r.SizeX / part;
+            double Y = r.SizeY / part;
+            double Z = r.SizeZ / part;
 
-            Transform3DGroup transformGroup = new Transform3DGroup();
-            transformGroup.Children.Add(new ScaleTransform3D(2, 2, 2));
-            Point3D p0 = new Point3D(0, 0, 0);
-            Point3D p1 = this.parent.centroid();
-            
-            //TODO: locate brace in or out the teeth
+            this.Transform = new ScaleTransform3D(2, 2, 2);
+        }
 
-            //Console.WriteLine(Vector3D.DotProduct(p0.ToVector3D(), p1.ToVector3D()));
-            transformGroup.Children.Add(new TranslateTransform3D(p1.X + (r.SizeX / 2), p1.Y + (r.SizeY / 2), p1.Z + (r.SizeZ / 2)));
-            this.Transform = transformGroup;
-            //*/
+        private void locateBrace()
+        {
+            Rect3D r = this.parent.Content.Bounds;
+            Point3D p1 = this.parent.ToWorld(this.parent.centroid());
+
+            //locate brace in or out the teeth
+            double Xtrans = p1.X;
+            double Ztrans = p1.Z;
+            double Ytrans = p1.Y;
+            //double Ytrans = p1.Y - (r.SizeY / 2);
+
+            if (IsOuterBrace)
+            {
+                if (p1.X < 0)
+                    Xtrans = p1.X - (r.SizeX / 2);
+
+                if (p1.Z < -10)
+                    Ztrans = p1.Z - (r.SizeZ / 2);
+                else if (p1.Z > -10 && p1.Z < 5)
+                    Ztrans = p1.Z + (r.SizeZ / 4);
+                else
+                    Ztrans = p1.Z + (r.SizeZ / 2);
+            }
+            else
+            {
+                if (p1.X < 0)
+                    Xtrans = p1.X + (r.SizeX / 2);
+
+                if (p1.Z > 0)
+                    Ztrans = p1.Z - (r.SizeZ / 2);
+                else
+                    Ztrans = p1.Z + (r.SizeZ / 2);
+            }
+
+            this.Transform = new TranslateTransform3D(Xtrans, Ytrans, Ztrans);
         }
 
         internal void sample(Color color)
         {
             sample(MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Blue)));
         }
+
 
 
         private TeethVisual3D parent;
@@ -209,6 +254,29 @@ namespace smileUp
 
         }
 
+        public bool IntToBoolOuterBrace(int str)
+        {
+            return str == Smile.OUTERBRACE;
+        }
+
+        public bool IsOuterBrace
+        {
+            get
+            {
+                return (bool)this.GetValue(OuterBraceProperty);
+            }
+
+            set
+            {
+                this.Model.Location = (value? Smile.OUTERBRACE:Smile.INNERBRACE);
+                this.SetValue(OuterBraceProperty, value);
+            }
+        }
+
+        protected static void OuterBraceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((BraceVisual3D)d).locateBrace();
+        }
 
     }
 }

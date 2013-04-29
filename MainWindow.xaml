@@ -4,7 +4,7 @@
         xmlns:helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf" 
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:avalonDock="http://avalondock.codeplex.com"
-        xmlns:smileUp="clr-namespace:smileUp" Title="{Binding ApplicationTitle}" Height="600" Width="740" Background="LightBlue">
+        xmlns:smileUp="clr-namespace:smileUp" Title="{Binding ApplicationTitle}" Height="600" Width="740" Background="LightBlue" Unloaded="Window_Unloaded">
     <Window.Resources>
         <ContextMenu x:Key="MyContextMenu">
             <MenuItem Header="Send" />
@@ -27,8 +27,8 @@
                 <MenuItem Header="_Open..." Command="{Binding FileOpenCommand}"/>
                 <MenuItem Header="_Export..." Command="{Binding FileExportCommand}"/>
                 <Separator/>
-                <MenuItem Header="_OpenRaw..." Command="{Binding FileOpenRawCommand}"/>
-                <MenuItem Header="_ExportRaw..." Command="{Binding FileExportRawCommand}"/>
+                <MenuItem Header="_OpenRaw..." Command="{Binding FileOpenRawCommand}" />
+                <MenuItem Header="_ExportRaw..." Command="{Binding FileExportRawCommand}" IsEnabled="False"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Command="{Binding FileExitCommand}"/>
             </MenuItem>
@@ -46,10 +46,11 @@
 
         <ToolBarTray Orientation="Horizontal" Grid.Row="1">
             <ToolBar Band="1" FlowDirection="LeftToRight">
-                <Button Content="{smileUp:Image /Icons/102.png}" x:Name="openBtn" ToolTip="Open" />
-                <Button Content="{smileUp:Image /Icons/102.png}" x:Name="openRawBtn" ToolTip="Open Raw" />
+                <Button Content="{smileUp:Image /Icons/102.png}" x:Name="openBtn" ToolTip="Open" IsEnabled="False"/>
+                <Button Content="{smileUp:Image /Icons/102.png}" x:Name="openRawBtn" ToolTip="Open Raw" IsEnabled="False"/>
                 <Button Content="{smileUp:Image /Icons/103.png}" x:Name="saveBtn" ToolTip="Save" />
-                <Button Content="{smileUp:Image /Icons/104.png}" x:Name="printBtn" ToolTip="Print" />
+                <Button Content="{smileUp:Image /Icons/104.png}" x:Name="printBtn" ToolTip="Print" Click="printBtn_Click" />
+                <Button Content="{smileUp:Image /Icons/3dprint.png}" x:Name="print3dBtn" ToolTip="3D Print" Click="print3dBtn_Click" />
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">
                 <ToggleButton Content="{smileUp:Image /Icons/101.png}" x:Name="ShowHideRawVisualBtn" ToolTip="Show Hide RawVisual" Click="ShowHideRawVisualBtn_Click" />
@@ -97,7 +98,6 @@
 
                                 </helix:HelixViewport3D>
                                 <Canvas IsHitTestVisible="true" Visibility="Hidden" Width="150" Height="200" Margin="6,15,362,205" x:Name="canvasShortcut">
-
                                     <TextBlock Height="27" Foreground="Black" Background="Beige" HorizontalAlignment="Left" Name="text1" VerticalAlignment="Bottom" Width="150" />
                                 </Canvas>
                             </Grid>
@@ -121,7 +121,10 @@
                                 <smileUp:EllipticalLayoutPanel x:Name="chartPanel"/>
 
                             </avalonDock:LayoutAnchorable>
-                            </avalonDock:LayoutAnchorablePane>
+                            <avalonDock:LayoutAnchorable Title="Patient Data" CanClose="False" CanFloat="False" CanHide="False">
+                                <Grid />
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorable Title="Properties" CanClose="False" CanFloat="False" CanHide="False">
                                 <xctk:PropertyGrid x:Name="_propertyGrid" Width="330" Margin="5"/>

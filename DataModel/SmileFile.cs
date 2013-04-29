@@ -3,26 +3,27 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Xml.Serialization;
 
-namespace smileUp
+namespace smileUp.DataModel
 {
     public class SmileFile
     {
         private string fileName = "default.obj";
         private string screenshot = "default.png";
-        private int type = Smile.NONE; // 0= none, 1=scanning, 2=manipulation, 3=printing
+        private int type = Smile.REGISTERED; // 0= registered, 1=scanning, 2=manipulation, 3=printing
 
         public Patient Patient { get; set; }
         public string Id { get; set; }
-        public string FileName { get; set; }
+        public string FileName { get { return fileName; } set { this.fileName = value; } }
         public string Description { get; set; }
-        public string Screenshot { get; set; }
-        public int Type { get; set; }
+        public string Screenshot { get { return screenshot; } set { this.screenshot = value; } }
+        public int Type { get { return type; } set { this.type = value; } }
+        public string RefId { get; set; }
 
         
         private string ScannedFile 
         { 
             get {
-                return Smile.SCANNED_PATH + "" + fileName;
+                return Smile.SCANNED_PATH + "" + FileName;
             } 
         }
 
@@ -30,7 +31,7 @@ namespace smileUp
         {
             get
             {
-                return Smile.MANIPULATED_PATH + "" + fileName;
+                return Smile.MANIPULATED_PATH + "" + FileName;
             }
         }
 
@@ -49,7 +50,7 @@ namespace smileUp
         {
             get
             {
-                return Smile.SCANNED_PATH + "" + screenshot;
+                return Smile.SCANNED_PATH + "" + Screenshot;
             }
         }
 
@@ -57,7 +58,7 @@ namespace smileUp
         {
             get
             {
-                return Smile.MANIPULATED_PATH + "" + screenshot;
+                return Smile.MANIPULATED_PATH + "" + Screenshot;
             }
         }
 

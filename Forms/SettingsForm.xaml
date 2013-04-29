@@ -1,0 +1,17 @@
+﻿<Window x:Class="smileUp.Forms.SettingsForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SettingsForm" Height="300" Width="371">
+    <Grid Width="355">
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,32,0,0" Name="textBlock1" Text="Scanned Path:" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="126,29,0,0" Name="txtScannedPath" VerticalAlignment="Top" Width="134" />
+        <Button Content="Browse" Height="23" HorizontalAlignment="Left" Margin="266,28,0,0" Name="btnBrowse1" VerticalAlignment="Top" Width="61" Click="btnBrowse1_Click" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,74,0,0" Name="textBlock2" Text="Manipulated Path:" VerticalAlignment="Top" />
+        <TextBox Height="23" Margin="126,71,0,0" Name="txtManipulatedPath" VerticalAlignment="Top" HorizontalAlignment="Left" Width="134" />
+        <Button Content="Browse" Height="23" HorizontalAlignment="Left" Margin="266,70,0,0" Name="btnBrowse2" VerticalAlignment="Top" Width="61" Click="btnBrowse2_Click" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,115,0,0" Name="textBlock3" Text="Photo Path:" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="126,112,0,0" Name="txtPhotoPath" VerticalAlignment="Top" Width="134" />
+        <Button Content="Browse" Height="23" HorizontalAlignment="Left" Margin="266,111,0,0" Name="btnBrowse3" VerticalAlignment="Top" Width="61" Click="btnBrowse3_Click" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="256,221,0,0" Name="btnSave" VerticalAlignment="Top" Width="75" Click="btnSave_Click" />
+    </Grid>
+</Window>

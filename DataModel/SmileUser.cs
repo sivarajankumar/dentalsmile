@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace smileUp
+namespace smileUp.DataModel
 {
     public class SmileUser
     {

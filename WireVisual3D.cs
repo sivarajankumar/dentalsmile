@@ -8,21 +8,22 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using HelixToolkit.Wpf;
 using System.Windows.Data;
+using smileUp.DataModel;
 
 namespace smileUp
 {
     public class WireVisual3D : SmileVisual3D
     {
-        public static readonly DependencyProperty ThicknesProperty = DependencyProperty.Register("ThicknesTransform", typeof(double), typeof(WireVisual3D), new UIPropertyMetadata(1.2, ThicknesChanged));
+        public static readonly DependencyProperty ThicknesProperty = DependencyProperty.Register("ThicknesWire", typeof(double), typeof(WireVisual3D), new UIPropertyMetadata(1.2, ThicknesChanged));
         //public static readonly DependencyProperty ColourProperty = DependencyProperty.Register("ColourTransform", typeof(Brush), typeof(WireVisual3D), new UIPropertyMetadata(Brushes.Blue, ColourChanged));
-        public static readonly DependencyProperty MaterialProperty = DependencyProperty.Register("MaterialTransform", typeof(String), typeof(WireVisual3D), new UIPropertyMetadata("ceramic", MaterialChanged));
+        public static readonly DependencyProperty MaterialProperty = DependencyProperty.Register("MaterialWire", typeof(String), typeof(WireVisual3D), new UIPropertyMetadata("ceramic", MaterialChanged));
 
 
         public WireVisual3D(Brush b, BraceVisual3D p1, BraceVisual3D p2)
         {
             if (p1 != null)
             {
-                Id = p1.Id + "_wire" + p1.Children.Count.ToString("00") + "." + p1.Parent.Parent.Parent.patient.Name;
+                Id = p1.Id + "_wire" + p1.Children.Count.ToString("00") + "." + p1.Parent.Parent.Parent.patient.Id;
 
                 brace1 = p1;
                 brace2 = p2;
@@ -165,9 +166,7 @@ namespace smileUp
                 dt.Children.Clear();
                 
                 TubeVisual3D tube = new TubeVisual3D { Diameter = 1.02, Path = contours, Fill = dt.brush };
-                dt.Children.Add(tube);
-                
-                //Console.WriteLine("wire:" + dt.Id);
+                dt.Children.Add(tube);                
             }
         }
         public virtual void Bind(BraceVisual3D source1, BraceVisual3D source2)

@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using smileUp.DataModel;
 
 namespace smileUp.Forms
 {
@@ -48,7 +49,7 @@ namespace smileUp.Forms
             //make a treatment
 
             treatment = new Treatment();
-            //treatment.Id = //generated: PhaseTxt+sequence
+            treatment.Id = db.getTreatmentNewId(app.patient.Id);//generated: patient+sequence
             treatment.Patient = app.patient;
             treatment.Dentist = app.user.Dentist;
             treatment.Phase = new Phase();// Smile.SCANNING;
@@ -64,9 +65,13 @@ namespace smileUp.Forms
 
         private void button3_Click(object sender, RoutedEventArgs e)
         {
-            //finish the treatment and store the file to disk and db
+            //finish the treatment 
+
+            //and store the file to disk 
+
+            //and to table
             SmileFile file = new SmileFile();
-            file.Id = "generated";//TODO FORMAT: seq
+            file.Id = db.getSmileFileNewId(app.patient.Id);
             file.Type = Smile.SCANNING;
             file.FileName = "SCAN"+file.Id+".obj";
             file.Screenshot = "SCAN" + file.Id + ".png";

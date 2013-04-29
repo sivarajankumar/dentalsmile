@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using HelixToolkit.Wpf;
 using System.Windows.Input;
+using smileUp.DataModel;
 
 namespace smileUp
 {
@@ -32,7 +33,7 @@ namespace smileUp
                 bc = this.parent.bc;
                 wc = this.parent.wc;
 
-                Id = p.Id + "_teeth" + tc.Children.Count.ToString("00") + "." + p.Parent.patient.Name;
+                Id = p.Id + "_teeth" + tc.Children.Count.ToString("00") + "." + p.Parent.patient.Id;
                 
                 if (model == null) model = new Teeth();
                 model.Id = Id;

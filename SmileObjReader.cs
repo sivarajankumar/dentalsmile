@@ -17,6 +17,7 @@ namespace smileUp
     using System.Windows.Media.Media3D;
     using HelixToolkit.Wpf;
     using System.Text.RegularExpressions;
+    using smileUp.DataModel;
 
         /// <summary>
         /// A Wavefront .obj file reader.

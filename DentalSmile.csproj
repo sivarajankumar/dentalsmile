@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>smileUp</RootNamespace>
-    <AssemblyName>smileUp</AssemblyName>
+    <AssemblyName>DentalSmile</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -34,6 +34,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\dentalsmile32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AvalonDock">
@@ -77,6 +80,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataModel\MeasurementTeeth.cs" />
+    <Compile Include="DataModel\Measurement.cs" />
+    <Compile Include="Forms\MeasurementForm.xaml.cs">
+      <DependentUpon>MeasurementForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NotesConfirmationForm.xaml.cs">
+      <DependentUpon>NotesConfirmationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.xaml.cs">
+      <DependentUpon>SettingsForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MeasurementContainer.cs" />
+    <Compile Include="CustomEditors\BraceLocationItemSource.cs" />
     <Compile Include="Forms\AppointmentForm.xaml.cs">
       <DependentUpon>AppointmentForm.xaml</DependentUpon>
     </Compile>
@@ -95,8 +111,8 @@
     <Compile Include="Forms\TreatmentList.xaml.cs">
       <DependentUpon>TreatmentList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SmileUser.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="DataModel\SmileUser.cs" />
+    <Compile Include="DataModel\Person.cs" />
     <Compile Include="Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -109,14 +125,14 @@
     <Compile Include="Forms\DentistList.xaml.cs">
       <DependentUpon>DentistList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Phase.cs" />
-    <Compile Include="Dentist.cs" />
+    <Compile Include="DataModel\Phase.cs" />
+    <Compile Include="DataModel\Dentist.cs" />
     <Compile Include="DentalSmileDB.cs" />
     <Compile Include="ListMenusControl.xaml.cs">
       <DependentUpon>ListMenusControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Smile.cs" />
-    <Compile Include="SmileFile.cs" />
+    <Compile Include="DataModel\SmileFile.cs" />
     <Compile Include="ListFilesControl.xaml.cs">
       <DependentUpon>ListFilesControl.xaml</DependentUpon>
     </Compile>
@@ -132,9 +148,9 @@
     <Compile Include="BaseMarker.cs" />
     <Compile Include="BraceContainer.cs" />
     <Compile Include="BraceVisual3D.cs" />
-    <Compile Include="Brace.cs" />
+    <Compile Include="DataModel\Brace.cs" />
     <Compile Include="CustomEditors\TeethMappingItemSource.cs" />
-    <Compile Include="Treatment.cs" />
+    <Compile Include="DataModel\Treatment.cs" />
     <Compile Include="WpfDashboard.xaml.cs">
       <DependentUpon>WpfDashboard.xaml</DependentUpon>
     </Compile>
@@ -177,12 +193,12 @@
     <Compile Include="WireContainer.cs" />
     <Compile Include="WireVisual3D.cs" />
     <Compile Include="CustomEditors\CustomAttributeEditorWire.cs" />
-    <Compile Include="Wire.cs" />
+    <Compile Include="DataModel\Wire.cs" />
     <Compile Include="CustomEditors\Editors.cs" />
     <Compile Include="CustomEditors\CustomAttributeEditorBrace.cs" />
     <Compile Include="CustomEditors\CustomAttributeEditorTeeth.cs" />
     <Compile Include="Dialogs\ProgressDialog.xaml.cs" />
-    <Compile Include="Patient.cs" />
+    <Compile Include="DataModel\Patient.cs" />
     <Compile Include="SmileObjExporter.cs" />
     <Compile Include="SmileVisual3D.cs" />
     <Compile Include="VisualTreeAdapter.cs" />
@@ -193,7 +209,7 @@
     <Compile Include="GumVisual3D.cs" />
     <Compile Include="JawVisual3D.cs" />
     <Compile Include="MathHelper.cs" />
-    <Compile Include="Teeth.cs" />
+    <Compile Include="DataModel\Teeth.cs" />
     <Compile Include="TeethVisual3D.cs" />
     <Page Include="Dashboard.xaml">
       <SubType>Designer</SubType>
@@ -207,6 +223,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Forms\MeasurementForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\NotesConfirmationForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\PatientForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\ScanningWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\SettingsForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -421,11 +449,17 @@
     <Resource Include="Resources\Icons\agents.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\ManipulatedFiles\" />
-    <Folder Include="Resources\ScannedFiles\" />
+    <Resource Include="Icons\3dprint.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Photos\default.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ManipulatedFiles\default.jpg" />
+    <Resource Include="Resources\ScannedFiles\default.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\dentalsmile32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Text;
+using smileUp.DataModel;
 
 namespace smileUp.CustomEditors
 {

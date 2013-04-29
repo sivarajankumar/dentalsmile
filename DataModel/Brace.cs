@@ -4,7 +4,7 @@ using System.Windows.Media.Media3D;
 using System.Xml.Serialization;
 using System;
 
-namespace smileUp
+namespace smileUp.DataModel
 {
     public class Brace
     {
@@ -40,6 +40,9 @@ namespace smileUp
 
         [XmlIgnore]
         public Teeth Teeth { get; set; }
+
+        [XmlIgnore]
+        public int Location { get; set; }
 
         public Brace()
         {

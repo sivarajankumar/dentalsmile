@@ -5,18 +5,17 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using System;
 
-namespace smileUp
+namespace smileUp.DataModel
 {
     public class Patient : Person
     {
-        public string Id { get; set ;}
-
-
+        private string id = "001";
         private string name = "MrX";
         private string photo = "default.jpg";
 
-        public string Photo { get { return photo; } set { this.photo = value; } }
+        public string Id { get { return id; } set { this.id = value; } }
         public string Name { get { return name; } set { this.name = value; } }
+        public string Photo { get { return photo; } set { this.photo = value; } }
         public List<SmileFile> Files { get; set; }
 
         public Patient()

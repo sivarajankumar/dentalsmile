@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace smileUp
+namespace smileUp.DataModel
 {
-    class Phase
+    public class Phase
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
     }

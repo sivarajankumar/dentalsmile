@@ -41,7 +41,7 @@ namespace smileUp
             else { 
                 this.dgTMeasurement.Rows.Add(teeth.Model.TeethNumber,teeth.Model.Id,teeth.Model.StartPosition,teeth.Model.EndPosition,teeth.Model.Length); 
             }
-
+            this.Show();
             return;
         }
      

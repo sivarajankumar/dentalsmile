@@ -50,7 +50,7 @@ namespace smileUp
             bc = this.parent.bc;
             wc = this.parent.wc;
 
-            Id = "gum" + p.gums.Count.ToString("00") + "." + p.patient.Name;
+            Id = "gum" + p.gums.Count.ToString("00") + "." + p.patient.Id;
 
             sample(color);
 

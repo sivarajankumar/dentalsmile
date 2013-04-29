@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
+using smileUp.DataModel;
 
 namespace smileUp
 {
@@ -15,6 +16,7 @@ namespace smileUp
     {
         public SmileUser user;
         public Patient patient;
+        public Dictionary<string, string> settings = new Dictionary<string, string>();
 
         public void ApplySkin(Uri skinDictionaryUri)
         {

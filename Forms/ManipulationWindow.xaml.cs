@@ -25,7 +25,17 @@ namespace smileUp.Forms
 
         private void button3_Click(object sender, RoutedEventArgs e)
         {
+            //save the manipulation file to disk
+        }
 
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            //show patient form and select a patient to app.pasient
+        }
+
+        private void button4_Click(object sender, RoutedEventArgs e)
+        {
+            //finish manipulation file and update the db
         }
     }
 }

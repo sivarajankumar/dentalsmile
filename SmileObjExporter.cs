@@ -15,6 +15,7 @@ namespace smileUp
     using System.Xml.Serialization;
     using System.Globalization;
     using HelixToolkit.Wpf;
+    using smileUp.DataModel;
 
 
     public class SmileObjExporter //: Exporter

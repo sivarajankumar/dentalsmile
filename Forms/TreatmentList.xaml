@@ -1,8 +1,52 @@
 ﻿<Window x:Class="smileUp.Forms.TreatmentList"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="TreatmentList" Height="300" Width="300">
-    <Grid>
-        
+        Title="TreatmentList" Height="512" Width="575">
+    <Grid Width="551">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="false" Height="145" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="0,70,0,0" Name="treatmentsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="521" 
+                  SelectedValuePath="Id" SelectionChanged="treatmentsDataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Path=Id}" Header="ID" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="fnameColumn" Binding="{Binding Path=Patient.FirstName}" Header="First Name" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="lnameColumn" Binding="{Binding Path=Patient.LastName}" Header="Last Name" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTemplateColumn x:Name="tdateColumn" Header="Date of Treatment" Width="SizeToHeader" IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=TreatmentDate, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="timeColumn" Binding="{Binding Path=TreatmentTime}" Header="Time" Width="SizeToHeader" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="New" Height="23" HorizontalAlignment="Left" Margin="0,12,0,0" Name="btnNew" VerticalAlignment="Top" Width="52" Click="btnNew_Click" />
+        <TextBox Height="29" Margin="120,13,0,0" Name="keywordTxt" VerticalAlignment="Top" HorizontalAlignment="Left" Width="320" />
+        <TextBlock Height="20" HorizontalAlignment="Left" Margin="58,17,0,0" Name="textBlock1" Text="Keyword:" VerticalAlignment="Top" Width="56" />
+        <Button Content="Find" Height="23" HorizontalAlignment="Right" Margin="0,17,32,0" Name="btnFind" VerticalAlignment="Top" Width="75" Click="btnFind_Click" />
+        <CheckBox Content="ID" Height="16" HorizontalAlignment="Left" Margin="123,48,0,0" Name="idChk" VerticalAlignment="Top" />
+        <CheckBox Content="Treatment Date" Height="16" HorizontalAlignment="Left" Margin="173,48,0,0" Name="tDateChk" VerticalAlignment="Top" />
+        <CheckBox Content="Patient" Height="16" HorizontalAlignment="Left" Margin="303,48,0,0" Name="patientChk" VerticalAlignment="Top" />
+        <CheckBox Content="Dentist" Height="16" HorizontalAlignment="Right" Margin="0,48,113,0" Name="dentistChk" VerticalAlignment="Top" />
+
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="false" Height="145" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="0,257,0,0" Name="filesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="521" 
+                  SelectedValuePath="Id" SelectionChanged="filesDataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="fileIdColumn" Binding="{Binding Path=Id}" Header="ID" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="fileNameColumn" Binding="{Binding Path=FileName}" Header="Filename" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="fileDescriptionColumn" Binding="{Binding Path=Description}" Header="Description" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="fileTypeColumn" Binding="{Binding Path=Type}" Header="Type" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTemplateColumn x:Name="fileScreenshotColumn" Header="Screenshot" Width="SizeToHeader" IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                             <Image Source="{Binding Path=GetScreenshot }"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Start Manipulation" Height="23" Margin="0,421,32,0" Name="btnStartManipulation" VerticalAlignment="Top" Click="btnStartManipulation_Click" HorizontalAlignment="Right" Width="110" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,228,0,0" Name="textBlock2" Text="Files" VerticalAlignment="Top" />
+        <Button Content="New Scanning" Height="23" HorizontalAlignment="Left" Margin="123,421,0,0" Name="btnNewScan" VerticalAlignment="Top" Width="89" Click="btnNewScan_Click" />
+        <Button Content="Continue Manipulation" Height="23" HorizontalAlignment="Left" Margin="248,421,0,0" Name="btnContinueManipulation" VerticalAlignment="Top" Width="134" Click="btnContinueManipulation_Click" />
     </Grid>
 </Window>

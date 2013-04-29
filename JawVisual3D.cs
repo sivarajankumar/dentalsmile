@@ -6,6 +6,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using HelixToolkit.Wpf;
 using System.Text.RegularExpressions;
+using smileUp.DataModel;
 
 namespace smileUp
 {
@@ -19,7 +20,7 @@ namespace smileUp
         public ToothContainer tc;
         public BraceContainer bc;
         public WireContainer wc;
-
+        public MeasurementContainer mc;
 
         public JawVisual3D(Patient p)
         {
@@ -30,11 +31,25 @@ namespace smileUp
             tc = new ToothContainer();
             bc = new BraceContainer();
             wc = new WireContainer();
+            mc = new MeasurementContainer();
 
             displayGumContainer(true);
             displayTeethContainer(true);
             displayBraceContainer(true);
             displayWireContainer(true);
+            displayMeasurementContainer(true);
+        }
+
+        public void displayMeasurementContainer(bool b)
+        {
+            try
+            {
+                if (b)
+                    this.Children.Add(mc);
+                else
+                    this.Children.Remove(mc);
+            }
+            catch (Exception e) { }
         }
 
         public void displayBraceContainer(bool b)
@@ -65,6 +80,11 @@ namespace smileUp
                     this.Children.Add(tc);
                 else
                     this.Children.Remove(tc);
+                
+                if (b)
+                    this.Children.Add(mc);
+                else
+                    this.Children.Remove(mc);
             }
             catch (Exception e) { }
         }
@@ -444,5 +464,31 @@ namespace smileUp
         }
 
 
+
+        public void updateBraceLocation(string braceid, int oldLocation, int newValue)
+        {
+            BraceVisual3D brace = findBrace(braceid);
+            if (brace != null)
+            {
+                brace.IsOuterBrace = brace.IntToBoolOuterBrace(newValue);
+            }
+        }
+
+        private BraceVisual3D findBrace(string braceid)
+        {
+            //find the existing new id
+            foreach (var t in bc.Children)
+            {
+                if (t is BraceVisual3D)
+                {
+                    BraceVisual3D brace = (BraceVisual3D)t;
+                    if (brace.Id.Equals(braceid))
+                    {
+                        return brace;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

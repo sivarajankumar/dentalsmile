@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Text;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 using System.Text.RegularExpressions;
+using smileUp.DataModel;
 
 namespace smileUp.CustomEditors
 {

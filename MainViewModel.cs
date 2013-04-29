@@ -12,12 +12,15 @@ using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Microsoft.Win32;
+using smileUp.DataModel;
 
 namespace smileUp
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Media;
+    using smileUp.DataModel;
+    using smileUp.Forms;
 
     public class VisualElement
     {
@@ -142,7 +145,19 @@ namespace smileUp
         private ModelVisual3D _rootVisual;
 
         MainWindow window;
-            
+
+        public Patient Patient { get; set; }
+
+        public Treatment Treatment { get; set; }
+
+        public SmileFile SmileFile { get; set; }
+
+        string rawFilename = "RAW.obj";
+        string jawFilename = "JAW.obj";
+
+        DentalSmileDB DB;
+        App app;
+        
         private IFileDialogService FileDialogService;
         public IHelixViewport3D HelixView { get; set; }
 
@@ -198,13 +213,89 @@ namespace smileUp
 
             //Elements = new List<VisualElement>();
             //foreach (var c in hv.Children) Elements.Add(new VisualElement(c));
-            
-            Patient patient = new Patient();
-            JawVisual = new JawVisual3D(patient);
+
+            DB = new DentalSmileDB();
+            Treatment = new Treatment();
+            SmileFile = new SmileFile();
+            Patient = new Patient();
+            JawVisual = new JawVisual3D(Patient);
             RootVisual = window.vmodel;
+            app = Application.Current as App;
 
             RootVisual.Children.Add(JawVisual);
             this.window = window;
+
+        }
+
+        //INTEGRATION
+        public MainViewModel(IFileDialogService fds, HelixViewport3D hv, Treatment treatment, SmileFile file, bool duplicate, MainWindow window)
+        {
+            Expansion = 1;
+            FileDialogService = fds;
+            HelixView = hv;
+            FileOpenCommand = new DelegateCommand(FileOpen);
+            FileOpenRawCommand = new DelegateCommand(FileOpenRaw);
+            //FileExportCommand = new DelegateCommand(FileExport);
+            FileExportCommand = new DelegateCommand(ConfirmDirectFileExport);            
+            FileExportRawCommand = new DelegateCommand(FileExportRaw);
+            FileExitCommand = new DelegateCommand(FileExit);
+            ViewZoomExtentsCommand = new DelegateCommand(ViewZoomExtents);
+            EditCopyXamlCommand = new DelegateCommand(CopyXaml);
+            EditClearAreaCommand = new DelegateCommand(ClearArea);
+            ApplicationTitle = "Dental Smile - 3D Viewer";
+
+            ModelToBaseMarker = new Dictionary<Model3D, BaseMarker>();
+            OriginalMaterial = new Dictionary<Model3D, Material>();
+
+            //Elements = new List<VisualElement>();
+            //foreach (var c in hv.Children) Elements.Add(new VisualElement(c));
+
+            this.window = window;
+            RootVisual = window.vmodel;
+            
+            handleManipulationData(treatment, file, duplicate);
+            
+            //JawVisual = new JawVisual3D(Patient);
+            //RootVisual.Children.Add(JawVisual);
+        }
+
+        private void handleManipulationData(Treatment treatment, SmileFile file, bool duplicate)
+        {
+            DB = new DentalSmileDB();
+            app = Application.Current as App;
+            if (app.patient == null) app.patient = new Patient();
+            Patient = app.patient;
+
+            if (treatment == null)
+            {
+                Treatment = new Treatment();
+            }
+            else
+            {
+                Treatment = treatment;
+                if (duplicate)
+                {
+                    Treatment.Id = null;
+                }
+                Treatment.TRefId = treatment.Id;
+            }
+            //if (file != null) SmileFile = file;
+
+            if (file.Type == Smile.MANIPULATION)
+            {
+                //Load Jaw
+                LoadJawFile(file.GetFile);
+            }
+            else if (file.Type == Smile.SCANNING)
+            {
+                //Load Raw
+                LoadRawFile(file.GetFile);
+            }
+
+            SmileFile = new SmileFile();
+            SmileFile.RefId = file.Id;
+
+            ViewZoomExtents();
         }
 
         
@@ -224,6 +315,130 @@ namespace smileUp
         private void FileExit()
         {
             App.Current.Shutdown();
+        }
+
+        private void ConfirmDirectFileExport()
+        {
+            NotesConfirmationForm n = new NotesConfirmationForm();
+            n.ShowDialog();
+            if (n != null && n.Notes != null)
+            {
+                DirectFileExport(n.Notes);
+                SaveMedicalResume(n.MedicalResume, n.Notes);
+
+                n.Close();
+                MessageBox.Show("Data saved successfully.", "Successfully");
+            }
+        }
+
+        /**
+         * http://www.deltasblog.co.uk/code-snippets/c-resizing-a-bitmap-image/
+         */
+        private static System.Drawing.Bitmap ResizeBitmap(System.Drawing.Bitmap sourceBMP, int width, int height)
+        {
+            System.Drawing.Bitmap result = new System.Drawing.Bitmap(width, height);
+            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(result))
+                g.DrawImage(sourceBMP, 0, 0, width, height);
+            return result;
+        }
+
+        /**
+         * http://www.smokycogs.com/blog/proportionately-resizing-a-bitmap-in-c-sharp/
+         */
+        public static System.Drawing.Bitmap ResizeBitmapProportionally(System.Drawing.Bitmap sourceBitmap, int maxWidth, int maxHeight)
+        {
+            // original dimensions  
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // Find the longest and shortest dimentions  
+            int longestDimension = (width > height) ? width : height;
+            int shortestDimension = (width < height) ? width : height;
+
+            double factor = ((double)longestDimension) / (double)shortestDimension;
+
+            // Set width as max  
+            double newWidth = maxWidth;
+            double newHeight = maxWidth / factor;
+
+            //If height is actually greater, then we reset it to use height instead of width  
+            if (width < height)
+            {
+                newWidth = maxHeight / factor;
+                newHeight = maxHeight;
+            }
+
+            // Create new Bitmap at new dimensions based on original bitmap  
+            System.Drawing.Bitmap resizedBitmap = new System.Drawing.Bitmap((int)newWidth, (int)newHeight);
+            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage((System.Drawing.Image)resizedBitmap))
+                g.DrawImage(sourceBitmap, 0, 0, (int)newWidth, (int)newHeight);
+            return resizedBitmap;
+        }  
+
+        private void DirectFileExport(string notes)
+        {
+            bool newFile = false;
+            SmileFile.Patient = Patient;
+            SmileFile.Description = notes;
+            SmileFile.Type = Smile.MANIPULATION;
+            if (SmileFile.Id == null)
+            {
+                SmileFile.Id = DB.getSmileFileNewId(Patient.Id);
+                newFile = true;
+            }
+
+            jawFilename = "JAW" + SmileFile.Id + ".obj";
+            
+            var path = Smile.MANIPULATED_PATH + jawFilename;
+            var e = new SmileObjExporter(path);
+            //e.Export(CurrentModel);
+            ((SmileObjExporter)e).jawVisual = JawVisual;
+            ((SmileObjExporter)e).Export(JawVisual, Patient);
+
+            string screenShot = "JAW" + SmileFile.Id + ".png";
+            path = Smile.MANIPULATED_PATH + screenShot;
+            HelixView.Export(path);
+
+            //TODO save to table
+            SmileFile.FileName = jawFilename;
+            SmileFile.Screenshot = screenShot;
+
+            Treatment.Phase = Smile.GetPhase(Smile.MANIPULATION);
+
+            if (Treatment.Id != null)
+            {
+                DB.UpdateTreatment(Treatment);
+            }
+            else
+            {
+                Treatment.Id = DB.getTreatmentNewId(Patient.Id);
+                Treatment.TreatmentDate = DateTime.Now;
+                Treatment.TreatmentTime = DateTime.Now.ToString(Smile.TIME_FORMAT);
+                DB.InsertTreatment(Treatment);
+            }
+            if (newFile)
+            {
+                DB.InsertFileInfo(SmileFile);
+                DB.insertTreatmentFiles(Treatment, SmileFile);
+            }
+            else
+            {
+                DB.UpdateFileInfo(SmileFile);
+            }
+        }
+
+        private void SaveMedicalResume(string resume, string description)
+        {
+            DB.insertTreatmentNotes(Treatment, resume, SmileFile, description);
+        }
+
+        private void DirectFileExportRaw()
+        {
+            var path = Smile.MANIPULATED_PATH + "RAW" + "SmileFile.Id" + ".obj";
+            var e = new SmileObjExporter(path);
+            //e.Export(CurrentModel);
+            ((SmileObjExporter)e).rawVisual = RawVisual;
+            ((SmileObjExporter)e).Export(RawVisual, Patient);
         }
 
         private void FileExport()
@@ -354,6 +569,76 @@ namespace smileUp
             HelixView.ZoomExtents(500);
         }
 
+        private void LoadRawFile(string CurrentModelPath)
+        {        
+            CurrentModel = ModelImporter.Load(CurrentModelPath);
+            Model3DGroup group = new Model3DGroup();
+            if (CurrentModel != null)
+            {
+                var mb = new MeshBuilder(false, false);
+                Rect3D r = CurrentModel.Bounds;
+
+                Model3DGroup g = (Model3DGroup)CurrentModel;
+                foreach (GeometryModel3D gm in g.Children)
+                {
+                    MeshGeometry3D mesh = (MeshGeometry3D)gm.Geometry;
+                    Point3DCollection ind = mesh.Positions;
+                    for (int i = 0; i < ind.Count; i++)
+                    {
+                        var p0 = ind[i];
+
+                        p0 = new Point3D(p0.X + (-(r.X + (r.SizeX / 2))), p0.Y + (-(r.Y + (r.SizeY / 2))), p0.Z + (-(r.Z + (r.SizeZ / 2))));
+
+                        mb.Positions.Add(p0);
+                    }
+
+                    for (int i = 0; i < mesh.TriangleIndices.Count; i++)
+                    {
+                        mb.TriangleIndices.Add(mesh.TriangleIndices[i]);
+                    }
+
+                }
+                var geom = new GeometryModel3D(mb.ToMesh(), MaterialHelper.CreateMaterial(Colors.BlueViolet));
+                geom.BackMaterial = MaterialHelper.CreateMaterial(Colors.Chocolate);
+                group.Children.Add(geom);
+
+                CurrentModel = group;
+                if (RawVisual == null) RawVisual = new RawVisual3D(RootVisual);
+                RawVisual.Content = CurrentModel;
+                RawVisual.ShowBoundingBox = true;
+                RawVisual.showHideBoundingBox();
+                RootVisual.Children.Add(RawVisual);
+                smileMode = "RAW";
+                ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
+                HelixView.ZoomExtents(100);
+            }
+        }
+
+        private void LoadJawFile(string CurrentModelPath)
+        {
+            JawVisual3D jv = null;
+            jv = (JawVisual3D)SmileModelImporter.Load(CurrentModelPath);
+            if (jv != null)
+            {
+                if(RootVisual.Children.Contains(JawVisual)) RootVisual.Children.Remove(JawVisual);
+                JawVisual = null;
+                JawVisual = jv;
+                RootVisual.Children.Add(JawVisual);
+                smileMode = "JAW";
+
+                if (JawVisual.selectedGum != null)
+                {
+                    drawWires();
+                }
+
+                //if (!HelixView.Viewport.Children.Contains(RootVisual))                    HelixView.Viewport.Children.Add(RootVisual);
+                window.chartPanel.Visibility = Visibility.Visible;
+                ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
+            }
+
+            HelixView.ZoomExtents(100);
+        }
+
         private void FileOpen()
         {
             CurrentModelPath = FileDialogService.OpenFileDialog("models", null, OpenFileFilter, ".3ds");
@@ -372,29 +657,7 @@ namespace smileUp
             _rootVisual.Children.Add(rawVisual);
 
             //*/
-            
-            JawVisual3D jv = null;
-            jv = (JawVisual3D)SmileModelImporter.Load(CurrentModelPath);
-            if (jv != null)
-            {
-                RootVisual.Children.Remove(JawVisual);
-                JawVisual = null;
-                JawVisual = jv;
-                RootVisual.Children.Add(JawVisual);
-                smileMode = "JAW";
-
-                if (JawVisual.selectedGum != null)
-                {
-                    drawWires();
-                }
-
-                //if (!HelixView.Viewport.Children.Contains(RootVisual))                    HelixView.Viewport.Children.Add(RootVisual);
-                window.chartPanel.Visibility = Visibility.Visible;
-
-                ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
-            }
-
-            HelixView.ZoomExtents(0);
+            LoadJawFile(CurrentModelPath);
 #if !DEBUG
             }
             catch (Exception e)
@@ -403,6 +666,7 @@ namespace smileUp
             }
 #endif
         }
+
 
 
         private void FileOpenRaw()
@@ -554,25 +818,44 @@ namespace smileUp
             return new Point3D(x, y, z);
         }
 
-        internal void showHideRawVisual()
+        internal void showHideRawVisual(bool b)
         {
             if (RawVisual != null)
             {
-                if (RootVisual.Children.Contains(RawVisual))
+                try
+                {
+                    if (b)
+                        RootVisual.Children.Add(RawVisual);
+                    else
+                        RootVisual.Children.Remove(RawVisual);
+                }
+                catch (Exception e) { }
+
+                /*if (RootVisual.Children.Contains(RawVisual))
                 {
                     RootVisual.Children.Remove(RawVisual);
                 }
                 else
                 {
                     RootVisual.Children.Add(RawVisual);
-                }
+                }*/
             }
         }
 
-        internal void showHideJawVisual()
+        internal void showHideJawVisual(bool b)
         {
             if (JawVisual != null)
             {
+                try
+                {
+                    if (b)
+                        RootVisual.Children.Add(JawVisual);
+                    else
+                        RootVisual.Children.Remove(JawVisual);
+                }
+                catch (Exception e) { }
+
+                /*
                 if (RootVisual.Children.Contains(JawVisual))
                 {
                     RootVisual.Children.Remove(JawVisual);
@@ -580,7 +863,7 @@ namespace smileUp
                 else
                 {
                     RootVisual.Children.Add(JawVisual);
-                }
+                }*/
             }
         }
 
@@ -592,6 +875,7 @@ namespace smileUp
                 GeometryModel3D gumModel = RawVisual.grabUpperPlane();
                 if (JawVisual == null) JawVisual = new JawVisual3D(new Patient());
                 JawVisual.replaceGum(gumModel);
+                MessageBox.Show("Processing is done.", "Cutting Mesh");
             }
 
         }
@@ -707,6 +991,7 @@ namespace smileUp
                 {
                     JawVisual.addTeeth(models);
                 }
+                MessageBox.Show("Processing is done.", "Manual Segmentation");
             }
 
         }
@@ -755,7 +1040,13 @@ namespace smileUp
         {
             JawVisual.displayWireContainer(f);
         }
-		
+
+
+        public void updateBraceLocation(string braceid, int oldLocation, int newValue)
+        {
+            JawVisual.updateBraceLocation(braceid, oldLocation, newValue);
+        }
+
     }
 
     public interface IFileDialogService
