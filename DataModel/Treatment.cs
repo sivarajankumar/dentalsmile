@@ -16,6 +16,6 @@ namespace smileUp.DataModel
         public string Room { get; set; }
         
         public List<SmileFile> Files { get; set; }
-        public string TRefId { get; set; }
+        public string RefId { get; set; }
     }
 }

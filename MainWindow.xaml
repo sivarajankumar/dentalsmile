@@ -30,6 +30,8 @@
                 <MenuItem Header="_OpenRaw..." Command="{Binding FileOpenRawCommand}" />
                 <MenuItem Header="_ExportRaw..." Command="{Binding FileExportRawCommand}" IsEnabled="False"/>
                 <Separator/>
+                <MenuItem Header="_Export to STL..." Command="{Binding FileExportStlCommand}" />
+                <Separator/>
                 <MenuItem Header="E_xit" Command="{Binding FileExitCommand}"/>
             </MenuItem>
             <MenuItem Header="_Edit">
@@ -64,7 +66,7 @@
             <ToolBar Band="1" FlowDirection="LeftToRight">
                 <ToggleButton Content="{smileUp:Image /Icons/111.png}" x:Name="AlignObjectBtn"  ToolTip="Show Manipulator" Click="AlignObjectBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/225.png}" x:Name="AddPlaneBtn" ToolTip="Add Plane" Click="AddPlaneBtn_Click"/>
-                <Button Content="{smileUp:Image /Icons/106.png}" x:Name="GrabUpperMeshBtn" ToolTip="Cut" Click="GrabUpperMeshBtn_Click" />
+                <Button Content="{smileUp:Image /Icons/106.png}" x:Name="CutMeshBtn" ToolTip="Cut" Click="CutMeshBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/202.png}" x:Name="TeethMarkerBtn"  ToolTip="Teeth Marker" Click="TeethMarkerBtn_Click" />
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">

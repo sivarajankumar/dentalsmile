@@ -132,7 +132,7 @@ namespace smileUp
             }
         }
 
-        internal GeometryModel3D grabUpperPlane()
+        internal GeometryModel3D cutByPlane()
         {
             var p = new Point3D(0, 0, 0);
             

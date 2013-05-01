@@ -45,7 +45,7 @@ namespace smileUp
 		//added by achie
         int hit = 0;
         private readonly List<Point3D> mpoints = new List<Point3D>();
-        public IList<TeethTextItem> TextItems { get; set; }
+        //public IList<TeethTextItem> TextItems { get; set; }
 
         private static MeasurementForm measurementForm;
         private static Forms.MeasurementForm mForm;
@@ -504,10 +504,7 @@ namespace smileUp
             return Vector3D.CrossProduct(v0, v1);
         }
 
-
-
-       
-       private void cloneObject_Click(object sender, RoutedEventArgs e)
+        private void cloneObject_Click(object sender, RoutedEventArgs e)
         {
             Model3DGroup mg = (Model3DGroup) vm.CurrentModel;
             Model3DGroup cl = mg.Clone();
@@ -525,7 +522,7 @@ namespace smileUp
             d.Children.Add(cl);
         }
 
-       ModelVisual3D GetHitTestResult(Point location)
+        ModelVisual3D GetHitTestResult(Point location)
        {
            HitTestResult result = VisualTreeHelper.HitTest(view1, location);
            if (result != null && result.VisualHit is ModelVisual3D)
@@ -538,9 +535,9 @@ namespace smileUp
        }
 
 
-       Point3DCollection points;
-       Vector3DCollection vectors ;
-       List<BraceVisual3D> bracesModel;
+        Point3DCollection points;
+        Vector3DCollection vectors ;
+        List<BraceVisual3D> bracesModel;
 
         private void view1_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -897,7 +894,7 @@ namespace smileUp
             }
         }
 
-        private void GrabUpperMeshBtn_Click(object sender, RoutedEventArgs e)
+        private void CutMeshBtn_Click(object sender, RoutedEventArgs e)
         {
             busyIndicator.IsBusy = true;
             busyIndicator.BusyContent = "Processing Segmentation....Please Wait....";
@@ -905,7 +902,7 @@ namespace smileUp
 
             if (AddPlaneBtn.IsChecked == true)
             {
-                vm.grabUpperMesh();
+                vm.cutMesh();
             }
             else
             {
@@ -1316,7 +1313,8 @@ namespace smileUp
 
          private void print3dBtn_Click(object sender, RoutedEventArgs e)
          {
-             MessageBox.Show("I'm sorry, this feature isn't implemented yet.");
+             vm.StlFileExport();
+             //MessageBox.Show("I'm sorry, this feature isn't implemented yet.");
          }
     }
 

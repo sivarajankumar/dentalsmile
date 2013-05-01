@@ -358,8 +358,8 @@ namespace smileUp
         public bool InsertTreatment(Treatment t)
         {
             string tableName = "TREATMENT";
-            string columns = "(id, phase, dentist, patient, tdate, ttime, room, tref, created,createdBy)";
-            string values = "('" + t.Id + "'," + t.Phase.Id + ",'" + t.Dentist.UserId + "','" + t.Patient.Id + "','" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "','" + t.TreatmentTime + "','" + t.Room + "','" + "','" + t.TRefId+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
+            string columns = "(id, phase, dentist, patient, tdate, ttime, room, refid, created,createdBy)";
+            string values = "('" + t.Id + "'," + t.Phase.Id + ",'" + t.Dentist.UserId + "','" + t.Patient.Id + "','" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "','" + t.TreatmentTime + "','" + t.Room + "','" + "','" + t.RefId+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -375,7 +375,7 @@ namespace smileUp
         public void UpdateTreatment(Treatment t)
         {
             string tableName = "TREATMENT";
-            string setColumns = "phase =" + t.Phase.Id + ", dentist='" + t.Dentist.UserId + "', patient='" + t.Patient.Id + "', tdate='" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "', ttime='" + t.TreatmentTime + "',room='" + t.Room + "',tref='" + t.TRefId+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
+            string setColumns = "phase =" + t.Phase.Id + ", dentist='" + t.Dentist.UserId + "', patient='" + t.Patient.Id + "', tdate='" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "', ttime='" + t.TreatmentTime + "',room='" + t.Room + "',refid='" + t.RefId+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = '" + t.Id + "'";
 
             if (this.OpenConnection() == true)
@@ -389,8 +389,8 @@ namespace smileUp
         public bool InsertFileInfo(SmileFile t)
         {
             string tableName = "PFILE";
-            string columns = "(id, filename, description, patient, screenshot, type, created,createdBy)";
-            string values = "('" + t.Id + "','" + t.FileName + "','" + t.Description + "','" + t.Patient.Id + "','" + t.Screenshot + "'," + t.Type + ",'" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
+            string columns = "(id, filename, description, patient, screenshot, type, refid, created,createdBy)";
+            string values = "('" + t.Id + "','" + t.FileName + "','" + t.Description + "','" + t.Patient.Id + "','" + t.Screenshot + "'," + t.Type + ",'" + t.RefId+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -407,7 +407,7 @@ namespace smileUp
         public void UpdateFileInfo(SmileFile t)
         {
             string tableName = "PFILE";
-            string setColumns = "filename='" + t.FileName + "', description='" + t.Description + "', patient='" + t.Patient.Id + "', screenshot='" + t.Screenshot + "', type=" + t.Type + ", modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='"+User+"' ";
+            string setColumns = "filename='" + t.FileName + "', description='" + t.Description + "', patient='" + t.Patient.Id + "', screenshot='" + t.Screenshot + "', type=" + t.Type + ", refid='" + t.RefId+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = '" + t.Id + "'";
 
             if (this.OpenConnection() == true)
@@ -568,6 +568,7 @@ namespace smileUp
             p.Description = GetStringSafe(dataReader, "description");
             p.Screenshot = GetStringSafe(dataReader, "screenshot");
             p.Type = dataReader.GetInt32("type");
+            p.RefId = GetStringSafe(dataReader, "refid");
             
             if(nested) p.Patient = findPatientById(GetStringSafe(dataReader, "patient"));
 
@@ -592,7 +593,7 @@ namespace smileUp
             p.Room = GetStringSafe(dataReader, "room");
             p.TreatmentDate = dataReader.GetDateTime("tdate");
             p.TreatmentTime = GetStringSafe(dataReader, "ttime");
-            p.TRefId = GetStringSafe(dataReader, "tref");
+            p.RefId = GetStringSafe(dataReader, "refid");
 
             p.Patient = findPatientById(GetStringSafe(dataReader, "patient"));
             //p.Phase = findPhaseById(dataReader.GetInt32("phase"));

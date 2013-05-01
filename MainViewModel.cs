@@ -104,6 +104,7 @@ namespace smileUp
         public ICommand ViewZoomExtentsCommand { get; set; }
         public ICommand EditCopyXamlCommand { get; set; }
         public ICommand EditClearAreaCommand { get; set; }
+        public ICommand FileExportStlCommand { get; set; }
 
         //private const string OpenFileFilter = "3D model files (*.3ds;*.obj;*.lwo;*.stl)|*.3ds;*.obj;*.objz;*.lwo;*.stl";
         private const string OpenFileFilter = "3D model files (*.obj)|*.obj";
@@ -242,6 +243,9 @@ namespace smileUp
             ViewZoomExtentsCommand = new DelegateCommand(ViewZoomExtents);
             EditCopyXamlCommand = new DelegateCommand(CopyXaml);
             EditClearAreaCommand = new DelegateCommand(ClearArea);
+            FileExportStlCommand = new DelegateCommand(StlFileExport);            
+
+            
             ApplicationTitle = "Dental Smile - 3D Viewer";
 
             ModelToBaseMarker = new Dictionary<Model3D, BaseMarker>();
@@ -277,7 +281,7 @@ namespace smileUp
                 {
                     Treatment.Id = null;
                 }
-                Treatment.TRefId = treatment.Id;
+                Treatment.RefId = treatment.Id;
             }
             //if (file != null) SmileFile = file;
 
@@ -373,7 +377,43 @@ namespace smileUp
             using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage((System.Drawing.Image)resizedBitmap))
                 g.DrawImage(sourceBitmap, 0, 0, (int)newWidth, (int)newHeight);
             return resizedBitmap;
-        }  
+        }
+
+        public void StlFileExport()
+        {
+            var path = FileDialogService.SaveFileDialog(null, null, "StereoLithography Files (*.stl)|*.stl;", ".stl");
+            if (path == null)
+                return;
+            var e = new SmileStlExporter(path);
+            //e.Export(CurrentModel);
+            if (window.ShowHideJawVisualBtn.IsChecked.Value)
+            {
+                if (window.ShowHideWireVisualBtn.IsChecked.Value && window.ShowHideBraceVisualBtn.IsChecked.Value && window.ShowHideTeethVisualBtn.IsChecked.Value)
+                {
+                    ((SmileStlExporter)e).Export(JawVisual, Patient);
+                }
+                else
+                {
+                    if (window.ShowHideWireVisualBtn.IsChecked.Value)
+                    {
+                        ((SmileStlExporter)e).Export(JawVisual.wc, Patient);
+                    }
+
+                    if (window.ShowHideBraceVisualBtn.IsChecked.Value)
+                    {
+                        ((SmileStlExporter)e).Export(JawVisual.bc, Patient);
+                    }
+
+                    if (window.ShowHideTeethVisualBtn.IsChecked.Value)
+                    {
+                        ((SmileStlExporter)e).Export(JawVisual.tc, Patient);
+                    }
+                }
+
+                MessageBox.Show("Data Exported to STL file format at "+path+".", "STL Export - Successfully");
+            }            
+        }
+
 
         private void DirectFileExport(string notes)
         {
@@ -868,11 +908,11 @@ namespace smileUp
         }
 
 
-        internal void grabUpperMesh()
+        internal void cutMesh()
         {
             if (RawVisual != null)
             {
-                GeometryModel3D gumModel = RawVisual.grabUpperPlane();
+                GeometryModel3D gumModel = RawVisual.cutByPlane();
                 if (JawVisual == null) JawVisual = new JawVisual3D(new Patient());
                 JawVisual.replaceGum(gumModel);
                 MessageBox.Show("Processing is done.", "Cutting Mesh");
