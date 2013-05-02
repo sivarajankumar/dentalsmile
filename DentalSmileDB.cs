@@ -251,7 +251,7 @@ namespace smileUp
         public void InsertPatient(Patient p)
         {
             string tableName = "PATIENT";
-            string columns = "(id, fname, lname, birthdate, birthplace, gender,address1,address2,city,phone, created,createdBy)";
+            string columns = "(id, fname, lname, birthdate, birthplace, gender, address1,address2,city,phone)";
             string values = "('" + p.Id + "','" + p.FirstName + "','" + p.LastName + "'," + p.BirthDate.ToString(Smile.DATE_FORMAT) + ",'" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "," + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + ",'"+User+"')";
             string query = "INSERT INTO "+tableName + " "+ columns +" values "+ values +" ;";
 

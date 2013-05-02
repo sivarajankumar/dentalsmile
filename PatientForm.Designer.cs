@@ -118,7 +118,7 @@
             this.txt_id.Name = "txt_id";
             this.txt_id.Size = new System.Drawing.Size(100, 20);
             this.txt_id.TabIndex = 31;
-            this.txt_id.TextChanged += new System.EventHandler(this.txt_id_TextChanged);
+            //this.txt_id.TextChanged += new System.EventHandler(this.txt_id_TextChanged);
             // 
             // btn_save
             // 

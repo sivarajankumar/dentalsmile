@@ -59,6 +59,13 @@ namespace smileUp
             form.ShowDialog();
         }
 
+
+        private void btnPatientAdd_Click(object sender, RoutedEventArgs e)
+        {
+            PatientForm form = new PatientForm();
+            form.ShowDialog();
+        } 
+
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsForm s = new SettingsForm();

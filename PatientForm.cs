@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using smileUp.DataModel;
+using System.Data;
 
 namespace smileUp
 {
@@ -17,25 +19,28 @@ namespace smileUp
         {
             InitializeComponent();
             dbConnect = new DentalSmileDB();
+            
         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
+            
+            Patient p = new Patient(); 
 
-            string id = txt_id.Text;
-            string fname = txt_fname.Text;
-            string lname = txt_lname.Text;
-            DateTime birthdate = DateTime.Parse(dt_birthdate.Text);
-            string birthplace = txt_birthplace.Text;
-            string gender;
-            string address1 = txt_address1.Text;
-            string address2 = txt_address2.Text;
-            string city = txt_city.Text;
-            string phone = txt_phone.Text;
-            string created;
-            string createdBy;
+            p.Id= txt_id.Text;
+            p.Name = txt_fname.Text;
+            p.LastName = txt_lname.Text;
+            p.BirthDate = DateTime.Parse(dt_birthdate.Text);
+            p.BirthPlace= txt_birthplace.Text;
+            p.Gender = "";
+            p.Address1 = txt_address1.Text;
+            p.Address2 = txt_address2.Text;
+            p.City= txt_city.Text;
+            p.Phone = txt_phone.Text;
+            // created;
+            //string createdBy;
 
-            dbConnect.InsertPatient(id, fname, lname, birthdate, birthplace, address1, address2, city, phone);
+            dbConnect.InsertPatient(p);
 
             //MessageBox.Show("Data Patient is saved!");
             DialogResult result = MessageBox.Show("Data Patient is saved successfully", "Continue to Scanning?",

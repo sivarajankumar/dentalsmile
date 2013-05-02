@@ -1291,7 +1291,8 @@ namespace smileUp
 
          private void Patient_Click(object sender, RoutedEventArgs e)
          {
-             PatientRecordForm a = new PatientRecordForm();
+            // PatientRecordForm a = new PatientRecordForm();
+             PatientForm a = new PatientForm();
              a.Show();
          }
 

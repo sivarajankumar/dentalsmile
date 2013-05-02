@@ -44,6 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Components\AvalonDock.dll</HintPath>
     </Reference>
+    <Reference Include="HelixToolkit.Wpf">
+      <HintPath>..\helixtoolkit_07a74f1fe190\Source\HelixToolkit.Wpf\bin\Debug\HelixToolkit.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="QuantumConcepts.Common">
       <HintPath>Components\QuantumConcepts.Common.dll</HintPath>
@@ -71,10 +74,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFLibrary">
-      <HintPath>.\WPFLibrary.dll</HintPath>
+      <HintPath>Components\WPFLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>.\Xceed.Wpf.Toolkit.dll</HintPath>
+      <HintPath>Components\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +135,12 @@
     <Compile Include="DentalSmileDB.cs" />
     <Compile Include="ListMenusControl.xaml.cs">
       <DependentUpon>ListMenusControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PatientForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatientForm.Designer.cs">
+      <DependentUpon>PatientForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Smile.cs" />
     <Compile Include="DataModel\SmileFile.cs" />
@@ -344,6 +353,9 @@
     <EmbeddedResource Include="MeasurementForm.resx">
       <DependentUpon>MeasurementForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PatientForm.resx">
+      <DependentUpon>PatientForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PatientRecordForm.resx">
       <DependentUpon>PatientRecordForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -431,12 +443,6 @@
     <Resource Include="Icons\del_teeth.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\helixtoolkit_07a74f1fe190\Source\HelixToolkit.Wpf\HelixToolkit.Wpf_NET40.csproj">
-      <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
-      <Name>HelixToolkit.Wpf_NET40</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\bg.png" />
   </ItemGroup>
   <ItemGroup>
@@ -467,6 +473,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\dentalsmile32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
