@@ -31,9 +31,9 @@ namespace smileUp.Forms
             DB = new DentalSmileDB();
             app = Application.Current as App;
 
-            if (app.patient != null)
+            if (App.patient != null)
             {
-                Treatments = DB.findTreatmentsByPatientId(app.patient.Id);
+                Treatments = DB.findTreatmentsByPatientId(App.patient.Id);
             }
             else
             {
@@ -52,7 +52,7 @@ namespace smileUp.Forms
                 Treatment t =  treatmentsDataGrid.SelectedItem as Treatment;
                 SmileFile file = filesDataGrid.SelectedItem as SmileFile;
                 
-                app.patient = t.Patient;
+                App.patient = t.Patient;
 
                 MainWindow m = new MainWindow(t,file,true);
                 m.ShowDialog();
@@ -114,7 +114,7 @@ namespace smileUp.Forms
             {
                 Treatment t = treatmentsDataGrid.SelectedItem as Treatment;
                 SmileFile file = filesDataGrid.SelectedItem as SmileFile;
-                app.patient = t.Patient;
+                App.patient = t.Patient;
                 MainWindow m = new MainWindow(t, file, true);
                 m.Show();
                 this.Close();

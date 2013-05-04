@@ -20,16 +20,32 @@ namespace smileUp
     public partial class Dashboard : Window
     {
         App app;
+        DentalSmileDB DB;
+
         public Dashboard()
         {
             InitializeComponent();
             LoadSettings();
+            
+            //detect if Admin  is NULL
+            if (DB.selectDefaultAdmin() == null)
+            {
+                AdminPasswordDialog dlg = new AdminPasswordDialog();
+                dlg.ShowDialog();
+            }
+
+            if (App.user == null)
+            {
+                //ChangePasswordDialog dlg = new ChangePasswordDialog();
+                LoginDialog dlg = new LoginDialog();
+                dlg.ShowDialog();
+            }
         }
 
         private void LoadSettings()
         {
             app = Application.Current as App;
-
+            DB = new DentalSmileDB();
             ///TODO
         }
 
@@ -80,6 +96,12 @@ namespace smileUp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //this.Title = DateTime.Now.ToString(Smile.LONG_DATE_FORMAT);
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            LoginDialog dlg = new LoginDialog();
+            dlg.ShowDialog();
         }
     }
 }

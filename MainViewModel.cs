@@ -207,6 +207,9 @@ namespace smileUp
             ViewZoomExtentsCommand = new DelegateCommand(ViewZoomExtents);
             EditCopyXamlCommand = new DelegateCommand(CopyXaml);
             EditClearAreaCommand = new DelegateCommand(ClearArea);
+            FileExportStlCommand = new DelegateCommand(StlFileExport);            
+
+
             ApplicationTitle = "Dental Smile - 3D Viewer";
 
             ModelToBaseMarker = new Dictionary<Model3D, BaseMarker>();
@@ -267,8 +270,8 @@ namespace smileUp
         {
             DB = new DentalSmileDB();
             app = Application.Current as App;
-            if (app.patient == null) app.patient = new Patient();
-            Patient = app.patient;
+            if (App.patient == null) App.patient = new Patient();
+            Patient = App.patient;
 
             if (treatment == null)
             {
@@ -394,9 +397,10 @@ namespace smileUp
                 }
                 else
                 {
-                    if (window.ShowHideWireVisualBtn.IsChecked.Value)
+
+                    if (window.ShowHideTeethVisualBtn.IsChecked.Value)
                     {
-                        ((SmileStlExporter)e).Export(JawVisual.wc, Patient);
+                        ((SmileStlExporter)e).Export(JawVisual.tc, Patient);
                     }
 
                     if (window.ShowHideBraceVisualBtn.IsChecked.Value)
@@ -404,13 +408,16 @@ namespace smileUp
                         ((SmileStlExporter)e).Export(JawVisual.bc, Patient);
                     }
 
-                    if (window.ShowHideTeethVisualBtn.IsChecked.Value)
+                    if (window.ShowHideWireVisualBtn.IsChecked.Value)
                     {
-                        ((SmileStlExporter)e).Export(JawVisual.tc, Patient);
+                        ((SmileStlExporter)e).Export(JawVisual.wc, Patient);
                     }
                 }
+                
+                ((SmileStlExporter)e).Close();
 
-                MessageBox.Show("Data Exported to STL file format at "+path+".", "STL Export - Successfully");
+                if(((SmileStlExporter)e).Finish)
+                    MessageBox.Show("Data Exported to STL file format at "+path+".", "STL Export - Successfully");
             }            
         }
 

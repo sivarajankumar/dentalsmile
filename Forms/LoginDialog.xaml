@@ -1,0 +1,49 @@
+﻿<Window x:Class="smileUp.Forms.LoginDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wpfsl="http://schemas.softarcs.com/wpfsmartlibrary"
+		  WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="#FF16499A"
+        Title="LoginDialog" MinWidth="600" MinHeight="550" Unloaded="Window_Unloaded" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="550" d:DesignWidth="600">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPFSmartLibraryLight35;component/ResourceDictionaries/CommonRD.xaml" />
+                <ResourceDictionary Source="../ResourceDictionaries/LoginDialogRD.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="This" Background="{StaticResource GreenTileBrush}" />
+        <Label Grid.Row="0" Grid.Column="1" Content="is" Background="{StaticResource TomatoTileBrush}" />
+        <Label Grid.Row="0" Grid.Column="2" Content="the" Background="{StaticResource PurpleTileBrush}" />
+        <Label Grid.Row="1" Grid.Column="0" Content="Main" Background="{StaticResource BlueTileBrush}" />
+        <Label Grid.Row="1" Grid.Column="1" Content="Application" Background="{StaticResource PlumTileBrush}" />
+        <Label Grid.Row="1" Grid.Column="2" Content="Screen" Background="{StaticResource DarkRedTileBrush}" />
+        <Button x:Name="btnLock" Grid.Row="2" Grid.Column="1" Content="Lock" Click="btnLock_Click" />
+
+        <!--~~~~~~~~~  Demo 1 (english labels and commanding "full mvvm - no code behind needed")  ~~~~~~~~~-->
+        <wpfsl:SmartLoginOverlay x:Name="SmartLoginOverlayControl"
+										 FullSpan="On"
+										 IsUserOptionAvailable="True"
+										 UserName="{Binding UserName}"
+										 Password="{Binding Password}"
+										 UserImageSource="{Binding UserImageSource}"
+										 AdditionalSystemInfo="Locked"
+										 Command="{Binding SubmitCommand}"
+										 CommandParameter="{Binding RelativeSource={RelativeSource Self} }" Grid.ColumnSpan="3" Margin="0,0,0,2" Grid.RowSpan="3" />
+
+        <!--**** Try also setting the Background Property to this : Background="#FF182067"    ****-->
+    </Grid>
+</Window>

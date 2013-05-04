@@ -76,6 +76,9 @@
     <Reference Include="WPFLibrary">
       <HintPath>Components\WPFLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="WPFSmartLibraryLight35">
+      <HintPath>Components\WPFSmartLibraryLight35.dll</HintPath>
+    </Reference>
     <Reference Include="Xceed.Wpf.Toolkit">
       <HintPath>Components\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
@@ -87,6 +90,15 @@
     </ApplicationDefinition>
     <Compile Include="DataModel\MeasurementTeeth.cs" />
     <Compile Include="DataModel\Measurement.cs" />
+    <Compile Include="Forms\AdminPasswordDialog.xaml.cs">
+      <DependentUpon>AdminPasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangePasswordDialog.xaml.cs">
+      <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LoginDialog.xaml.cs">
+      <DependentUpon>LoginDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MeasurementForm.xaml.cs">
       <DependentUpon>MeasurementForm.xaml</DependentUpon>
     </Compile>
@@ -167,6 +179,7 @@
     <Compile Include="Stl\Normal.cs" />
     <Compile Include="Stl\STL.cs" />
     <Compile Include="Stl\Vertex.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="WpfDashboard.xaml.cs">
       <DependentUpon>WpfDashboard.xaml</DependentUpon>
     </Compile>
@@ -231,7 +244,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Forms\AdminPasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\AppointmentForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\ChangePasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\LoginDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -288,6 +313,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="NavigationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\LoginDialogRD.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -441,6 +470,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\del_teeth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\3dengine\helixtoolkit-07a74f1fe190\Source\HelixToolkit.Wpf\HelixToolkit.Wpf_NET40.csproj">
+      <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
+      <Name>HelixToolkit.Wpf_NET40</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\bg.png" />

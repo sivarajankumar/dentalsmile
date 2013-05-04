@@ -9,6 +9,7 @@ using System.IO;
 using MySql.Data.MySqlClient;
 using smileUp.DataModel;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace smileUp
 {
@@ -657,10 +658,10 @@ namespace smileUp
             return p;
         }
 
-        private SmileUser login(string id, string password)
+        public bool login(string id, string password, ref SmileUser p)
         {
-            string query = "SELECT * FROM SmileUser WHERE userid = @userid";
-            SmileUser p = null;
+            string query = "SELECT * FROM SmileUser WHERE LCASE(userid) = LCASE(@userid)";
+            string dbpassword  = null;
             if (this.OpenConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
@@ -672,7 +673,7 @@ namespace smileUp
                     p = new SmileUser();
 
                     p.UserId = GetStringSafe(dataReader, "userid");
-                    p.Password = GetStringSafe(dataReader, "password");
+                    dbpassword = GetStringSafe(dataReader, "password");
                     //p.Person = findDentistByUserId(dataReader.GetString("userid"));
                 }
                 dataReader.Close();
@@ -682,11 +683,31 @@ namespace smileUp
             if (p != null)
             {
                 //crosscheck the password using MD5
+                if (CalculateMD5Hash(password).Equals(dbpassword))
+                {
+                    p.Dentist = findDentistByUserId(p.UserId);
+                    return true;
+                }
             }
 
-            return p;
+            return false ;
         }
 
+        public string CalculateMD5Hash(string input)
+        {
+            // step 1, calculate MD5 hash from input
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hash = md5.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
         private SmileUser findUserByUserId(string id)
         {
             string query = "SELECT * FROM SmileUser WHERE userid = @userid";
@@ -1190,6 +1211,58 @@ namespace smileUp
         public static string GetStringSafe(IDataReader reader, string indexName, string defaultValue)
         {
             return GetStringSafe(reader, reader.GetOrdinal(indexName), defaultValue);
+        }
+
+        internal void updateAdmin(string p)
+        {
+            string tableName = "SmileUser";
+            string setColumns = "password='" + CalculateMD5Hash(p)+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
+            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = 'root'";
+
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                this.CloseConnection();
+            }
+        }
+
+        internal SmileUser selectDefaultAdmin()
+        {
+            string query = "SELECT * FROM SmileUser WHERE userid= @userid";
+            SmileUser p = null;
+            if (this.OpenPhaseConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, phaseConnection);
+                cmd.Parameters.Add(new MySqlParameter("userid", "root"));
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    p = toSmileUser(dataReader);
+                }
+                dataReader.Close();
+                this.ClosePhaseConnection();
+            }
+            return p;
+        }
+
+        internal bool InsertDefaultAdmin(string p)
+        {
+            string tableName = "SmileUser";
+            string columns = "(userid, password, created,createdBy)";
+            string values = "('root','" + CalculateMD5Hash(p)+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
+            string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
+
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                this.CloseConnection();
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -742,7 +742,13 @@ namespace smileUp
                                 if (gs.Length > 3 && gs[3].StartsWith("brace"))
                                 {
                                     teeth = getTeethVisualFromGum(gs[2], gum);
-
+                                    if (teeth == null)
+                                    {
+                                        teeth = new TeethVisual3D(gum);
+                                        teeth.Id = gs[1] + "_" + gs[2];
+                                        //gum.Children.Add(teeth);
+                                        gum.tc.Children.Add(teeth);
+                                    }
                                     BraceVisual3D brace = new BraceVisual3D(teeth, false);
                                     brace.Id = gs[1] + "_" + gs[2] + "_" + gs[3];
 
@@ -759,8 +765,15 @@ namespace smileUp
                                 }
                                 else
                                 {
-                                    teeth = new TeethVisual3D(gum);
-                                    teeth.Id = gs[1] + "_" + gs[2];
+                                    teeth = getTeethVisualFromGum(gs[2], gum);
+                                    if (teeth == null)
+                                    {
+                                        teeth = new TeethVisual3D(gum);
+                                        teeth.Id = gs[1] + "_" + gs[2];
+
+                                        //gum.Children.Add(teeth);
+                                        gum.tc.Children.Add(teeth);
+                                    }
 
                                     var modelGroup = new Model3DGroup();
                                     foreach (var gm in g.CreateModels())
@@ -768,9 +781,8 @@ namespace smileUp
                                         modelGroup.Children.Add(gm);
                                     }
                                     teeth.Content = modelGroup;
-                                    //gum.Children.Add(teeth);
-                                    gum.tc.Children.Add(teeth);
-                                }                                
+
+                                }
                             }
                             else
                             {
@@ -796,7 +808,13 @@ namespace smileUp
                             if (gs.Length > 3 && gs[3].StartsWith("brace"))
                             {
                                 teeth = getTeethVisualFromGum(gs[1], gum);
-
+                                if (teeth == null)
+                                {
+                                    teeth = new TeethVisual3D(gum);
+                                    teeth.Id = gs[1] + "_" + gs[2];
+                                    //gum.Children.Add(teeth);
+                                    gum.tc.Children.Add(teeth);
+                                }
                                 BraceVisual3D brace = new BraceVisual3D(teeth, false);
                                 brace.Id = gs[1] + "_" + gs[2] + "_" + gs[3];
 
@@ -813,8 +831,17 @@ namespace smileUp
                             }
                             else
                             {
-                                teeth = new TeethVisual3D(gum);
-                                teeth.Id = gs[1] + "_" + gs[2];
+                                teeth = getTeethVisualFromGum(gs[1], gum);
+                                if (teeth == null)
+                                {
+                                    teeth = new TeethVisual3D(gum);
+                                    teeth.Id = gs[1] + "_" + gs[2];
+
+                                    //gum.Children.Add(teeth);
+                                    gum.tc.Children.Add(teeth);
+                                } 
+                                //teeth = new TeethVisual3D(gum);
+                                //teeth.Id = gs[1] + "_" + gs[2];
 
                                 var modelGroup = new Model3DGroup();
                                 foreach (var gm in g.CreateModels())
@@ -823,7 +850,7 @@ namespace smileUp
                                 }
                                 teeth.Content = modelGroup;
                                 //gum.Children.Add(teeth);
-                                gum.tc.Children.Add(teeth);
+                                //gum.tc.Children.Add(teeth);
                             }
 
                         }

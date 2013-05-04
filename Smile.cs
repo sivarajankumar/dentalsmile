@@ -9,8 +9,10 @@ namespace smileUp
 {
     public class Smile
     {
-        public const string SCANNED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ScannedFiles\\";
-        public const string MANIPULATED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ManipulatedFiles\\";
+        //public const string SCANNED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ScannedFiles\\";
+        //public const string MANIPULATED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ManipulatedFiles\\";
+        public const string SCANNED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ScannedFiles\\";
+        public const string MANIPULATED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ManipulatedFiles\\";
         //public const string SCANNED_PATH = "pack://application:,,,/Resources/ScannedFiles/";
         //public const string MANIPULATED_PATH = "pack://application:,,,/Resources/ManipulatedFiles/";
         public const string PHOTOS_PATH = "pack://application:,,,/Resources/Photos/";

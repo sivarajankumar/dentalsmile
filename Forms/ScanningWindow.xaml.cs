@@ -49,9 +49,9 @@ namespace smileUp.Forms
             //make a treatment
 
             treatment = new Treatment();
-            treatment.Id = db.getTreatmentNewId(app.patient.Id);//generated: patient+sequence
-            treatment.Patient = app.patient;
-            treatment.Dentist = app.user.Dentist;
+            treatment.Id = db.getTreatmentNewId(App.patient.Id);//generated: patient+sequence
+            treatment.Patient = App.patient;
+            treatment.Dentist = App.user.Dentist;
             treatment.Phase = new Phase();// Smile.SCANNING;
             treatment.Room = "R212";//Setting Default Room
             treatment.TreatmentDate = DateTime.Now;
@@ -71,11 +71,11 @@ namespace smileUp.Forms
 
             //and to table
             SmileFile file = new SmileFile();
-            file.Id = db.getSmileFileNewId(app.patient.Id);
+            file.Id = db.getSmileFileNewId(App.patient.Id);
             file.Type = Smile.SCANNING;
             file.FileName = "SCAN"+file.Id+".obj";
             file.Screenshot = "SCAN" + file.Id + ".png";
-            file.Patient = app.patient;
+            file.Patient = App.patient;
             file.Description = textBox1.Text.ToString();//"Describe about some thing by USER";
 
             if (db.InsertFileInfo(file))

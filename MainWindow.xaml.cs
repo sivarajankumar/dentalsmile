@@ -77,6 +77,7 @@ namespace smileUp
             DataContext = vm;
 
             loadTeethNumberToChart();
+            reset();
 
             Loaded += new RoutedEventHandler(OnLoaded);
             _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
@@ -94,7 +95,7 @@ namespace smileUp
 
             app = Application.Current as App;
 
-            if (app.patient == null)
+            if (App.patient == null)
             {
                 MessageBox.Show("Select Patient First!");
                 //show PatientForm
@@ -1144,7 +1145,7 @@ namespace smileUp
 
                 chartPanel.Children.Add(button);
             }
-            reset();
+            //reset();
         }
  
         void button_Checked(object sender, RoutedEventArgs e)

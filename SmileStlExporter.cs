@@ -22,7 +22,8 @@ namespace smileUp
         private readonly StreamWriter writer;
         //private readonly BinaryWriter binaryWriter;
         public bool ExportNormals { get; set; }
-
+        private bool finished = false;
+        public bool Finish { get { return finished; } set { this.finished = value; } }
 
         private STL stlExporter;
         private Patient patient;
@@ -48,8 +49,12 @@ namespace smileUp
             Traverse<GeometryModel3D>(visual, this.ExportModel);
             stlExporter.Facets = faces;
             stlExporter.Write(this.writer);
+            finished = true;
         }
-
+        public void Close()
+        {
+            this.writer.Close();
+        }
         protected void ExportModel(GeometryModel3D model, Transform3D transform)
         {
             //this.writer.WriteLine(string.Format("o object{0}", this.objectNo++));

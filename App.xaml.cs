@@ -14,8 +14,8 @@ namespace smileUp
     /// </summary>
     public partial class App : Application
     {
-        public SmileUser user;
-        public Patient patient;
+        public static SmileUser user;
+        public static Patient patient;
         public Dictionary<string, string> settings = new Dictionary<string, string>();
 
         public void ApplySkin(Uri skinDictionaryUri)

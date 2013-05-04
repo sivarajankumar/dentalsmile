@@ -39,8 +39,8 @@ namespace smileUp.Forms
         {
             Treatment d = new Treatment();
             d.Phase = phases.ElementAt(phaseCombo.SelectedIndex);
-            d.Patient = app.patient;
-            d.Dentist = app.user.Dentist;
+            d.Patient = App.patient;
+            d.Dentist = App.user.Dentist;
             d.Room = roomTextBox.Text.ToLower();
             d.TreatmentDate = DateTime.Now;
             d.TreatmentTime = DateTime.Now.ToString(Smile.TIME_FORMAT);
