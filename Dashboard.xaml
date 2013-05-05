@@ -1,15 +1,34 @@
 ﻿<Window x:Class="smileUp.Dashboard"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Dashboard" Height="300" Width="300" Unloaded="Window_Unloaded" Loaded="Window_Loaded">
-    <Grid>
-        <Button Content="Dentist List " Height="23" HorizontalAlignment="Left" Margin="22,12,0,0" Name="doctorBtn" VerticalAlignment="Top" Width="75" Click="doctorBtn_Click" />
-        <Button Content="Add Dentist" Height="23" HorizontalAlignment="Left" Margin="191,12,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
-        <Button Content="Patient List" Height="23" HorizontalAlignment="Left" Margin="22,89,0,0" Name="btnPatientList" VerticalAlignment="Top" Width="90" />
-        <Button Content="Add Patient " Height="23" HorizontalAlignment="Left" Margin="176,89,0,0" Name="btnPatientAdd" VerticalAlignment="Top" Width="90" Click="btnPatientAdd_Click"/>
-        <Button Content="Treatment List (History)" Height="23" HorizontalAlignment="Left" Margin="22,178,0,0" Name="btnTreatmentList" VerticalAlignment="Top" Width="142" Click="btnTreatmentList_Click" />
-        <Button Content="Treatment Add" Height="23" HorizontalAlignment="Left" Margin="176,178,0,0" Name="btnTreatmentAdd" VerticalAlignment="Top" Width="90" Click="btnTreatmentAdd_Click" />
-        <Button Content="Setting" Height="23" HorizontalAlignment="Left" Margin="191,226,0,0" Name="btnSettings" VerticalAlignment="Top" Width="75" Click="btnSettings_Click" />
-        <Button Content="Login" Height="23" HorizontalAlignment="Left" Margin="121,123,0,0" Name="btnLogin" VerticalAlignment="Top" Width="75" Click="btnLogin_Click" />
-    </Grid>
+        xmlns:local="clr-namespace:smileUp.Views"
+        Background="{DynamicResource MainBackgroundBrush}"
+        Title="Dashboard" Height="602" Width="949" Unloaded="Window_Unloaded" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+
+        <!-- Header Area-->
+        <Border Height="50" DockPanel.Dock="Top" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" x:Name="HeaderBorder" Padding="10,0,10,0" >
+            <DockPanel x:Name="Header" >
+                <TextBlock xml:space="preserve" Opacity="1" FontFamily="Segoe UI" FontSize="24" FontStretch="Normal" FontWeight="Light" TextWrapping="Wrap" Foreground="{DynamicResource HeaderFontColor}" VerticalAlignment="Bottom" Margin="0,0,0,5"><Run Foreground="#FFCFD3DA">Dental</Run><Run FontWeight="Normal">.Smile</Run></TextBlock>
+<!--                <Rectangle Fill="{DynamicResource OGITREV}" Stroke="{x:Null}" HorizontalAlignment="Right" Margin="0,0,0,12" x:Name="Vertigo" Width="120" Height="18" DockPanel.Dock="Right" VerticalAlignment="Bottom" Cursor="Hand"/>
+-->
+            </DockPanel>
+        </Border>
+        <Border x:Name="MenuBorder" VerticalAlignment="Top" DockPanel.Dock="Top" Margin="0,5,0,5">
+        </Border>
+        <Grid x:Name="MainGrid" Grid.IsSharedSizeScope="True" DockPanel.Dock="Top">
+            <Button Content="Dentist List " Height="23" HorizontalAlignment="Left" Margin="22,12,0,0" Name="doctorBtn" VerticalAlignment="Top" Width="75" Click="doctorBtn_Click" />
+            <Button Content="Add Dentist" Height="23" HorizontalAlignment="Left" Margin="112,12,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+            <Button Content="Patient List" Height="23" HorizontalAlignment="Left" Margin="22,65,0,0" Name="btnPatientList" VerticalAlignment="Top" Width="90" />
+            <Button Content="Add Patient " Height="23" HorizontalAlignment="Left" Margin="112,65,0,0" Name="btnPatientAdd" VerticalAlignment="Top" Width="90" />
+            <Button Content="Treatment List (History)" Height="23" HorizontalAlignment="Left" Margin="22,160,0,0" Name="btnTreatmentList" VerticalAlignment="Top" Width="119" Click="btnTreatmentList_Click" />
+            <Button Content="Treatment Add" Height="23" HorizontalAlignment="Left" Margin="112,118,0,0" Name="btnTreatmentAdd" VerticalAlignment="Top" Width="90" Click="btnTreatmentAdd_Click" />
+            <Button Content="Setting" Height="23" HorizontalAlignment="Left" Margin="127,217,0,0" Name="btnSettings" VerticalAlignment="Top" Width="75" Click="btnSettings_Click" />
+            <Button Content="Login" Height="23" HorizontalAlignment="Left" Margin="22,217,0,0" Name="btnLogin" VerticalAlignment="Top" Width="75" Click="btnLogin_Click" />
+            
+            <local:LoginControl x:Name="WelcomeUserControl" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+
+    </DockPanel>
+    
 </Window>

@@ -44,9 +44,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Components\AvalonDock.dll</HintPath>
     </Reference>
-    <Reference Include="HelixToolkit.Wpf">
-      <HintPath>..\helixtoolkit_07a74f1fe190\Source\HelixToolkit.Wpf\bin\Debug\HelixToolkit.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="QuantumConcepts.Common">
       <HintPath>Components\QuantumConcepts.Common.dll</HintPath>
@@ -74,13 +71,13 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFLibrary">
-      <HintPath>Components\WPFLibrary.dll</HintPath>
+      <HintPath>.\WPFLibrary.dll</HintPath>
     </Reference>
     <Reference Include="WPFSmartLibraryLight35">
       <HintPath>Components\WPFSmartLibraryLight35.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>Components\Xceed.Wpf.Toolkit.dll</HintPath>
+      <HintPath>.\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,8 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindableExtender.cs" />
     <Compile Include="DataModel\MeasurementTeeth.cs" />
     <Compile Include="DataModel\Measurement.cs" />
+    <Compile Include="DataModel\Photo.cs" />
     <Compile Include="Forms\AdminPasswordDialog.xaml.cs">
       <DependentUpon>AdminPasswordDialog.xaml</DependentUpon>
     </Compile>
@@ -148,12 +147,6 @@
     <Compile Include="ListMenusControl.xaml.cs">
       <DependentUpon>ListMenusControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PatientForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PatientForm.Designer.cs">
-      <DependentUpon>PatientForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Smile.cs" />
     <Compile Include="DataModel\SmileFile.cs" />
     <Compile Include="ListFilesControl.xaml.cs">
@@ -179,7 +172,11 @@
     <Compile Include="Stl\Normal.cs" />
     <Compile Include="Stl\STL.cs" />
     <Compile Include="Stl\Vertex.cs" />
+    <Compile Include="ValueConverters.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="Views\LoginControl.xaml.cs">
+      <DependentUpon>LoginControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpfDashboard.xaml.cs">
       <DependentUpon>WpfDashboard.xaml</DependentUpon>
     </Compile>
@@ -320,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Skins\Black\BlackResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SearchPatientControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -327,6 +328,10 @@
     <Page Include="PatientDetailsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LoginControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WpfDashboard.xaml">
       <SubType>Designer</SubType>
@@ -381,9 +386,6 @@
     </Compile>
     <EmbeddedResource Include="MeasurementForm.resx">
       <DependentUpon>MeasurementForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PatientForm.resx">
-      <DependentUpon>PatientForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PatientRecordForm.resx">
       <DependentUpon>PatientRecordForm.cs</DependentUpon>
@@ -510,7 +512,7 @@
     <Resource Include="Icons\dentalsmile32.ico" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Folder Include="Resources\Skins\Silver\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

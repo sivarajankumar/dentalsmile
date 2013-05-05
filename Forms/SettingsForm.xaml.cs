@@ -23,6 +23,9 @@ namespace smileUp.Forms
         public SettingsForm()
         {
             InitializeComponent();
+            txtManipulatedPath.Text = Smile.MANIPULATED_PATH;
+            txtScannedPath.Text = Smile.SCANNED_PATH;
+            txtPhotoPath.Text = Smile.PHOTOS_PATH;
         }
 
         private void btnBrowse1_Click(object sender, RoutedEventArgs e)
@@ -59,6 +62,22 @@ namespace smileUp.Forms
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             //TODO: save to dictionary
+            Properties.Settings.Default.ManipulatedPath = txtManipulatedPath.Text;
+            Properties.Settings.Default.ScannedPath = txtScannedPath.Text;
+            Properties.Settings.Default.PhotoPath = txtPhotoPath.Text;
+            
+            Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
+
+            if (System.Windows.MessageBox.Show("Setting saved successfully. Do you want to close this dialog?", "Configuration Changed", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Reload();
         }
     }
 }

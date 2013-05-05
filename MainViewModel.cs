@@ -397,7 +397,6 @@ namespace smileUp
                 }
                 else
                 {
-
                     if (window.ShowHideTeethVisualBtn.IsChecked.Value)
                     {
                         ((SmileStlExporter)e).Export(JawVisual.tc, Patient);

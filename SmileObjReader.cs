@@ -850,7 +850,8 @@ namespace smileUp
                                 }
                                 teeth.Content = modelGroup;
                                 //gum.Children.Add(teeth);
-                                //gum.tc.Children.Add(teeth);
+                                if(!gum.tc.Children.Contains(teeth)) 
+                                    gum.tc.Children.Add(teeth);
                             }
 
                         }

@@ -941,8 +941,11 @@ namespace smileUp
         private void AddTeethBtn_Click(object sender, RoutedEventArgs e)
         {
             var pt = view1.FindNearestPoint(mousePoint);
-            TeethVisual3D t = vm.addTeeth((Point3D)pt);
-            //if (t != null) world.AddBody(t.getRigidBody());
+            if (pt != null)
+            {
+                TeethVisual3D t = vm.addTeeth((Point3D)pt);
+                //if (t != null) world.AddBody(t.getRigidBody());
+            }
         }
 
         private void AlignObjectBtn_Click(object sender, RoutedEventArgs e)
@@ -1292,8 +1295,7 @@ namespace smileUp
 
          private void Patient_Click(object sender, RoutedEventArgs e)
          {
-            // PatientRecordForm a = new PatientRecordForm();
-             PatientForm a = new PatientForm();
+             PatientRecordForm a = new PatientRecordForm();
              a.Show();
          }
 

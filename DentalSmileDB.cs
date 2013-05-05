@@ -670,21 +670,19 @@ namespace smileUp
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    p = new SmileUser();
-
-                    p.UserId = GetStringSafe(dataReader, "userid");
                     dbpassword = GetStringSafe(dataReader, "password");
-                    //p.Person = findDentistByUserId(dataReader.GetString("userid"));
                 }
                 dataReader.Close();
                 this.CloseConnection();
             }
 
-            if (p != null)
+            if (dbpassword != null)
             {
                 //crosscheck the password using MD5
                 if (CalculateMD5Hash(password).Equals(dbpassword))
                 {
+                    p = new SmileUser();
+                    p.UserId = id;
                     p.Dentist = findDentistByUserId(p.UserId);
                     return true;
                 }
@@ -1250,8 +1248,8 @@ namespace smileUp
         internal bool InsertDefaultAdmin(string p)
         {
             string tableName = "SmileUser";
-            string columns = "(userid, password, created,createdBy)";
-            string values = "('root','" + CalculateMD5Hash(p)+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
+            string columns = "(userid, password, admin, created,createdBy)";
+            string values = "('root','" + CalculateMD5Hash(p)+ "',1,'" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','DENTALSMILE')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)

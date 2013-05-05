@@ -47,6 +47,8 @@ namespace smileUp
             app = Application.Current as App;
             DB = new DentalSmileDB();
             ///TODO
+            
+
         }
 
         private void doctorBtn_Click(object sender, RoutedEventArgs e)
@@ -102,6 +104,22 @@ namespace smileUp
         {
             LoginDialog dlg = new LoginDialog();
             dlg.ShowDialog();
+        }
+
+        private void WelcomeUserControl_NewButtonClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void WelcomeUserControl_OpenButtonClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void WelcomeUserControl_ImportButtonClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void WelcomeUserControl_OpenRecentFileButtonClick(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

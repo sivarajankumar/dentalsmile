@@ -220,5 +220,22 @@ namespace smileUp
                 this.Content = m;
             }            
         }
+
+        public void drawEdges(MeshGeometry3D mesh)
+        {
+            Int32Collection edges = MeshGeometryHelper.FindEdges(mesh);
+            Point3DCollection pos = mesh.Positions;
+            int x = 1;
+            for (int i = 1; i < edges.Count; i += 2)
+            {
+                Point3DCollection paths = new Point3DCollection();
+                paths.Add(pos[edges[i - 1]]);
+                paths.Add(pos[edges[i]]);
+                TubeVisual3D t = new TubeVisual3D { Diameter = 0.02, Path = paths, Fill = Brushes.Yellow };
+                //t.Transform = new TranslateTransform3D(1, 1, 1);
+                this.Children.Add(t);
+            }
+        }
+
     }
 }

@@ -9,14 +9,17 @@ namespace smileUp
 {
     public class Smile
     {
-        //public const string SCANNED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ScannedFiles\\";
-        //public const string MANIPULATED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ManipulatedFiles\\";
-        public const string SCANNED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ScannedFiles\\";
-        public const string MANIPULATED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ManipulatedFiles\\";
         //public const string SCANNED_PATH = "pack://application:,,,/Resources/ScannedFiles/";
         //public const string MANIPULATED_PATH = "pack://application:,,,/Resources/ManipulatedFiles/";
-        public const string PHOTOS_PATH = "pack://application:,,,/Resources/Photos/";
+        //public const string SCANNED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ScannedFiles\\";
+        //public const string MANIPULATED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ManipulatedFiles\\";
+        //public static string SCANNED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ScannedFiles\\";
+        //public static string MANIPULATED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ManipulatedFiles\\";
 
+        public static string SCANNED_PATH = Properties.Settings.Default.ScannedPath;
+        public static string MANIPULATED_PATH = Properties.Settings.Default.ManipulatedPath;
+        public static string PHOTOS_PATH = Properties.Settings.Default.PhotoPath;
+        
         public const int NONE= -1;
         public const int REGISTERED = 0;
         public const int SCANNING = 1;

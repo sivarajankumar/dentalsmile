@@ -9,5 +9,14 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">server=localhost;User Id=root;database=orthoproject</Value>
     </Setting>
+    <Setting Name="ScannedPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\DentalSmile\Resources\ScannedFiles\</Value>
+    </Setting>
+    <Setting Name="ManipulatedPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\DentalSmile\Resources\ManipulatedFiles\</Value>
+    </Setting>
+    <Setting Name="PhotoPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\DentalSmile\Resources\PhotoFiles\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

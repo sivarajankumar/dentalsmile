@@ -181,19 +181,19 @@ namespace smileUp
                 if (visual is TeethVisual3D)
                 {
                     TeethVisual3D t = (TeethVisual3D)visual;
-                    stlExporter.Name = string.Format("g jaw_{0}", t.Id);
+                    stlExporter.Name = string.Format("{0}", t.Id);
 //                    this.writer.WriteLine(string.Format("g jaw_{0}", t.Id));
                 }
                 else if (visual is GumVisual3D)
                 {
                     GumVisual3D t = (GumVisual3D)visual;
-                    stlExporter.Name = string.Format("g jaw_{0}", t.Id);
+                    stlExporter.Name = string.Format("{0}", t.Id);
 //                    this.writer.WriteLine(string.Format("g jaw_{0}", t.Id));
                 }
                 else if (visual is BraceVisual3D)
                 {
                     BraceVisual3D t = (BraceVisual3D)visual;
-                    stlExporter.Name = string.Format("g jaw_{0}", t.Id);
+                    stlExporter.Name = string.Format("{0}", t.Id);
 //                    this.writer.WriteLine(string.Format("g jaw_{0}", t.Id));
                 }
                 else if (visual is WireVisual3D)
