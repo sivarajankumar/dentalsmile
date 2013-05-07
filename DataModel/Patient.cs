@@ -17,6 +17,7 @@ namespace smileUp.DataModel
         public string Name { get { return name; } set { this.name = value; } }
         public string Photo { get { return photo; } set { this.photo = value; } }
         public List<SmileFile> Files { get; set; }
+        public List<Photo> Photos;
 
         public Patient()
         {

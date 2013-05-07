@@ -23,7 +23,7 @@ namespace smileUp.DataModel
         private string ScannedFile 
         { 
             get {
-                return Smile.SCANNED_PATH + "" + FileName;
+                return Smile.SCANNED_PATH + "/" + FileName;
             } 
         }
 
@@ -31,7 +31,7 @@ namespace smileUp.DataModel
         {
             get
             {
-                return Smile.MANIPULATED_PATH + "" + FileName;
+                return Smile.MANIPULATED_PATH + "/" + FileName;
             }
         }
 
@@ -50,7 +50,7 @@ namespace smileUp.DataModel
         {
             get
             {
-                return Smile.SCANNED_PATH + "" + Screenshot;
+                return Smile.SCANNED_PATH + "/" + Screenshot;
             }
         }
 
@@ -58,7 +58,7 @@ namespace smileUp.DataModel
         {
             get
             {
-                return Smile.MANIPULATED_PATH + "" + Screenshot;
+                return Smile.MANIPULATED_PATH + "/" + Screenshot;
             }
         }
 

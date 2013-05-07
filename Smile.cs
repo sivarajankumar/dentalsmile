@@ -29,6 +29,7 @@ namespace smileUp
         public static string DATE_FORMAT = "yyyy-MM-dd";
         public static string TIME_FORMAT = "hh:mm:s";
         public static string LONG_DATE_FORMAT = DATE_FORMAT + " " + TIME_FORMAT;
+        public static string DATE_ID_FORMAT = "ddMMyy";
 
         public const int OUTERBRACE = 1;
         public const int INNERBRACE = 0;
@@ -100,5 +101,12 @@ namespace smileUp
 
             return p;
         }
+
+    }
+
+
+    public enum Gender
+    {
+        Male, Female
     }
 }

@@ -179,27 +179,31 @@ namespace smileUp
         /// </summary>
         internal void clearManipulator()
         {
-            List<Visual3D> childs = this.parent.Children.ToList();
-            foreach (var m in childs)
+            if (this.parent.Children.Count > 0)
             {
-                if (m is CombinedManipulator)
-                {
-                    this.parent.Children.Remove(m);
-                }
-            }
-            try
-            {
-                childs = this.Children.ToList();
+                List<Visual3D> childs = this.parent.Children.ToList();
                 foreach (var m in childs)
                 {
-                    if (m is BraceVisual3D)
+                    if (m is CombinedManipulator)
                     {
-                        ((BraceVisual3D)m).clearManipulator();
+                        this.parent.Children.Remove(m);
                     }
-                }
+                }            
 
+                try
+                {
+                    childs = this.Children.ToList();
+                    foreach (var m in childs)
+                    {
+                        if (m is BraceVisual3D)
+                        {
+                            ((BraceVisual3D)m).clearManipulator();
+                        }
+                    }
+
+                }
+                catch (Exception e) { }
             }
-            catch (Exception e) { }
             //this.parent.Children.Remove(_manipulator);
             _manipulator = null;
         }

@@ -3,12 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:SoftArcs.WPFSmartLibrary.ValueConverter;assembly=WPFSmartLibraryLight35"
+             xmlns:ap="clr-namespace:SoftArcs.WPFSmartLibrary.UIClassAttachedProperties;assembly=WPFSmartLibraryLight35"
+             xmlns:ft="clr-namespace:SoftArcs.WPFSmartLibrary.FoundationTypes;assembly=WPFSmartLibraryLight35"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="380">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPFSmartLibraryLight35;component/ResourceDictionaries/CommonRD/TextAndFontsRD.xaml" />
+                <ResourceDictionary Source="/WPFSmartLibraryLight35;component/ResourceDictionaries/SmartStyles/SmartTextBoxesRD.xaml" />
+                <ResourceDictionary Source="/WPFSmartLibraryLight35;component/ResourceDictionaries/SmartStyles/SmartPasswordBoxesRD.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontFamily" Value="Segoe UI Light" />
+                <Setter Property="FontSize" Value="{StaticResource StandardFontSize}" />
+                <!--<Setter Property="FontFamily" Value="Segoe WP SemiLight" />-->
+            </Style>
+            <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource Win8ExtendedPasswordBoxStyle}">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Height" Value="25" />
+                <Setter Property="Width" Value="160" />
+                <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
     
     <StackPanel>
         <!-- Header -->
-        <Border Width="300" Padding="5,0,5,0" Opacity="0.8" x:Name="Header" Background="{DynamicResource WelcomeBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="5,5,0,0" HorizontalAlignment="Center" >
+        <Border Width="380" Padding="5,0,5,0" Opacity="0.8" x:Name="Header" Background="{DynamicResource WelcomeBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="5,5,0,0" HorizontalAlignment="Center" >
             <Grid>
                 <Rectangle Fill="#FF050708" Height="69"/>
                 <TextBlock Padding="4,0,0,0" Text="Welcome" TextWrapping="Wrap" Foreground="{DynamicResource WelcomeHeaderFontColor}" FontSize="18" FontWeight="Bold" x:Name="HeaderTextBlock" d:LayoutOverrides="Height" HorizontalAlignment="Left" Margin="3.5,0,0,2" VerticalAlignment="Bottom"/>
@@ -17,7 +45,7 @@
 
         <!-- Content -->
         <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1,1,1,1">
-            <Grid Margin="0,0,0,0" x:Name="ContentGrid" Background="{DynamicResource InputBackgroundBrush}">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" x:Name="ContentGrid" Background="{DynamicResource InputBackgroundBrush}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -32,6 +60,7 @@
                 </Grid.RenderTransform>
 
                 <Border Grid.RowSpan="3" BorderThickness="1" VerticalAlignment="Top" Margin="0,20,0,0">
+                    <Image x:Name="imgUser" Source="/Resources/Photos/UserDefault.png" MaxHeight="150" />
                 </Border>
 
                 <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,20,0,0">
@@ -57,17 +86,18 @@
 						Visibility="{Binding ElementName=VisualRoot, Path=IsUserOptionAvailable}" />
 
                     <PasswordBox x:Name="PasswordBoxControl" Margin="12,18,12,5" Width="200"
-									KeyDown="PasswordBoxControl_KeyDown"
-									GotFocus="PasswordBoxControl_GotFocus"
-									LostFocus="PasswordBoxControl_LostFocus"
-									/>
-
+									KeyDown="PasswordBoxControl_OnKeyDown"
+									GotFocus="PasswordBoxControl_OnGotFocus"
+									LostFocus="PasswordBoxControl_OnLostFocus"                                    
+            ap:PasswordBoxBinding.Password="{Binding ElementName=VisualRoot, Path=Password, Mode=TwoWay}"
+                                 />
                     <Label x:Name="lblCapsLockInfo" Margin="12,1" Padding="0" FontSize="10" Foreground="#FFFD8B6C"
 						 Content="{Binding ElementName=VisualRoot, Path=CapsLockInfo}" SnapsToDevicePixels="True"
 						 Visibility="Hidden" />
+                    <Button x:Name="LoginButton" Style="{StaticResource Win8_OKButtonStyle}" FontFamily="Segoe UI" Click="LoginButton_Click" />
                 </StackPanel>
 
-                <StackPanel x:Name="FaultMessagePanel" Grid.Row="2" Grid.Column="1" Visibility="Hidden"
+                <StackPanel x:Name="FaultMessagePanel" Grid.Row="2" Grid.Column="1" Visibility="Visible"
 							Margin="12,18,12,5" >
                     <TextBlock x:Name="tblNoCredentialsMessage" Padding="0" FontSize="10"
 								Foreground="#FFFD8B6C" Width="200" TextWrapping="Wrap" SnapsToDevicePixels="True"
@@ -75,8 +105,8 @@
                     <TextBlock x:Name="tblWrongCredentialsMessage" Padding="0" FontSize="10"
 								Foreground="#FFFD8B6C" Width="200" TextWrapping="Wrap" SnapsToDevicePixels="True"
 								Text="{Binding ElementName=VisualRoot, Path=WrongCredentialsInfo}" />
-                    <Button x:Name="btnOK" Style="{StaticResource Win8_OKButtonStyle}" Margin="0,7,0,0"
-							HorizontalAlignment="Left" FontFamily="Segoe UI" Click="btnOK_Click" />
+                    <Button x:Name="SubmitButton" Style="{StaticResource Win8_OKButtonStyle}" Margin="0,7,0,0"
+							HorizontalAlignment="Left" FontFamily="Segoe UI" Click="SubmitButton_Click" />
                 </StackPanel>
 
                 <!--

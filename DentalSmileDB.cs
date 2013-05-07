@@ -252,8 +252,8 @@ namespace smileUp
         public void InsertPatient(Patient p)
         {
             string tableName = "PATIENT";
-            string columns = "(id, fname, lname, birthdate, birthplace, gender, address1,address2,city,phone)";
-            string values = "('" + p.Id + "','" + p.FirstName + "','" + p.LastName + "'," + p.BirthDate.ToString(Smile.DATE_FORMAT) + ",'" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "," + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + ",'"+User+"')";
+            string columns = "(id, fname, lname, birthdate, birthplace, gender, address1,address2,city,phone,created, createdby)";
+            string values = "('" + p.Id + "','" + p.FirstName + "','" + p.LastName + "','" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "','" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "'," + p.Phone + ",'" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
             string query = "INSERT INTO "+tableName + " "+ columns +" values "+ values +" ;";
 
             if (this.OpenPatientConnection() == true)
@@ -1261,6 +1261,78 @@ namespace smileUp
             }
 
             return false;
+        }
+
+        internal bool findPatientByNameAndBirthDate(string fname, string lname, string bdate)
+        {
+            string query = "SELECT * FROM PATIENT ";
+            bool any = false;
+            string where = "";
+            if (fname!= null)
+            {
+                where += " LCASE(fname) = '" + fname.ToLower() + "' ";
+                any = true;
+            }
+            if (lname != null)
+            {
+                if (any) where += " and ";
+                where += " LCASE(lname) = '" + lname.ToLower() + "' ";
+                any = true;
+            }
+            if (bdate != null)
+            {
+                if (any) where += " and ";
+                where += " birthdate = '" + bdate + "' ";
+                any = true;
+            }
+            if (any) query += " WHERE " + where;
+
+            int i = 0;
+            if (this.OpenDentistConnection() == true)
+            {                
+                MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    i++;
+                }
+                dataReader.Close();
+                this.CloseDentistConnection();
+            }
+            return i > 0;
+        }
+        private int countPatientByCreated()
+        {
+            string query = "SELECT Count(*) FROM PATIENT WHERE created = '"+ DateTime.Now.ToString(Smile.DATE_FORMAT) + "'";
+            int Count = -1;
+
+            //Open Connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Mysql Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //ExecuteScalar will return one value
+                Count = int.Parse(cmd.ExecuteScalar() + "");
+
+                //close Connection
+                this.CloseConnection();
+
+                return Count;
+            }
+            else
+            {
+                return Count;
+            }
+        }
+        internal string getPatientNewId()
+        {
+            string id = DateTime.Now.DayOfWeek.ToString().Substring(0,3);
+            id += DateTime.Now.ToString(Smile.DATE_ID_FORMAT);
+            int idInt = countPatientByCreated();
+            idInt++;
+            id += idInt.ToString("0000");
+            return id;
         }
     }
 }

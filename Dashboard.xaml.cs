@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using smileUp.Forms;
+using System.Windows.Media.Animation;
 
 namespace smileUp
 {
@@ -75,6 +76,7 @@ namespace smileUp
         {
             TreatmentForm form = new TreatmentForm();
             form.ShowDialog();
+
         }
 
 
@@ -121,5 +123,19 @@ namespace smileUp
         private void WelcomeUserControl_OpenRecentFileButtonClick(object sender, RoutedEventArgs e)
         {
         }
+
+
+        private void HistoryControl_HistoryDataClick(object sender, RoutedEventArgs e)
+        {
+            //HistoryControl.Refresh();
+
+            ((Storyboard)this.Resources["ShowHistoryData"]).Begin(this);
+        }
+
+        private void ShowHistoryData_StoryboardCompleted(object sender, EventArgs e)
+        {
+            //FirstNameEditTextBox.Focus();
+        }
+        
     }
 }

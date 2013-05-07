@@ -4,6 +4,7 @@
         xmlns:helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf" 
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:avalonDock="http://avalondock.codeplex.com"
+        xmlns:views="clr-namespace:smileUp.Views"
         xmlns:smileUp="clr-namespace:smileUp" Title="{Binding ApplicationTitle}" Height="600" Width="740" Background="LightBlue" Unloaded="Window_Unloaded">
     <Window.Resources>
         <ContextMenu x:Key="MyContextMenu">
@@ -124,7 +125,7 @@
 
                             </avalonDock:LayoutAnchorable>
                             <avalonDock:LayoutAnchorable Title="Patient Data" CanClose="False" CanFloat="False" CanHide="False">
-                                <Grid />
+                                <views:PatientDetails x:Name="patientDetailsControl" HorizontalAlignment="Center" VerticalAlignment="Top" />
                             </avalonDock:LayoutAnchorable>
                         </avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorablePane>
