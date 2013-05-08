@@ -37,6 +37,14 @@
             </DockPanel>
         </Border>
         <Border x:Name="MenuBorder" VerticalAlignment="Top" DockPanel.Dock="Top" Margin="0,5,0,5">
+            <Menu x:Name="menuDashboard" VerticalAlignment="Bottom" Margin="5,0,0,0" Style="{DynamicResource MenuStyle}">
+                <MenuItem Header="_Master Data" Style="{DynamicResource MenuItemStyle}">
+                    <MenuItem Header="_Dentist" Click="Dentist_Click" />
+                </MenuItem>
+                <MenuItem Header="_Help" Style="{DynamicResource MenuItemStyle}">
+                    <MenuItem Header="_Settings" Click="Settings_Click" />
+                </MenuItem>
+            </Menu>
         </Border>
         
         <Grid x:Name="MainGrid" Grid.IsSharedSizeScope="True" DockPanel.Dock="Top" >
@@ -49,11 +57,10 @@
                 <views:PatientDetails Grid.Column="0" x:Name="patientDetailsControl" HorizontalAlignment="Center" VerticalAlignment="Top" HistoryDataClick="HistoryControl_HistoryDataClick"/>
 <!--                <GridSplitter Width="5" Grid.Column="1" HorizontalAlignment="Left" Background="{DynamicResource MainBackgroundBrush}" BorderThickness="0,10,0,10"/>
 -->
-                <views:HistoryControl Grid.Column="1" x:Name="HistoryControl" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Top" />
             </Grid>
-
-
+            <views:HistoryControl  x:Name="HistoryControl" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Top" />
         </Grid>
+
 
     </DockPanel>
     

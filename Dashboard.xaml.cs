@@ -41,6 +41,15 @@ namespace smileUp
                 LoginDialog dlg = new LoginDialog();
                 dlg.ShowDialog();
             }
+
+            if (App.user != null && App.user.Admin == true)
+            {
+                menuDashboard.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                menuDashboard.Visibility = System.Windows.Visibility.Hidden;
+            }
         }
 
         private void LoadSettings()
@@ -135,6 +144,15 @@ namespace smileUp
         private void ShowHistoryData_StoryboardCompleted(object sender, EventArgs e)
         {
             //FirstNameEditTextBox.Focus();
+        }
+
+        private void Dentist_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         
     }

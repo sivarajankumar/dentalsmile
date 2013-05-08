@@ -19,12 +19,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
-        <Menu>
-			<MenuItem Header="_Patient">
+        <Menu VerticalAlignment="Bottom" Margin="5,0,0,0" Style="{DynamicResource MenuStyle}">
+            <MenuItem Header="_Patient" Style="{DynamicResource MenuItemStyle}">
                 <MenuItem Header="_New Patient" Click="Patient_Click"/>
                 <MenuItem Header="_Search Patient" Click="SearchPatient_Click"/>
             </MenuItem>
-            <MenuItem Header="_File">
+            <MenuItem Header="_File" Style="{DynamicResource MenuItemStyle}">
                 <MenuItem Header="_Open..." Command="{Binding FileOpenCommand}"/>
                 <MenuItem Header="_Export..." Command="{Binding FileExportCommand}"/>
                 <Separator/>
@@ -35,14 +35,14 @@
                 <Separator/>
                 <MenuItem Header="E_xit" Command="{Binding FileExitCommand}"/>
             </MenuItem>
-            <MenuItem Header="_Edit">
+            <MenuItem Header="_Edit" Style="{DynamicResource MenuItemStyle}">
                 <!-- <MenuItem Header="_Copy XAML" Command="{Binding EditCopyXamlCommand}"/> -->
                 <MenuItem Header="_Clear All" Command="{Binding EditClearAreaCommand}"/>
             </MenuItem>
-            <MenuItem Header="_View">
+            <MenuItem Header="_View" Style="{DynamicResource MenuItemStyle}">
                 <MenuItem Header="_Zoom extents" Command="{Binding ViewZoomExtentsCommand}"/>
             </MenuItem>
-            <MenuItem Header="_Help">
+            <MenuItem Header="_Help" Style="{DynamicResource MenuItemStyle}">
                 <MenuItem Header="_About" Command="{Binding HelpAboutCommand}"/>
             </MenuItem>
         </Menu>

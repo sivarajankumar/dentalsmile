@@ -23,8 +23,13 @@ namespace smileUp.Views
             if (person == null)
                 return false;
 
-            if (this.Filter.Matches(person.Name) ||
+            if (this.Filter.Matches(person.FirstName) ||
+                this.Filter.Matches(person.LastName) || 
                 this.Filter.MatchesYear(person.BirthDate) ||
+                this.Filter.Matches(person.BirthDate) ||
+                this.Filter.Matches(person.City) ||
+                this.Filter.Matches(person.Address1) ||
+                this.Filter.Matches(person.Address2) ||
                 this.Filter.Matches(person.Gender))
                 return true;
 

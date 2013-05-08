@@ -18,5 +18,20 @@
     <Setting Name="PhotoPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">c:\DentalSmile\Resources\PhotoFiles\</Value>
     </Setting>
+    <Setting Name="DbHost" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="DbUserId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">root</Value>
+    </Setting>
+    <Setting Name="DbPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DbPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3306</Value>
+    </Setting>
+    <Setting Name="DbDatabase" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dentalsmile</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -25,6 +25,7 @@ namespace smileUp
         private string database;
         private string uid;
         private string password;
+        private string port;
 
         private string user = "USER";
         public string User { get { return user; } set { this.user = value; } }
@@ -38,12 +39,17 @@ namespace smileUp
         //Initialize values
         private void Initialize()
         {
-            server = "localhost";
-            database = "dentalsmile";
-            uid = "root";
-            password = "";
+            //server = "localhost";
+            //database = "dentalsmile";
+            //uid = "root";
+            //password = "";
+            server = Smile.DbHost;
+            port = Smile.DbPort;
+            database = Smile.DbDatabase;
+            uid = Smile.DbUserId;
+            password = Smile.DbPassword;
             string connectionString;
-            connectionString = "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            connectionString = "SERVER=" + server + ";"+"Port="+port+";" + "DATABASE=" + database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
             connectionString += "Convert Zero Datetime=True;";
 
             connection = new MySqlConnection(connectionString);
@@ -662,6 +668,7 @@ namespace smileUp
         {
             string query = "SELECT * FROM SmileUser WHERE LCASE(userid) = LCASE(@userid)";
             string dbpassword  = null;
+            bool isAdmin = false;
             if (this.OpenConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
@@ -671,6 +678,7 @@ namespace smileUp
                 while (dataReader.Read())
                 {
                     dbpassword = GetStringSafe(dataReader, "password");
+                    isAdmin = dataReader.GetBoolean("admin");
                 }
                 dataReader.Close();
                 this.CloseConnection();
@@ -684,6 +692,7 @@ namespace smileUp
                     p = new SmileUser();
                     p.UserId = id;
                     p.Dentist = findDentistByUserId(p.UserId);
+                    p.Admin = isAdmin;
                     return true;
                 }
             }

@@ -18,7 +18,7 @@ namespace smileUp
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value != null)
-                return ((DateTime)value).ToShortDateString();
+                return ((DateTime)value).ToString(Smile.DISPLAY_DATE_FORMAT);
 
             return string.Empty;
         }

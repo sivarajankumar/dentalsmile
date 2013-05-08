@@ -19,13 +19,20 @@ namespace smileUp
         public static string SCANNED_PATH = Properties.Settings.Default.ScannedPath;
         public static string MANIPULATED_PATH = Properties.Settings.Default.ManipulatedPath;
         public static string PHOTOS_PATH = Properties.Settings.Default.PhotoPath;
-        
+
+        public static string DbHost = Properties.Settings.Default.DbHost;
+        public static string DbPort = Properties.Settings.Default.DbPort;
+        public static string DbUserId = Properties.Settings.Default.DbUserId;
+        public static string DbPassword = Properties.Settings.Default.DbPassword;
+        public static string DbDatabase = Properties.Settings.Default.DbDatabase;
+
         public const int NONE= -1;
         public const int REGISTERED = 0;
         public const int SCANNING = 1;
         public const int MANIPULATION = 2;
         public const int PRINTING = 3;
 
+        public static string DISPLAY_DATE_FORMAT = "dd-MMM-yyyy";
         public static string DATE_FORMAT = "yyyy-MM-dd";
         public static string TIME_FORMAT = "hh:mm:s";
         public static string LONG_DATE_FORMAT = DATE_FORMAT + " " + TIME_FORMAT;
@@ -101,6 +108,7 @@ namespace smileUp
 
             return p;
         }
+
 
     }
 

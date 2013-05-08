@@ -22,7 +22,7 @@ namespace smileUp.Views
     /// </summary>
     public partial class PatientDetails : UserControl
     {
-        List<Patient> family;
+        List<Patient> patients;
         bool ignoreSelection = true;
         DentalSmileDB DB;
         Storyboard CollapseDetailsEdit;
@@ -38,18 +38,23 @@ namespace smileUp.Views
             DetailsEdit.Visibility = Visibility.Collapsed;
             DetailsAdd.Visibility = Visibility.Collapsed;
             DetailsList.Visibility = Visibility.Collapsed;
+            HistoryList.Visibility = Visibility.Collapsed;
 
             CollapseDetailsEdit = ((Storyboard)this.Resources["CollapseDetailsEdit"]);
             CollapseDetailsAdd = ((Storyboard)this.Resources["CollapseDetailsAdd"]);
 
-            FamilyListView.ItemsSource = family;
-            
-            family = DB.SelectAllPatient();
-            ICollectionView view = System.Windows.Data.CollectionViewSource.GetDefaultView(family);
+            PatientListView.ItemsSource = patients;
+
+            patients = DB.SelectAllPatient();
+            ICollectionView view = System.Windows.Data.CollectionViewSource.GetDefaultView(patients);
             view.SortDescriptions.Add(new SortDescription("FirstName", ListSortDirection.Ascending));
-            
-            FamilyListView.ItemsSource = family;
+
+            PatientListView.ItemsSource = patients;
             ignoreSelection = false;
+            navigateButton();
+
+            Storyboard ExpandDetailsList = ((Storyboard)this.Resources["ExpandDetailsList"]);
+            ExpandDetailsList.Begin();
         }
 
         /// <summary>
@@ -98,24 +103,6 @@ namespace smileUp.Views
 
         private void FindButton_Click(object sender, RoutedEventArgs e)
         {
-            // Deleting a person requires deleting that person from their relations with other people
-            // Call the relationship helper to handle delete.
-            /*
-            RelationshipHelper.DeletePerson(family, family.Current);
-
-            if (family.Count > 0)
-            {
-                // Current person is deleted, choose someone else as the current person
-                family.Current = family[0];
-
-                family.OnContentChanged();
-                SetDefaultFocus();
-            }
-            else
-            {
-                // Let the container window know that everyone has been deleted
-                RaiseEvent(new RoutedEventArgs(EveryoneDeletedEvent));
-            }*/
         }
 
         private void DoneEditButton_Click(object sender, RoutedEventArgs e)
@@ -135,7 +122,15 @@ namespace smileUp.Views
             
             Patient patient = App.patient;
             //TODO: store to DB
-            
+            patient.FirstName = FirstNameEditTextBox.Text;
+            patient.LastName = LastNameEditTextBox.Text;
+            patient.Gender = GenderListBox.SelectedValue.ToString();
+            patient.BirthPlace = BirthPlaceEditTextBox.Text;
+            patient.BirthDate = BirthDateEditTextBox.SelectedDate.Value;
+            patient.Address1 = Address1EditTextBox.Text;
+            patient.Address2 = Address2EditTextBox.Text;
+            patient.City = CityEditTextBox.Text;
+            patient.Phone = PhoneEditTextBox.Text;
             DB.UpdatePatient(patient);
             CollapseDetailsEdit.Begin();
         }
@@ -242,6 +237,8 @@ namespace smileUp.Views
         private void ExpandDetailsEdit_StoryboardCompleted(object sender, EventArgs e)
         {
             FirstNameEditTextBox.Focus();
+            navigateButton();
+
         }
 
         /// <summary>
@@ -249,12 +246,13 @@ namespace smileUp.Views
         /// </summary>
         private void CollapseDetailsEdit_StoryboardCompleted(object sender, EventArgs e)
         {
-            //FamilyMemberAddButton.Focus();
+            navigateButton();
+
         }
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)
         {
-            RaiseEvent(new RoutedEventArgs(HistoryDataClickEvent));
+            //RaiseEvent(new RoutedEventArgs(HistoryDataClickEvent));
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -276,7 +274,8 @@ namespace smileUp.Views
         /// </summary>
         private void ExpandDetailsAdd_StoryboardCompleted(object sender, EventArgs e)
         {
-            //FirstNameEditTextBox.Focus();
+            navigateButton();
+
         }
 
         /// <summary>
@@ -284,13 +283,17 @@ namespace smileUp.Views
         /// </summary>
         private void CollapseDetailsAdd_StoryboardCompleted(object sender, EventArgs e)
         {
-            //FamilyMemberAddButton.Focus();
-            if(App.patient != null)
+            if (App.patient != null)
+            {
                 DetailsList.Visibility = Visibility.Visible;
+                DataContext = App.patient;
+            }
+            navigateButton();
+
         }
 
 
-        private void FamilyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PatientListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!ignoreSelection)
             {
@@ -299,6 +302,7 @@ namespace smileUp.Views
                 if (selected != null)
                 {
                     this.DataContext = selected;
+                    App.patient = selected;
                 }
 
                 ignoreSelection = false;
@@ -307,7 +311,7 @@ namespace smileUp.Views
 
         private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            FamilyListView.FilterList(FilterTextBox.Text);
+            PatientListView.FilterList(FilterTextBox.Text);
         }
 
 
@@ -316,7 +320,7 @@ namespace smileUp.Views
         /// </summary>
         private void ExpandDetailsList_StoryboardCompleted(object sender, EventArgs e)
         {
-            //FirstNameEditTextBox.Focus();
+            navigateButton();
         }
 
         /// <summary>
@@ -324,16 +328,13 @@ namespace smileUp.Views
         /// </summary>
         private void CollapseDetailsList_StoryboardCompleted(object sender, EventArgs e)
         {
-            //FamilyMemberAddButton.Focus();
+            navigateButton();
         }
 
 
         public static readonly RoutedEvent HistoryDataClickEvent = EventManager.RegisterRoutedEvent(
     "HistoryDataClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PatientDetails));
 
-        /// <summary>
-        /// Expose the FamilyDataClick event
-        /// </summary>
         public event RoutedEventHandler HistoryDataClick
         {
             add { AddHandler(HistoryDataClickEvent, value); }
@@ -377,6 +378,40 @@ namespace smileUp.Views
                 MessageBox.Show("Patient already exist");
                 //TODO Find
             }
+        }
+
+        private void navigateButton(){
+            EditButton.IsEnabled = App.patient != null;
+            InfoButton.IsEnabled = App.patient != null;
+        }
+
+        private void HideHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FilterHistoryTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void HistoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ExpandHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExpandHistoryList_StoryboardCompleted(object sender, EventArgs e)
+        {
+            navigateButton();
+        }
+        private void CollapseHistoryList_StoryboardCompleted(object sender, EventArgs e)
+        {
+            navigateButton();
         }
     }
 }
