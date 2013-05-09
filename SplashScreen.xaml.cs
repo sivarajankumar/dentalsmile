@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using smileUp.Forms;
 
 namespace smileUp
 {
@@ -42,14 +43,42 @@ namespace smileUp
         {
             cont = cont + 1;
 
+            if (cont == 1)
+            {
+                LoadSettings();
+            }
+
             if (cont > 2)
             {
                 //MainWindow m = new MainWindow();
                 //m.Show();
+                this.Close();
                 Dashboard d = new Dashboard();
                 d.Show();
-                this.Close();
                 _timer.Stop();
+            }
+        }
+
+        private void LoadSettings()
+        {
+            //Smile.DbDatabase = Properties.Settings.Default.DbDatabase = "xx";
+            //Smile.INSTALL = Properties.Settings.Default.InstallationMode = true;
+
+            DentalSmileDB DB = new DentalSmileDB();
+            ///TODO
+            //test DB connection, if fail changes configuration
+            if (Smile.INSTALL)
+            {
+                SettingsDB dbForm = new SettingsDB();
+                dbForm.ShowDialog();
+                DB = new DentalSmileDB();
+            }
+
+            //detect if Admin  is NULL
+            if (DB.selectDefaultAdmin() == null)
+            {
+                AdminPasswordDialog dlg = new AdminPasswordDialog();
+                dlg.ShowDialog();
             }
         }
 

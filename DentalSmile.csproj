@@ -95,6 +95,9 @@
     <Compile Include="Forms\ChangePasswordDialog.xaml.cs">
       <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SettingsDB.xaml.cs">
+      <DependentUpon>SettingsDB.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
@@ -195,6 +198,9 @@
       <DependentUpon>PatientListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SortListView.cs" />
+    <Compile Include="Views\Welcome.xaml.cs">
+      <DependentUpon>Welcome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpfDashboard.xaml.cs">
       <DependentUpon>WpfDashboard.xaml</DependentUpon>
     </Compile>
@@ -270,6 +276,10 @@
     <Page Include="Forms\ChangePasswordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\SettingsDB.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\LoginDialog.xaml">
       <SubType>Designer</SubType>
@@ -368,6 +378,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PatientListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Welcome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

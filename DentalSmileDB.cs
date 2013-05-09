@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using smileUp.DataModel;
 using System.Data;
 using System.Security.Cryptography;
+using System.Reflection;
 
 namespace smileUp
 {
@@ -59,6 +60,22 @@ namespace smileUp
             fileConnection = new MySqlConnection(connectionString);
         }
 
+        public bool TestConnectionString()
+        {
+            try
+            {
+                if (this.OpenConnection() == true)
+                {                   
+                    this.CloseConnection();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+        }
 
         //open connection to database
         private bool OpenConnection()

@@ -33,5 +33,8 @@
     <Setting Name="DbDatabase" Type="System.String" Scope="User">
       <Value Profile="(Default)">dentalsmile</Value>
     </Setting>
+    <Setting Name="InstallationMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

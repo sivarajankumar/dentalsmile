@@ -506,9 +506,13 @@
                         </Border>
 
                         <Label Margin="15,0,0,0" Content="Edit Person" HorizontalAlignment="Left" Width="95" Height="22.87" BorderThickness="0,0,0,2" Padding="3,2,5,0" Template="{DynamicResource LabelControlTemplate}"/>
-
-                        <Button Margin="15,0,10,0" x:Name="EditButton" Content="_Details" FontSize="10" Width="95" HorizontalAlignment="Left" Style="{DynamicResource BlackButtonStyle}"/>
-                        <Button Margin="15,2,10,2" x:Name="InfoButton" Content="_Histories" HorizontalAlignment="Left" Width="95" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="InfoButton_Click"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Margin="15,0,10,0" x:Name="EditButton" Content="_Details" FontSize="10" Width="75" HorizontalAlignment="Center" Style="{DynamicResource BlackButtonStyle}"/>
+                            <Button Margin="15,2,10,2" x:Name="InfoButton" Content="_Histories" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="InfoButton_Click"/>
+                            <Button Margin="15,2,10,2" x:Name="AddTreatmentButton" Content="_Add Treatment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
+                            <Button Margin="15,2,10,2" x:Name="InvoiceButton" Content="_Invoice" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
+                            <Button Margin="15,2,10,2" x:Name="AppointmentButton" Content="_Appointment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
+                        </StackPanel>
 
                     </StackPanel>
                 </Border>
@@ -735,7 +739,11 @@
                         </views:PatientDisplayListView>
                     </DockPanel>
                 </Border>
+                
             </DockPanel>
         </Border>
+        <Border VerticalAlignment="Top" DockPanel.Dock="Top" Margin="0,5,0,5">
+        </Border>
+        <views:Welcome />
     </DockPanel>
 </UserControl>

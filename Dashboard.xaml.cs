@@ -28,20 +28,6 @@ namespace smileUp
             InitializeComponent();
             LoadSettings();
             
-            //detect if Admin  is NULL
-            if (DB.selectDefaultAdmin() == null)
-            {
-                AdminPasswordDialog dlg = new AdminPasswordDialog();
-                dlg.ShowDialog();
-            }
-
-            if (App.user == null)
-            {
-                //ChangePasswordDialog dlg = new ChangePasswordDialog();
-                LoginDialog dlg = new LoginDialog();
-                dlg.ShowDialog();
-            }
-
             if (App.user != null && App.user.Admin == true)
             {
                 menuDashboard.Visibility = System.Windows.Visibility.Visible;
@@ -56,8 +42,29 @@ namespace smileUp
         {
             app = Application.Current as App;
             DB = new DentalSmileDB();
-            ///TODO
+
+                //if (Smile.INSTALL)
+            if(!DB.TestConnectionString())
+            {
+                SettingsDB dbForm = new SettingsDB();
+                dbForm.ShowDialog();
+                DB = new DentalSmileDB();
+            }
+
+            //detect if Admin  is NULL
+            if (DB.selectDefaultAdmin() == null)
+            {
+                AdminPasswordDialog dlg = new AdminPasswordDialog();
+                dlg.ShowDialog();
+            }
+
             
+            if (App.user == null)
+            {
+                //ChangePasswordDialog dlg = new ChangePasswordDialog();
+                LoginDialog dlg = new LoginDialog();
+                dlg.ShowDialog();
+            }
 
         }
 
@@ -148,11 +155,18 @@ namespace smileUp
 
         private void Dentist_Click(object sender, RoutedEventArgs e)
         {
-
+            DentistList f = new DentistList();
+            f.ShowDialog();
         }
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-
+            SettingsForm f = new SettingsForm();
+            f.ShowDialog();
+        }
+        private void DBSettings_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsDB f = new SettingsDB();
+            f.ShowDialog();
         }
         
     }

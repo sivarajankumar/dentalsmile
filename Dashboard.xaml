@@ -40,9 +40,19 @@
             <Menu x:Name="menuDashboard" VerticalAlignment="Bottom" Margin="5,0,0,0" Style="{DynamicResource MenuStyle}">
                 <MenuItem Header="_Master Data" Style="{DynamicResource MenuItemStyle}">
                     <MenuItem Header="_Dentist" Click="Dentist_Click" />
+                    <MenuItem Header="_User" />
+                    <MenuItem Header="_Appointment" />
+                    <MenuItem Header="_Treatment" />
+                </MenuItem>
+                <MenuItem Header="_Report" Style="{DynamicResource MenuItemStyle}">
+                    <MenuItem Header="_Daily" />
+                    <MenuItem Header="_Weekly" />
+                    <MenuItem Header="_Monthly" />
+                    <MenuItem Header="_Annually" />
                 </MenuItem>
                 <MenuItem Header="_Help" Style="{DynamicResource MenuItemStyle}">
                     <MenuItem Header="_Settings" Click="Settings_Click" />
+                    <MenuItem Header="_Database Config" Click="DBSettings_Click" />
                 </MenuItem>
             </Menu>
         </Border>

@@ -1,289 +1,252 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+/*
+SQLyog Community v8.61 
+MySQL - 5.0.22-community-nt : Database - dentalsmile
+*********************************************************************
+*/
 
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
-CREATE SCHEMA IF NOT EXISTS `dentalsmile` DEFAULT CHARACTER SET latin1 ;
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`dentalsmile` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
 USE `dentalsmile`;
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`DENTIST`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`DENTIST` ;
+/*Table structure for table `dentist` */
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`DENTIST` (
-  `userid` VARCHAR(15) NOT NULL ,
-  `fname` VARCHAR(45) NOT NULL ,
-  `lname` VARCHAR(45) NULL ,
-  `birthdate` DATE NULL ,
-  `birthplace` VARCHAR(45) NULL ,
-  `address1` VARCHAR(45) NULL ,
-  `address2` VARCHAR(45) NULL ,
-  `city` VARCHAR(45) NULL ,
-  `phone` VARCHAR(15) NULL ,
-  `created` DATE NULL ,
-  `createdBy` VARCHAR(45) NULL ,
-  `modified` TIMESTAMP NULL ,
-  `modifiedBy` VARCHAR(45) NULL ,
-  PRIMARY KEY (`userid`) )
-ENGINE = MYISAM
-AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `dentist`;
 
+CREATE TABLE `dentist` (
+  `userid` varchar(15) NOT NULL,
+  `fname` varchar(45) NOT NULL,
+  `lname` varchar(45) default NULL,
+  `birthdate` date default NULL,
+  `birthplace` varchar(45) default NULL,
+  `address1` varchar(45) default NULL,
+  `address2` varchar(45) default NULL,
+  `city` varchar(45) default NULL,
+  `phone` varchar(15) default NULL,
+  `created` date default NULL,
+  `createdBy` varchar(45) default NULL,
+  `modified` timestamp NULL default NULL,
+  `modifiedBy` varchar(45) default NULL,
+  `gender` varchar(1) default NULL,
+  PRIMARY KEY  (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`measurement`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`measurement` ;
+/*Data for the table `dentist` */
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`measurement` (
-  `measurement_id` INT(7) NOT NULL AUTO_INCREMENT ,
-  `patient_id` CHAR(7) NOT NULL ,
-  `file_id` INT(7) NOT NULL ,
-  `measurement_status` INT(1) NULL DEFAULT NULL ,
-  `measurement_lastupdate` DATE NULL DEFAULT NULL ,
-  `measured_by` CHAR(25) NULL DEFAULT NULL ,
-  PRIMARY KEY (`measurement_id`, `patient_id`, `file_id`) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = latin1;
+insert  into `dentist`(`userid`,`fname`,`lname`,`birthdate`,`birthplace`,`address1`,`address2`,`city`,`phone`,`created`,`createdBy`,`modified`,`modifiedBy`,`gender`) values ('DWIM','DWIm','MII','1984-05-19','GK','yk','yk','yk','0921',NULL,NULL,NULL,NULL,'M');
 
+/*Table structure for table `measurement` */
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`measurement_detail`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`measurement_detail` ;
+DROP TABLE IF EXISTS `measurement`;
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`measurement_detail` (
-  `measurement_detail_id` INT(7) NOT NULL AUTO_INCREMENT ,
-  `measurement_id` INT(7) NOT NULL ,
-  `tooth_id` INT(2) NULL DEFAULT NULL ,
-  PRIMARY KEY (`measurement_detail_id`, `measurement_id`) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = latin1;
+CREATE TABLE `measurement` (
+  `id` int(11) NOT NULL auto_increment,
+  `patient` varchar(13) default NULL,
+  `treatment` varchar(16) default NULL,
+  `pfile` varchar(16) default NULL,
+  `type` varchar(45) default NULL,
+  `created` datetime default NULL,
+  `createdBy` varchar(45) default NULL,
+  `modified` datetime default NULL,
+  `modifiedBy` varchar(45) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `measurement` */
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`PATIENT`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`PATIENT` ;
+/*Table structure for table `measurement_detail` */
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`PATIENT` (
-  `id` VARCHAR(13) NOT NULL COMMENT 'auto-increment has a limit;\nor generated with format SUN0104130001' ,
-  `fname` VARCHAR(45) NOT NULL ,
-  `lname` VARCHAR(45) NULL ,
-  `birthdate` DATE NOT NULL ,
-  `birthplace` VARCHAR(50) NOT NULL ,
-  `gender` CHAR(1) NOT NULL COMMENT 'M;F' ,
-  `address1` VARCHAR(100) NOT NULL ,
-  `address2` VARCHAR(100) NULL ,
-  `city` VARCHAR(45) NULL ,
-  `phone` VARCHAR(15) NOT NULL ,
-  `created` DATE NULL ,
-  `createdBy` VARCHAR(45) NULL ,
-  `modified` TIMESTAMP NULL ,
-  `modifiedBy` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 6
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `measurement_detail`;
 
+CREATE TABLE `measurement_detail` (
+  `measurement_detail_id` int(7) NOT NULL auto_increment,
+  `measurement_id` int(7) NOT NULL,
+  `tooth_id` int(2) default NULL,
+  PRIMARY KEY  (`measurement_detail_id`,`measurement_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`PHASE`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`PHASE` ;
+/*Data for the table `measurement_detail` */
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`PHASE` (
-  `id` INT(1) NOT NULL ,
-  `name` VARCHAR(25) NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = latin1;
+/*Table structure for table `measurementteeth` */
 
+DROP TABLE IF EXISTS `measurementteeth`;
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`TREATMENT`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`TREATMENT` ;
+CREATE TABLE `measurementteeth` (
+  `id` int(11) NOT NULL auto_increment,
+  `measurementid` int(11) default NULL,
+  `teethid` varchar(255) default NULL,
+  `length` double default NULL,
+  `spoint` varchar(45) default NULL,
+  `epoint` varchar(45) default NULL,
+  `type` varchar(5) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`TREATMENT` (
-  `id` VARCHAR(16) NOT NULL ,
-  `PHASE` INT(1) NULL ,
-  `PATIENT` VARCHAR(13) NULL ,
-  `DENTIST` VARCHAR(15) NULL ,
-  `tdate` DATE NULL ,
-  `ttime` TIME NULL ,
-  `room` VARCHAR(45) NULL ,
-  `refId` VARCHAR(16) NULL ,
-  `created` DATE NULL ,
-  `createdBy` VARCHAR(45) NULL ,
-  `modified` TIMESTAMP NULL ,
-  `modifiedBy` VARCHAR(45) NULL ,
-  INDEX `fk_TREATMENT_PATIENT` (`PATIENT` ASC) ,
-  INDEX `fk_TREATMENT_DOCTOR` (`DENTIST` ASC) ,
-  INDEX `fk_TREATMENT_PHASE` (`PHASE` ASC) ,
-  PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_TREATMENT_PATIENT`
-    FOREIGN KEY (`PATIENT` )
-    REFERENCES `dentalsmile`.`PATIENT` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TREATMENT_DOCTOR`
-    FOREIGN KEY (`DENTIST` )
-    REFERENCES `dentalsmile`.`DENTIST` (`userid` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TREATMENT_PHASE`
-    FOREIGN KEY (`PHASE` )
-    REFERENCES `dentalsmile`.`PHASE` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = latin1;
+/*Data for the table `measurementteeth` */
 
+/*Table structure for table `patient` */
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`PFILE`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`PFILE` ;
+DROP TABLE IF EXISTS `patient`;
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`PFILE` (
-  `PATIENT` VARCHAR(13) NOT NULL ,
-  `id` VARCHAR(16) NOT NULL ,
-  `filename` VARCHAR(35) NOT NULL ,
-  `description` VARCHAR(255) NULL DEFAULT NULL ,
-  `type` TINYINT(5) NOT NULL DEFAULT 0 ,
-  `refId` VARCHAR(16) NULL ,
-  `created` DATE NULL DEFAULT NULL COMMENT 'uploaded' ,
-  `createdBy` VARCHAR(50) NULL DEFAULT NULL ,
-  `modified` TIMESTAMP NULL DEFAULT NULL ,
-  `modifiedBy` VARCHAR(50) NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_PFILE_PATIENT` (`PATIENT` ASC) ,
-  CONSTRAINT `fk_PFILE_PATIENT`
-    FOREIGN KEY (`PATIENT` )
-    REFERENCES `dentalsmile`.`PATIENT` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = latin1;
+CREATE TABLE `patient` (
+  `id` varchar(13) NOT NULL COMMENT 'auto-increment has a limit;\nor generated with format SUN0104130001',
+  `fname` varchar(45) NOT NULL,
+  `lname` varchar(45) default NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(50) NOT NULL,
+  `gender` varchar(6) NOT NULL default '' COMMENT 'M;F',
+  `address1` varchar(100) NOT NULL,
+  `address2` varchar(100) default NULL,
+  `city` varchar(45) default NULL,
+  `phone` varchar(15) NOT NULL,
+  `created` date default NULL,
+  `createdBy` varchar(45) default NULL,
+  `modified` timestamp NULL default NULL,
+  `modifiedBy` varchar(45) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+/*Data for the table `patient` */
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`TOOTH`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`TOOTH` ;
+insert  into `patient`(`id`,`fname`,`lname`,`birthdate`,`birthplace`,`gender`,`address1`,`address2`,`city`,`phone`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001','DWI','MIYANTO','2013-05-19','GK','Male','yk','yk','yk','0821',NULL,NULL,NULL,NULL),('Tue0705130001','dr.wewe','asas','2013-05-07','5/7/2013','Male','asasa','sasa','sasa','1212','2013-05-07','USER',NULL,NULL);
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`TOOTH` (
-  `number` INT(2) NOT NULL ,
-  `type` INT(1) NULL DEFAULT NULL COMMENT '1:upper ; 2:lower' ,
-  `name` VARCHAR(25) NOT NULL ,
-  PRIMARY KEY (`number`) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = latin1;
+/*Table structure for table `pfile` */
 
+DROP TABLE IF EXISTS `pfile`;
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`TREATMENT_PFILE`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`TREATMENT_PFILE` ;
+CREATE TABLE `pfile` (
+  `PATIENT` varchar(13) NOT NULL,
+  `id` varchar(16) NOT NULL,
+  `filename` varchar(35) NOT NULL,
+  `description` varchar(255) default NULL,
+  `type` tinyint(5) NOT NULL default '0',
+  `refId` varchar(16) default NULL,
+  `created` date default NULL COMMENT 'uploaded',
+  `createdBy` varchar(50) default NULL,
+  `modified` timestamp NULL default NULL,
+  `modifiedBy` varchar(50) default NULL,
+  `screenshot` varchar(50) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_PFILE_PATIENT` (`PATIENT`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`TREATMENT_PFILE` (
-  `TREATMENT` VARCHAR(16) NOT NULL ,
-  `PFILE` VARCHAR(16) NOT NULL ,
-  PRIMARY KEY (`TREATMENT`, `PFILE`) ,
-  INDEX `fk_TREATMENT_has_PFILE_TREATMENT` (`TREATMENT` ASC) ,
-  INDEX `fk_TREATMENT_has_PFILE_PFILE` (`PFILE` ASC) ,
-  CONSTRAINT `fk_TREATMENT_has_PFILE_TREATMENT`
-    FOREIGN KEY (`TREATMENT` )
-    REFERENCES `dentalsmile`.`TREATMENT` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TREATMENT_has_PFILE_PFILE`
-    FOREIGN KEY (`PFILE` )
-    REFERENCES `dentalsmile`.`PFILE` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+/*Data for the table `pfile` */
 
+insert  into `pfile`(`PATIENT`,`id`,`filename`,`description`,`type`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`,`screenshot`) values ('SUN0104130001','SUN0104130001001','sdefault.obj',NULL,1,NULL,NULL,NULL,NULL,NULL,'default.jpg');
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`TREATMENT_NOTES`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`TREATMENT_NOTES` ;
+/*Table structure for table `phase` */
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`TREATMENT_NOTES` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `TREATMENT` VARCHAR(16) NULL ,
-  `PFILE` VARCHAR(16) NULL ,
-  `notes` VARCHAR(255) NULL ,
-  `description` VARCHAR(255) NULL ,
-  `created` DATETIME NULL ,
-  `createdBy` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_TREATMENT_NOTES_TREATMENT_PFILE` (`TREATMENT` ASC, `PFILE` ASC) ,
-  CONSTRAINT `fk_TREATMENT_NOTES_TREATMENT_PFILE`
-    FOREIGN KEY (`TREATMENT` , `PFILE` )
-    REFERENCES `dentalsmile`.`TREATMENT_PFILE` (`TREATMENT` , `PFILE` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `phase`;
 
+CREATE TABLE `phase` (
+  `id` int(1) NOT NULL,
+  `name` varchar(25) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`SmileUser`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`SmileUser` ;
+/*Data for the table `phase` */
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`SmileUser` (
-  `userid` VARCHAR(25) NOT NULL ,
-  `password` VARCHAR(45) NOT NULL ,
-  `admin` TINYINT(1) NULL ,
-  `created` DATETIME NULL ,
-  `createdBy` VARCHAR(45) NULL ,
-  `modified` TIMESTAMP NULL ,
-  `modifiedBy` VARCHAR(45) NULL ,
-  PRIMARY KEY (`userid`) )
-ENGINE = InnoDB;
+/*Table structure for table `smileuser` */
 
+DROP TABLE IF EXISTS `smileuser`;
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`Measurement`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`Measurement` ;
+CREATE TABLE `smileuser` (
+  `userid` varchar(25) NOT NULL,
+  `password` varchar(35) NOT NULL default '',
+  `admin` tinyint(1) NOT NULL default '0',
+  `created` datetime default NULL,
+  `createdBy` varchar(45) default NULL,
+  `modified` timestamp NULL default NULL,
+  `modifiedBy` varchar(45) default NULL,
+  PRIMARY KEY  (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`Measurement` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `patient` VARCHAR(13) NULL ,
-  `treatment` VARCHAR(16) NULL ,
-  `pfile` VARCHAR(16) NULL ,
-  `type` VARCHAR(45) NULL ,
-  `created` DATETIME NULL ,
-  `createdBy` VARCHAR(45) NULL ,
-  `modified` DATETIME NULL ,
-  `modifiedBy` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+/*Data for the table `smileuser` */
 
+insert  into `smileuser`(`userid`,`password`,`admin`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('DWIM','900150983CD24FB0D6963F7D28E17F72',0,NULL,NULL,NULL,NULL);
 
--- -----------------------------------------------------
--- Table `dentalsmile`.`MeasurementTeeth`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dentalsmile`.`MeasurementTeeth` ;
+/*Table structure for table `tooth` */
 
-CREATE  TABLE IF NOT EXISTS `dentalsmile`.`MeasurementTeeth` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `measurementid` INT NULL ,
-  `teethid` VARCHAR(255) NULL ,
-  `length` DOUBLE NULL ,
-  `spoint` VARCHAR(45) NULL ,
-  `epoint` VARCHAR(45) NULL ,
-  `type` VARCHAR(5) NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `tooth`;
 
+CREATE TABLE `tooth` (
+  `number` int(2) NOT NULL,
+  `type` int(1) default NULL COMMENT '1:upper ; 2:lower',
+  `name` varchar(25) NOT NULL,
+  PRIMARY KEY  (`number`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+/*Data for the table `tooth` */
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+/*Table structure for table `treatment` */
+
+DROP TABLE IF EXISTS `treatment`;
+
+CREATE TABLE `treatment` (
+  `id` varchar(16) NOT NULL,
+  `PHASE` int(1) default NULL,
+  `PATIENT` varchar(13) default NULL,
+  `DENTIST` varchar(15) default NULL,
+  `tdate` date default NULL,
+  `ttime` time default NULL,
+  `room` varchar(45) default NULL,
+  `refId` varchar(16) default NULL,
+  `created` date default NULL,
+  `createdBy` varchar(45) default NULL,
+  `modified` timestamp NULL default NULL,
+  `modifiedBy` varchar(45) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_TREATMENT_PATIENT` (`PATIENT`),
+  KEY `fk_TREATMENT_DOCTOR` (`DENTIST`),
+  KEY `fk_TREATMENT_PHASE` (`PHASE`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*Data for the table `treatment` */
+
+insert  into `treatment`(`id`,`PHASE`,`PATIENT`,`DENTIST`,`tdate`,`ttime`,`room`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001001',0,'SUN0104130001','DWIM','2013-04-05','10:00:00','1',NULL,NULL,NULL,NULL,NULL),('SUN0104130001002',1,'SUN0104130001','DWIM','2013-04-05','10:20:00','1','SUN0104130001001',NULL,NULL,NULL,NULL);
+
+/*Table structure for table `treatment_notes` */
+
+DROP TABLE IF EXISTS `treatment_notes`;
+
+CREATE TABLE `treatment_notes` (
+  `id` int(11) NOT NULL auto_increment,
+  `TREATMENT` varchar(16) default NULL,
+  `PFILE` varchar(16) default NULL,
+  `notes` varchar(255) default NULL,
+  `description` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `createdBy` varchar(45) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_TREATMENT_NOTES_TREATMENT_PFILE` (`TREATMENT`,`PFILE`),
+  CONSTRAINT `fk_TREATMENT_NOTES_TREATMENT_PFILE` FOREIGN KEY (`TREATMENT`, `PFILE`) REFERENCES `treatment_pfile` (`TREATMENT`, `PFILE`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `treatment_notes` */
+
+/*Table structure for table `treatment_pfile` */
+
+DROP TABLE IF EXISTS `treatment_pfile`;
+
+CREATE TABLE `treatment_pfile` (
+  `TREATMENT` varchar(16) NOT NULL,
+  `PFILE` varchar(16) NOT NULL,
+  PRIMARY KEY  (`TREATMENT`,`PFILE`),
+  KEY `fk_TREATMENT_has_PFILE_PFILE` (`PFILE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `treatment_pfile` */
+
+insert  into `treatment_pfile`(`TREATMENT`,`PFILE`) values ('SUN0104130001002','SUN0104130001001');
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

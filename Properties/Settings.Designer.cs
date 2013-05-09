@@ -128,5 +128,17 @@ namespace smileUp.Properties {
                 this["DbDatabase"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool InstallationMode {
+            get {
+                return ((bool)(this["InstallationMode"]));
+            }
+            set {
+                this["InstallationMode"] = value;
+            }
+        }
     }
 }
