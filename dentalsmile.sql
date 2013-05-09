@@ -34,7 +34,7 @@ CREATE TABLE `dentist` (
   `createdBy` varchar(45) default NULL,
   `modified` timestamp NULL default NULL,
   `modifiedBy` varchar(45) default NULL,
-  `gender` varchar(1) default NULL,
+  `gender` varchar(6) default NULL,
   PRIMARY KEY  (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
