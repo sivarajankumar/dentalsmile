@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wpfsl="http://schemas.softarcs.com/wpfsmartlibrary"
-		  WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="#FF16499A"
-        Title="LoginDialog" MinWidth="600" MinHeight="550" Unloaded="Window_Unloaded" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="550" d:DesignWidth="600">
+		  WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="#FF16499A" 
+        Title="Dental.Smile -- Login" MinWidth="600" MinHeight="550" Unloaded="Window_Unloaded" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="550" d:DesignWidth="600">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -33,7 +33,6 @@
         <Label Grid.Row="1" Grid.Column="2" Content="Screen" Background="{StaticResource DarkRedTileBrush}" />
         <Button x:Name="btnLock" Grid.Row="2" Grid.Column="1" Content="Lock" Click="btnLock_Click" />
 
-        <!--~~~~~~~~~  Demo 1 (english labels and commanding "full mvvm - no code behind needed")  ~~~~~~~~~-->
         <wpfsl:SmartLoginOverlay x:Name="SmartLoginOverlayControl"
 										 FullSpan="On"
 										 IsUserOptionAvailable="True"

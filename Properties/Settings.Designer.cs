@@ -140,5 +140,17 @@ namespace smileUp.Properties {
                 this["InstallationMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("001")]
+        public string Room {
+            get {
+                return ((string)(this["Room"]));
+            }
+            set {
+                this["Room"] = value;
+            }
+        }
     }
 }

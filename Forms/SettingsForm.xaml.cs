@@ -26,6 +26,7 @@ namespace smileUp.Forms
             txtManipulatedPath.Text = Smile.MANIPULATED_PATH;
             txtScannedPath.Text = Smile.SCANNED_PATH;
             txtPhotoPath.Text = Smile.PHOTOS_PATH;
+            txtRoom.Text = Smile.Room;
         }
 
         private void btnBrowse1_Click(object sender, RoutedEventArgs e)
@@ -62,9 +63,10 @@ namespace smileUp.Forms
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             //TODO: save to dictionary
-            Properties.Settings.Default.ManipulatedPath = txtManipulatedPath.Text;
-            Properties.Settings.Default.ScannedPath = txtScannedPath.Text;
-            Properties.Settings.Default.PhotoPath = txtPhotoPath.Text;
+            Smile.MANIPULATED_PATH = Properties.Settings.Default.ManipulatedPath = txtManipulatedPath.Text;
+            Smile.SCANNED_PATH = Properties.Settings.Default.ScannedPath = txtScannedPath.Text;
+            Smile.PHOTOS_PATH= Properties.Settings.Default.PhotoPath = txtPhotoPath.Text;
+            Smile.Room = Properties.Settings.Default.Room= txtRoom.Text;
             
             Properties.Settings.Default.Save();
             Properties.Settings.Default.Reload();

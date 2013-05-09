@@ -27,6 +27,7 @@ namespace smileUp
         public static string DbDatabase = Properties.Settings.Default.DbDatabase;
 
         public static bool INSTALL = Properties.Settings.Default.InstallationMode;
+        public static string Room = Properties.Settings.Default.Room;
 
         public const int NONE = -1;
         public const int REGISTERED = 0;

@@ -52,9 +52,9 @@ namespace smileUp
             {
                 //MainWindow m = new MainWindow();
                 //m.Show();
-                this.Close();
                 Dashboard d = new Dashboard();
                 d.Show();
+                this.Close();
                 _timer.Stop();
             }
         }

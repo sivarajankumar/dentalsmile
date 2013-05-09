@@ -177,6 +177,10 @@
     <Compile Include="Stl\Vertex.cs" />
     <Compile Include="ValueConverters.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="Views\FileFilterSortListView.cs" />
+    <Compile Include="Views\FileDisplayListView.cs" />
+    <Compile Include="Views\TreatmentFilterSortListView.cs" />
+    <Compile Include="Views\TreatmentDisplayListView.cs" />
     <Compile Include="Views\HistoryControl.xaml.cs">
       <DependentUpon>HistoryControl.xaml</DependentUpon>
     </Compile>
@@ -346,6 +350,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Skins\Black\BlackResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Skins\Silver\SilverResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -563,9 +571,7 @@
   <ItemGroup>
     <Resource Include="Icons\dentalsmile32.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Skins\Silver\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Photos\UserDefault.png" />
   </ItemGroup>

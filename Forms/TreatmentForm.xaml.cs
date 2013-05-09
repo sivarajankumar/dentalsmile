@@ -32,6 +32,8 @@ namespace smileUp.Forms
             db = new DentalSmileDB();
             phases = db.SelectAllPhases();
             phaseCombo.DataContext = phases;
+
+            roomTextBox.Text = Smile.Room;
         }
 
 

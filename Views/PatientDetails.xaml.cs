@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using smileUp.DataModel;
 using System.Windows.Media.Animation;
 using System.ComponentModel;
+using smileUp.Forms;
 
 namespace smileUp.Views
 {
@@ -252,7 +253,12 @@ namespace smileUp.Views
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)
         {
+            HistoryListView.DataContext = null;
             //RaiseEvent(new RoutedEventArgs(HistoryDataClickEvent));
+            List<Treatment> t =  DB.findTreatmentsByPatientId(App.patient.Id);
+            HistoryListView.ItemsSource = t;
+            HistoryFileListView.ItemsSource = null;
+            navigateButton(Smile.NONE);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -383,6 +389,7 @@ namespace smileUp.Views
         private void navigateButton(){
             EditButton.IsEnabled = App.patient != null;
             InfoButton.IsEnabled = App.patient != null;
+            AddTreatmentButton1.IsEnabled = App.patient != null;
         }
 
         private void HideHistoryButton_Click(object sender, RoutedEventArgs e)
@@ -392,14 +399,46 @@ namespace smileUp.Views
 
         private void FilterHistoryTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            HistoryListView.FilterList(FilterHistoryTextBox.Text);
 
         }
 
         private void HistoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!ignoreSelection)
+            {
+                ignoreSelection = true;
+                Treatment selected = (Treatment)((ListBox)sender).SelectedItem;
+                if (selected != null)
+                {
+                    HistoryFileListView.ItemsSource = selected.Files;
+                }
+                ignoreSelection = false;
+            }
+            navigateButton(Smile.REGISTERED);
+        }
+        private void HistoryFileListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!ignoreSelection)
+            {
+                ignoreSelection = true;
+                
+                SmileFile selected = (SmileFile)((ListBox)sender).SelectedItem;
+
+                if (selected != null)
+                {
+                    if (selected != null) navigateButton(selected.Type);
+                }
+                
+                ignoreSelection = false;
+            }
 
         }
+        private void FilterHistoryFileTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            HistoryFileListView.FilterList(FilterHistoryFileTextBox.Text);
 
+        }
         private void ExpandHistoryButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -412,6 +451,73 @@ namespace smileUp.Views
         private void CollapseHistoryList_StoryboardCompleted(object sender, EventArgs e)
         {
             navigateButton();
+        }
+
+        private void AddTreatmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            TreatmentForm f = new TreatmentForm();
+            f.ShowDialog();
+        }
+
+        private void btnStartManipulation_Click(object sender, RoutedEventArgs e)
+        {
+            if (HistoryFileListView.SelectedItem != null)
+            {
+                Treatment t = HistoryListView.SelectedItem as Treatment;
+                SmileFile file = HistoryFileListView.SelectedItem as SmileFile;
+
+                App.patient = t.Patient;
+
+                MainWindow m = new MainWindow(t, file, true);
+                m.ShowDialog();
+                //this.Close();
+            }
+        }
+        private void btnNewScan_Click(object sender, RoutedEventArgs e)
+        {
+            ScanningForm s = new ScanningForm();
+            s.Show();
+            //s.Close();
+        }
+
+        private void btnContinueManipulation_Click(object sender, RoutedEventArgs e)
+        {
+            if (HistoryFileListView.SelectedItem != null)
+            {
+                Treatment t = HistoryListView.SelectedItem as Treatment;
+                SmileFile file = HistoryFileListView.SelectedItem as SmileFile;
+                App.patient = t.Patient;
+                MainWindow m = new MainWindow(t, file, true);
+                m.ShowDialog();
+                //this.Close();
+            }
+        }
+        private void navigateButton(int type)
+        {
+            if (type == Smile.REGISTERED)
+            {
+                btnNewScan.IsEnabled = true;
+                btnStartManipulation.IsEnabled = false;
+                btnContinueManipulation.IsEnabled = false;
+            }
+            else if (type == Smile.SCANNING)
+            {
+                btnNewScan.IsEnabled = true;
+                btnStartManipulation.IsEnabled = true;
+                btnContinueManipulation.IsEnabled = false;
+            }
+            else if (type == Smile.MANIPULATION)
+            {
+                btnNewScan.IsEnabled = true;
+                btnStartManipulation.IsEnabled = true;
+                btnContinueManipulation.IsEnabled = true;
+            }
+            else
+            {
+                btnNewScan.IsEnabled = false;
+                btnStartManipulation.IsEnabled = false;
+                btnContinueManipulation.IsEnabled = false;
+            }
         }
     }
 }

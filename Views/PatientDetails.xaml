@@ -186,6 +186,10 @@
                     <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.2"/>
                     <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
                 </DoubleAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HistoryList" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="{x:Static Visibility.Collapsed}"/>
+                </ObjectAnimationUsingKeyFrames>
                 <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DetailsInfo" Storyboard.TargetProperty="(FrameworkElement.Height)">
                     <SplineDoubleKeyFrame KeyTime="00:00:00" Value="350"/>
                     <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="125"/>
@@ -212,7 +216,7 @@
 -->                
             </Storyboard>
 
-            <!-- Animation for collapsing the Details Add section -->
+            <!-- Animation for collapsing the Details List section -->
             <Storyboard x:Key="CollapseDetailsList" Completed="CollapseDetailsList_StoryboardCompleted">
                 <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="DetailsList">
                     <SplineDoubleKeyFrame KeyTime="00:00:00" Value="300"/>
@@ -220,6 +224,10 @@
                 </DoubleAnimationUsingKeyFrames>
                 <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DetailsList" Storyboard.TargetProperty="(UIElement.Visibility)">
                     <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="{x:Static Visibility.Collapsed}"/>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HistoryList" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
                     <DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="{x:Static Visibility.Collapsed}"/>
                 </ObjectAnimationUsingKeyFrames>
                 <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="DetailsInfo">
@@ -262,7 +270,7 @@
                 </DoubleAnimationUsingKeyFrames>
                 <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DetailsInfo" Storyboard.TargetProperty="(FrameworkElement.Height)">
                     <SplineDoubleKeyFrame KeyTime="00:00:00" Value="350"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="125"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
                 </DoubleAnimationUsingKeyFrames>
                 <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="DetailsEdit" Storyboard.TargetProperty="(UIElement.Visibility)">
                     <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
@@ -290,7 +298,7 @@
                     <DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="{x:Static Visibility.Collapsed}"/>
                 </ObjectAnimationUsingKeyFrames>
                 <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="DetailsInfo">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00" Value="125"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
                     <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="350"/>
                 </DoubleAnimationUsingKeyFrames>
                 <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="DetailsEdit" Storyboard.TargetProperty="(UIElement.Visibility)">
@@ -456,6 +464,7 @@
 
         <Border DockPanel.Dock="Top" Background="{DynamicResource PanelGradientBrush}" Style="{DynamicResource BorderStyle}" x:Name="DetailsBodyBorder" BorderThickness="1,0,1,1" CornerRadius="0,0,10,10">
             <DockPanel>
+                
                 <!-- Details Info displays the information about the person such as the person's photo, name, and birth date. -->
                 <Border x:Name="DetailsInfo" DockPanel.Dock="Top" Style="{DynamicResource DetailsBorderStyle}" Margin="0,0,0,0" BorderThickness="0,1,0,0" CornerRadius="0,0,0,0" Padding="0,0,0,0" Height="350" Opacity="1" Background="{x:Null}">
                     <StackPanel Background="{x:Null}" Margin="0,0,0,0" >
@@ -507,16 +516,15 @@
 
                         <Label Margin="15,0,0,0" Content="Edit Person" HorizontalAlignment="Left" Width="95" Height="22.87" BorderThickness="0,0,0,2" Padding="3,2,5,0" Template="{DynamicResource LabelControlTemplate}"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Margin="15,0,10,0" x:Name="EditButton" Content="_Details" FontSize="10" Width="75" HorizontalAlignment="Center" Style="{DynamicResource BlackButtonStyle}"/>
+                            <Button Margin="15,0,10,0" x:Name="EditButton" Content="_Edit Data" FontSize="10" Width="75" HorizontalAlignment="Center" Style="{DynamicResource BlackButtonStyle}"/>
                             <Button Margin="15,2,10,2" x:Name="InfoButton" Content="_Histories" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="InfoButton_Click"/>
-                            <Button Margin="15,2,10,2" x:Name="AddTreatmentButton" Content="_Add Treatment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
+                            <Button Margin="15,2,10,2" x:Name="AddTreatmentButton1" Content="_Add Treatment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="AddTreatmentButton_Click"/>
                             <Button Margin="15,2,10,2" x:Name="InvoiceButton" Content="_Invoice" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
                             <Button Margin="15,2,10,2" x:Name="AppointmentButton" Content="_Appointment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
                         </StackPanel>
 
                     </StackPanel>
                 </Border>
-
                 
                 <!-- Details Edit is used for modifying the person info -->
                 <Border x:Name="DetailsEdit" DockPanel.Dock="Top" Style="{DynamicResource DetailsBorderStyle}" AllowDrop="True" Drop="AvatarPhoto_Drop" Margin="0,0,0,0" Background="{DynamicResource InputBackgroundBrush}" BorderThickness="0,1,0,1" CornerRadius="0,0,0,0" Padding="0,0,0,0" Height="545" Visibility="Visible">
@@ -692,54 +700,124 @@
 
                 <!-- HistoryList -->
                 <Border x:Name="HistoryList" DockPanel.Dock="Top" Style="{DynamicResource DetailsBorderStyle}" Background="{x:Null}" BorderThickness="0,1,0,0" CornerRadius="0,0,0,0" Opacity="1" Margin="0,0,0,0" Padding="15,10,5,10">
-                    <DockPanel>
+                    <Grid DockPanel.Dock="Top" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="250" />
+                            <RowDefinition Height="210" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0">
                         <DockPanel Margin="0,0,0,8" HorizontalAlignment="Stretch" DockPanel.Dock="Top">
                                 <TextBlock Text="Treatments ( " Style="{DynamicResource SectionHeaderStyle}" Width="70.1366666666667" Height="20" />
                                 <TextBlock Text="{Binding Path=Items.Count, ElementName=HistoryListView}" FontWeight="Normal" Style="{DynamicResource SectionHeaderStyle}" Height="20" />
                                 <TextBlock Text=")" Style="{DynamicResource SectionHeaderStyle}" Width="4.05" Height="20" />
                             <Button x:Name="ExpandHistoryButton" Content="Expand" Style="{DynamicResource RedButtonStyle}" FontSize="10" Width="50" Height="20" Click="ExpandHistoryButton_Click"  HorizontalAlignment="Right" Margin="0,0,10,0" DockPanel.Dock="Right" />
                             <Button x:Name="HideHistoryButton" Content="Hide" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Width="50" Height="20" Click="HideHistoryButton_Click"  HorizontalAlignment="Right" Margin="0,0,10,0" DockPanel.Dock="Right"/>
-                           
-                        </DockPanel>
+                                <Button x:Name="AddTreatmentButton2" Content="Add Treatment" Style="{DynamicResource NormalButtonStyle}" FontSize="10" Width="110" Height="20" Click="AddTreatmentButton_Click"  HorizontalAlignment="Right" Margin="0,0,10,0" DockPanel.Dock="Right"/>
+
+                            </DockPanel>
                         <DockPanel HorizontalAlignment="Stretch" DockPanel.Dock="Top">
                             <Label Margin="0,0,5,0" Content="Filter" VerticalAlignment="Center"/>
                             <views:FilterText x:Name="FilterHistoryTextBox" TextBoxBase.TextChanged="FilterHistoryTextBox_TextChanged"  VerticalAlignment="Center" />
                         </DockPanel>
-                        <views:PatientDisplayListView x:Name="HistoryListView" Background="{x:Null}" Margin="0,10,0,0" BorderBrush="{x:Null}"
+                        <views:TreatmentDisplayListView x:Name="HistoryListView" Background="{x:Null}" Margin="0,10,0,0" BorderBrush="{x:Null}"
               SelectionMode="Single" SelectionChanged="HistoryListView_SelectionChanged"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
               Style="{DynamicResource FamilyListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Auto"
               VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True" >
-                            <views:PatientDisplayListView.ItemContainerStyle>
+                            <views:TreatmentDisplayListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}" >
                                     <Setter Property="Template" Value="{DynamicResource FamilyListViewItemTemplate}"/>
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                 </Style>
-                            </views:PatientDisplayListView.ItemContainerStyle>
-                            <views:PatientDisplayListView.View>
+                            </views:TreatmentDisplayListView.ItemContainerStyle>
+                            <views:TreatmentDisplayListView.View>
                                 <GridView AllowsColumnReorder="False">
-                                    <views:SortListViewColumn SortProperty="FirstName"  Header="FullName" DisplayMemberBinding="{Binding Path=FullName}" Width="115" HeaderContainerStyle="{DynamicResource NameGridViewColumnHeader}"/>
-                                    <views:SortListViewColumn SortProperty="Gender"  Header="Gender" Width="40">
+                                    <views:SortListViewColumn SortProperty="Id"  Header="Id" DisplayMemberBinding="{Binding Path=Id}" Width="90" HeaderContainerStyle="{DynamicResource NameGridViewColumnHeader}"/>
+                                    <views:SortListViewColumn SortProperty="Phase"  Header="Phase" Width="90">
                                         <views:SortListViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Path=Gender}" Foreground="{DynamicResource FontColor}" />
+                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Path=Phase.Name}" Foreground="{DynamicResource FontColor}" />
                                             </DataTemplate>
                                         </views:SortListViewColumn.CellTemplate>
                                     </views:SortListViewColumn>
-                                    <views:SortListViewColumn SortProperty="BirthDate" Header="Born" Width="50">
+                                    <views:SortListViewColumn SortProperty="TreatmentDate" Header="Treatment Date" Width="70">
                                         <views:SortListViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Path=BirthDate}" Foreground="{DynamicResource FontColor}" />
+                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Path=TreatmentDate, Converter={StaticResource DateFormattingConverter}}" Foreground="{DynamicResource FontColor}" />
                                             </DataTemplate>
                                         </views:SortListViewColumn.CellTemplate>
                                     </views:SortListViewColumn>
-                                    <views:SortListViewColumn SortProperty="Address1"  Header="Addrees" DisplayMemberBinding="{Binding Path=Address1}" Width="115" HeaderContainerStyle="{DynamicResource NameGridViewColumnHeader}"/>
-                                    <views:SortListViewColumn SortProperty="City"  Header="City" DisplayMemberBinding="{Binding Path=City}" Width="115" HeaderContainerStyle="{DynamicResource NameGridViewColumnHeader}"/>
+                                    <views:SortListViewColumn SortProperty="TreatmentTime" Header="Time" Width="70">
+                                        <views:SortListViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Path=TreatmentTime}" Foreground="{DynamicResource FontColor}" />
+                                            </DataTemplate>
+                                        </views:SortListViewColumn.CellTemplate>
+                                    </views:SortListViewColumn>
+                                    <views:SortListViewColumn SortProperty="Room"  Header="Room" DisplayMemberBinding="{Binding Path=Room}" Width="35" HeaderContainerStyle="{DynamicResource NameGridViewColumnHeader}"/>
+                                    <views:SortListViewColumn SortProperty="Dentist"  Header="Dentist" DisplayMemberBinding="{Binding Path=Dentist.FullName}" Width="90" HeaderContainerStyle="{DynamicResource NameGridViewColumnHeader}"/>
                                 </GridView>
-                            </views:PatientDisplayListView.View>
-                        </views:PatientDisplayListView>
+                            </views:TreatmentDisplayListView.View>
+                        </views:TreatmentDisplayListView>
+
                     </DockPanel>
+                        <DockPanel Grid.Row="1" >
+                            <DockPanel HorizontalAlignment="Stretch" DockPanel.Dock="Top">
+                            <Label Margin="0,0,5,0" Content="Filter" VerticalAlignment="Center"/>
+                            <views:FilterText x:Name="FilterHistoryFileTextBox" TextBoxBase.TextChanged="FilterHistoryFileTextBox_TextChanged"  VerticalAlignment="Center" />
+                        </DockPanel>
+                            <views:FileDisplayListView x:Name="HistoryFileListView" Background="{x:Null}" Margin="0,10,0,0" BorderBrush="{x:Null}"
+              SelectionMode="Single" SelectionChanged="HistoryFileListView_SelectionChanged"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+              Style="{DynamicResource FamilyListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+              VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True">
+                                <views:FileDisplayListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}" >
+                                    <Setter Property="Template" Value="{DynamicResource FamilyListViewItemTemplate}"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                                </views:FileDisplayListView.ItemContainerStyle>
+                                <views:FileDisplayListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <views:SortListViewColumn SortProperty="Id"  Header="Id" DisplayMemberBinding="{Binding Path=Id}" Width="90" HeaderContainerStyle="{DynamicResource NameGridViewColumnHeader}"/>
+                                    <views:SortListViewColumn SortProperty="Phase"  Header="Phase" Width="90">
+                                        <views:SortListViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Path=Type}" Foreground="{DynamicResource FontColor}" />
+                                            </DataTemplate>
+                                        </views:SortListViewColumn.CellTemplate>
+                                    </views:SortListViewColumn>
+                                        <views:SortListViewColumn SortProperty="FileName" Header="FileName" Width="70">
+                                        <views:SortListViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Path=FileName}" Foreground="{DynamicResource FontColor}" />
+                                            </DataTemplate>
+                                        </views:SortListViewColumn.CellTemplate>
+                                    </views:SortListViewColumn>
+                                        <views:SortListViewColumn SortProperty="Screenshot" Header="Screenshot" Width="70">
+                                        <views:SortListViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                    <Image Source="{Binding Path=GetScreenshot }"/>
+                                            </DataTemplate>
+                                        </views:SortListViewColumn.CellTemplate>
+                                    </views:SortListViewColumn>
+                                </GridView>
+                                </views:FileDisplayListView.View>
+                            </views:FileDisplayListView>
+
+                        </DockPanel>
+                        <!-- group button scanning, manipulation -->
+                        <DockPanel Grid.Row="2">
+                            <StackPanel Orientation="Vertical">
+                                <Label Margin="0,0,5,0" Content="" HorizontalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Margin="15,0,10,0" x:Name="btnNewScan" Content="Scan_3D New" FontSize="10" Width="110" HorizontalAlignment="Center" Style="{DynamicResource NormalButtonStyle}"/>
+                                    <Button Margin="15,0,10,0" x:Name="btnContinueManipulation" Content="Contin_ue Manipulation" FontSize="10" Width="110" HorizontalAlignment="Center" Style="{DynamicResource NormalButtonStyle}"/>
+                                    <Button Margin="15,0,10,0" x:Name="btnStartManipulation" Content="Start _Manipulation" FontSize="10" Width="110" HorizontalAlignment="Center" Style="{DynamicResource NormalButtonStyle}" Click="btnStartManipulation_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DockPanel>
+                    </Grid>
                 </Border>
-                
             </DockPanel>
         </Border>
         <Border VerticalAlignment="Top" DockPanel.Dock="Top" Margin="0,5,0,5">

@@ -13,5 +13,7 @@
         <TextBox Height="23" HorizontalAlignment="Left" Margin="126,112,0,0" Name="txtPhotoPath" VerticalAlignment="Top" Width="134" />
         <Button Content="Browse" Height="23" HorizontalAlignment="Left" Margin="266,111,0,0" Name="btnBrowse3" VerticalAlignment="Top" Width="61" Click="btnBrowse3_Click" />
         <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="256,221,0,0" Name="btnSave" VerticalAlignment="Top" Width="75" Click="btnSave_Click" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,155,0,0" Name="textBlock4" Text="Room:" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="126,152,0,0" Name="txtRoom" VerticalAlignment="Top" Width="134" />
     </Grid>
 </Window>
