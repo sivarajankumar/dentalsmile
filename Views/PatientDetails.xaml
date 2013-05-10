@@ -516,7 +516,7 @@
 
                         <Label Margin="15,0,0,0" Content="Edit Person" HorizontalAlignment="Left" Width="95" Height="22.87" BorderThickness="0,0,0,2" Padding="3,2,5,0" Template="{DynamicResource LabelControlTemplate}"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Margin="15,0,10,0" x:Name="EditButton" Content="_Edit Data" FontSize="10" Width="75" HorizontalAlignment="Center" Style="{DynamicResource BlackButtonStyle}"/>
+                            <Button Margin="15,0,10,0" x:Name="EditButton" Content="_Edit Data" FontSize="10" Width="75" HorizontalAlignment="Center" Style="{DynamicResource BlackButtonStyle}" Click="EditButton_Click"/>
                             <Button Margin="15,2,10,2" x:Name="InfoButton" Content="_Histories" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="InfoButton_Click"/>
                             <Button Margin="15,2,10,2" x:Name="AddTreatmentButton1" Content="_Add Treatment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="AddTreatmentButton_Click"/>
                             <Button Margin="15,2,10,2" x:Name="InvoiceButton" Content="_Invoice" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
@@ -539,7 +539,7 @@
                             </Border>
                             <StackPanel Margin="15,0,0,0">
                                 <Label Content="Gender" Target="{Binding ElementName=GenderListBox, Mode=OneWay}" Padding="5,0,5,2" Foreground="{DynamicResource InputFontColor}"/>
-                                <ListBox KeyboardNavigation.DirectionalNavigation="Cycle" BorderBrush="Transparent" SelectedItem="{Binding Path=Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="GenderListBox" Foreground="{DynamicResource InputFontColor}" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-5,0,0" >
+                                <ListBox KeyboardNavigation.DirectionalNavigation="Cycle" BorderBrush="Transparent" SelectedItem="{Binding Path=Gender, Mode=TwoWay}" x:Name="GenderListBox" Foreground="{DynamicResource InputFontColor}" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-5,0,0" >                                   
                                     <ListBox.Resources>
                                         <Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}" >
                                             <Setter Property="Margin" Value="2, 2, 2, 0" />

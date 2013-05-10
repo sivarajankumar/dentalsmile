@@ -168,6 +168,17 @@ namespace smileUp
             SettingsDB f = new SettingsDB();
             f.ShowDialog();
         }
+
+        private void ChangeSkin(object sender, ExecutedRoutedEventArgs e)
+        {
+            ResourceDictionary rd = new ResourceDictionary();
+            rd.MergedDictionaries.Add(Application.LoadComponent(new Uri(e.Parameter as string, UriKind.Relative)) as ResourceDictionary);
+            Application.Current.Resources = rd;
+
+            // save the skin setting
+            Smile.Skin = Properties.Settings.Default.Skin = e.Parameter as string;
+            Properties.Settings.Default.Save();            
+        }
         
     }
 }

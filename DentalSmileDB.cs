@@ -276,7 +276,7 @@ namespace smileUp
         {
             string tableName = "PATIENT";
             string columns = "(id, fname, lname, birthdate, birthplace, gender, address1,address2,city,phone,created, createdby)";
-            string values = "('" + p.Id + "','" + p.FirstName + "','" + p.LastName + "','" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "','" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "'," + p.Phone + ",'" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
+            string values = "('" + p.Id + "','" + p.FirstName + "','" + p.LastName + "','" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "','" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
             string query = "INSERT INTO "+tableName + " "+ columns +" values "+ values +" ;";
 
             if (this.OpenPatientConnection() == true)
@@ -381,9 +381,11 @@ namespace smileUp
 
         public bool InsertTreatment(Treatment t)
         {
+            if (t.Id == null)
+                t.Id = getTreatmentNewId(t.Patient.Id);
             string tableName = "TREATMENT";
             string columns = "(id, phase, dentist, patient, tdate, ttime, room, refid, created,createdBy)";
-            string values = "('" + t.Id + "'," + t.Phase.Id + ",'" + t.Dentist.UserId + "','" + t.Patient.Id + "','" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "','" + t.TreatmentTime + "','" + t.Room + "','" + "','" + t.RefId+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
+            string values = "('" + t.Id + "'," + t.Phase.Id + ",'" + t.Dentist.UserId + "','" + t.Patient.Id + "','" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "','" + t.TreatmentTime + "','" + t.Room + "','"  + t.RefId+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
             if (this.OpenConnection() == true)
@@ -1033,7 +1035,7 @@ namespace smileUp
 
         public string getTreatmentNewId(string patientid)
         {
-            string query = "SELECT MAX(SUBSTR(id, 14)) id FROM TREATMENT WHERE patient = @patient";
+            string query = "SELECT MAX(id) id FROM ( SELECT MAX(SUBSTR(id, 14))  id FROM TREATMENT WHERE patient = @patient UNION SELECT 0 id FROM DUAL ) a ";
             int p = 0;
             if (this.OpenConnection() == true)
             {
@@ -1283,6 +1285,12 @@ namespace smileUp
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.ExecuteNonQuery();
                 this.CloseConnection();
+                Dentist d = new Dentist();
+                d.UserId = "root";
+                d.FirstName = "Root";
+                d.BirthDate = DateTime.Now;
+
+                InsertDentist(d);
                 return true;
             }
 

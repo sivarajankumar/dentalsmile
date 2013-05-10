@@ -39,5 +39,8 @@
     <Setting Name="Room" Type="System.String" Scope="User">
       <Value Profile="(Default)">001</Value>
     </Setting>
+    <Setting Name="Skin" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Black</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

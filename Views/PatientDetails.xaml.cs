@@ -68,7 +68,7 @@ namespace smileUp.Views
             if (fileNames.Length > 0)
             {
                 Photo photo = new Photo(fileNames[0]);
-                if (App.patient != null)
+                if (App.patient != null && App.patient.Photos != null)
                 {
                     // Set IsAvatar to false for the existing photos
                     foreach (Photo existingPhoto in App.patient.Photos)
@@ -152,7 +152,7 @@ namespace smileUp.Views
                 LastNameEditTextBox.Focus();
                 return false;
             }
-            if (GenderListBox.SelectedValue.Equals(string.Empty))
+            if (GenderListBox.SelectedItem.Equals(string.Empty))
             {
                 MessageBox.Show("Gender can't be null");
                 GenderListBox.Focus();
@@ -378,12 +378,24 @@ namespace smileUp.Views
 
                 App.patient = patient;
                 DataContext = patient;
+
+                insertTreatment(Smile.REGISTERED);
             }
             else
             {
                 MessageBox.Show("Patient already exist");
                 //TODO Find
             }
+        }
+
+        private void insertTreatment(int p)
+        {
+            Treatment t = new Treatment();
+            t.Phase = Smile.GetPhase(p);
+            t.Patient = App.patient;
+            t.Room = Smile.Room;
+            t.Dentist = App.user.Dentist;
+            DB.InsertTreatment(t);
         }
 
         private void navigateButton(){
@@ -518,6 +530,11 @@ namespace smileUp.Views
                 btnStartManipulation.IsEnabled = false;
                 btnContinueManipulation.IsEnabled = false;
             }
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DataContext = App.patient;
         }
     }
 }

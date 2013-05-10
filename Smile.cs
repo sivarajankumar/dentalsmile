@@ -15,7 +15,7 @@ namespace smileUp
         //public const string MANIPULATED_PATH = "I:\\opt\\apps\\3d\\dentalsmile\\Resources\\ManipulatedFiles\\";
         //public static string SCANNED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ScannedFiles\\";
         //public static string MANIPULATED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ManipulatedFiles\\";
-
+        
         public static string SCANNED_PATH = Properties.Settings.Default.ScannedPath;
         public static string MANIPULATED_PATH = Properties.Settings.Default.ManipulatedPath;
         public static string PHOTOS_PATH = Properties.Settings.Default.PhotoPath;
@@ -28,6 +28,7 @@ namespace smileUp
 
         public static bool INSTALL = Properties.Settings.Default.InstallationMode;
         public static string Room = Properties.Settings.Default.Room;
+        public static string Skin = Properties.Settings.Default.Skin;
 
         public const int NONE = -1;
         public const int REGISTERED = 0;
