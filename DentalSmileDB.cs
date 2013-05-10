@@ -1012,7 +1012,7 @@ namespace smileUp
 
         public string getSmileFileNewId(string patientid)
         {
-            string query = "SELECT MAX(SUBSTR(id, 14)) id FROM PFILE WHERE patient = @patient";
+            string query = "SELECT MAX(id) FROM ( SELECT MAX(SUBSTR(id, 14)) id FROM PFILE WHERE patient = @patient UNION SELECT 0 id FROM DUAL ) a";
             int p = 0;
             if (this.OpenConnection() == true)
             {

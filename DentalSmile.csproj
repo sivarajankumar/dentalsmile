@@ -86,6 +86,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindableExtender.cs" />
+    <Compile Include="Calendar\MonthView.xaml.cs">
+      <DependentUpon>MonthView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\MeasurementTeeth.cs" />
     <Compile Include="DataModel\Measurement.cs" />
     <Compile Include="DataModel\Photo.cs" />
@@ -265,6 +268,10 @@
     <Compile Include="MathHelper.cs" />
     <Compile Include="DataModel\Teeth.cs" />
     <Compile Include="TeethVisual3D.cs" />
+    <Page Include="Calendar\MonthView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -470,6 +477,7 @@
     <Resource Include="Helps\WireText.rtf" />
     <Resource Include="Helps\WireDrawedText.rtf" />
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="orthoprojectDataSet.xsc">
       <DependentUpon>orthoprojectDataSet.xsd</DependentUpon>
     </None>
@@ -578,6 +586,9 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Photos\UserDefault.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ForwardGreen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

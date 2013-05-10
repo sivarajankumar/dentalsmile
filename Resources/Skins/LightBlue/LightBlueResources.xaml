@@ -61,21 +61,21 @@
   <!-- SolidColorBrushes, LinearGradientBrushes, and DrawingBrushes-->
 
   <!-- The Background Brush is used as the background for the Main Window -->
-  <SolidColorBrush x:Key="MainBackgroundBrush" Color="#FF202020" />
+    <SolidColorBrush x:Key="MainBackgroundBrush" Color="#FF418CF2" />
 
   <!-- The Background Brush is used as the background for the Headers and Footers -->
-  <SolidColorBrush x:Key="BackgroundBrush" Color="#FF202020" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#FF418CF2" />
 
   <!-- The Panel Gradient Brush is used as the background for the panels such as the Details Panel -->
   <LinearGradientBrush x:Key="PanelGradientBrush" EndPoint="1,0.5" StartPoint="0,0.5">
-    <GradientStop Color="#FF555555" Offset="0" />
-    <GradientStop Color="#FF1C1C1C" Offset="1" />
+        <GradientStop Color="#FF5072BA" Offset="0" />
+        <GradientStop Color="#FF2F4678" Offset="1" />
   </LinearGradientBrush>
 
   <!-- The Diagram Gradient Brush is used as the background for the Diagram area-->
   <LinearGradientBrush x:Key="DiagramGradientBrush" EndPoint="0.439,0.967" StartPoint="0.561,0.033">
-    <GradientStop Color="#FF202020" Offset="0" />
-    <GradientStop Color="#FF545454" Offset="1" />
+        <GradientStop Color="#FF418CF2" Offset="0" />
+        <GradientStop Color="#FF5780D9" Offset="1" />
   </LinearGradientBrush>
 
   <SolidColorBrush x:Key="PersonInfoBackgroundBrush" Color="#FF282828" />

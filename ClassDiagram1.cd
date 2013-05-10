@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="smileUp.App" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAQA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.BraceContainer" Collapsed="true">
+    <Position X="20.25" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>BraceContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.BraceVisual3D" Collapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.25" />
+    <InheritanceLine Type="smileUp.SmileVisual3D" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="19.375" Y="1.13" />
+        <Point X="19.375" Y="1.322" />
+        <Point X="20.135" Y="1.322" />
+        <Point X="20.135" Y="2.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgDCAEFAAgAAABAAAKAQAAAAAAAQAAAAEgIAAIMBgI=</HashCode>
+      <FileName>BraceVisual3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Dashboard" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAIAAAIgAAMBZAAgAAAQCCQAAQGCAAACAQBA=</HashCode>
+      <FileName>Dashboard.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Photo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEIAAIAEAAggFAEAAAABAAAAAAAAA=</HashCode>
+      <FileName>DataModel\Photo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="smileUp.DentalSmileDB" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgQLgsCYJAAAXyhE4BcjiR0AFYBAAEgGwAABggCkMUY=</HashCode>
+      <FileName>DentalSmileDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.GumContainer" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>GumContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.GumVisual3D" Collapsed="true">
+    <Position X="16" Y="2.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>IQADCEEEAAAAAABIFAIARAAQgAAAQAAEAAAIAAIACoA=</HashCode>
+      <FileName>GumVisual3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.JawVisual3D" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AQA7LIWQAAAgAAAACAAAwgAACAjVwgBQAABIAAYIAAA=</HashCode>
+      <FileName>JawVisual3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.ListFilesControl" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ListFilesControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.MainViewModel" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RQEAAFmQAQJhFLCxCAtQURUAoGCQAQGMpGLoCIKwTJg=</HashCode>
+      <FileName>MainViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.MainWindow" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAmSGEIUApQmimYhCzQFBAAEQVABgtAnCIEUAAAMg=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.MeasurementContainer" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAIAQAAAAAAAAAAAEAA=</HashCode>
+      <FileName>MeasurementContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Observable" Collapsed="true">
+    <Position X="9.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Observable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="smileUp.RawVisual3D" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>BgAAABAAAQgAACBAAAAAgAAAMKAAAAAAAQYQAAKABAI=</HashCode>
+      <FileName>RawVisual3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Smile" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAQAAAAAAAAARGIAAIAQQQEAAACogGAJBVAAAg=</HashCode>
+      <FileName>Smile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.SmileModelImporter" Collapsed="true">
+    <Position X="5.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SmileModelImporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.SmileObjExporter" Collapsed="true">
+    <Position X="4" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAIIIAAAACwAQUIAgBENAAAQAAQQAAAAQBAIACAAgk=</HashCode>
+      <FileName>SmileObjExporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.SmileObjReader" Collapsed="true">
+    <Position X="5.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gkgAAEgEEAAAwhAAAEBoKoAgAAAgEiAUQBAAgAABKAA=</HashCode>
+      <FileName>SmileObjReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.SmileStlExporter" Collapsed="true">
+    <Position X="2.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAIAIAAAECwAAAIAABEFAAEAAAQQAAAAQBAIACAAAg=</HashCode>
+      <FileName>SmileStlExporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.SmileVisual3D" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAACABUAAAIAAABFAAAAAAACCAAAAAAAgAAAg=</HashCode>
+      <FileName>SmileVisual3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.SplashScreen" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAIAAQAAgAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SplashScreen.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.TeethVisual3D" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAADCAEEAAgAAABQAAKAwAAQEKAAQAAAAAgIAAIIBgI=</HashCode>
+      <FileName>TeethVisual3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.ToothContainer" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>ToothContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.WireContainer" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>WireContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.WireVisual3D" Collapsed="true">
+    <Position X="20.75" Y="2.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>gACCgAAABwgAIAqAJAIAAAQAAACAQAAAAAgAAAIIFgA=</HashCode>
+      <FileName>WireVisual3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Calendar.MonthView" Collapsed="true">
+    <Position X="9.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Calendar\MonthView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.CustomEditors.BraceLocationItemSource" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomEditors\BraceLocationItemSource.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="smileUp.CustomEditors.CustomAttributeEditorBrace" Collapsed="true">
+    <Position X="11.5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAIAAAAAAAAAAAAAAQAAEAAAAAA=</HashCode>
+      <FileName>CustomEditors\CustomAttributeEditorBrace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.CustomEditors.CustomAttributeEditorTeeth" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAABAAAAABAAAAQAAAQAAAAA=</HashCode>
+      <FileName>CustomEditors\CustomAttributeEditorTeeth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.CustomEditors.CustomAttributeEditorWire" Collapsed="true">
+    <Position X="11.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAACAAAABAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>CustomEditors\CustomAttributeEditorWire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.CustomEditors.Editors" Collapsed="true">
+    <Position X="13.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomEditors\Editors.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.CustomEditors.TeethMappingItemSource" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomEditors\TeethMappingItemSource.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="smileUp.DataModel.Brace" Collapsed="true">
+    <Position X="17.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAgAAoAAAAAAAAAIAAAAAAAABAACBA=</HashCode>
+      <FileName>DataModel\Brace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.Dentist" Collapsed="true">
+    <Position X="12.25" Y="5.25" Width="1.5" />
+    <InheritanceLine Type="smileUp.DataModel.Person" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="13.812" Y="4.509" />
+        <Point X="13.812" Y="4.875" />
+        <Point X="13" Y="4.875" />
+        <Point X="13" Y="5.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\Dentist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.Measurement" Collapsed="true">
+    <Position X="17.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAABAAAAAgAAAAAAAAQAAAAAACAA=</HashCode>
+      <FileName>DataModel\Measurement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.MeasurementTeeth" Collapsed="true">
+    <Position X="17.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAABAAQAAAAAAAUAAAEAAAAA=</HashCode>
+      <FileName>DataModel\MeasurementTeeth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.Patient" Collapsed="true">
+    <Position X="14" Y="5.25" Width="1.5" />
+    <InheritanceLine Type="smileUp.DataModel.Person" FixedFromPoint="true">
+      <Path>
+        <Point X="14.125" Y="4.509" />
+        <Point X="14.125" Y="4.875" />
+        <Point X="14.75" Y="4.875" />
+        <Point X="14.75" Y="5.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAIAAAACQAAAAAAAQAAAAEAAAAAAAAAAAAAoA=</HashCode>
+      <FileName>DataModel\Patient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.Person" Collapsed="true">
+    <Position X="13.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAEAAAAAAAICIIAAEgAQAgAAAAAAAAAAAIAAAAAg=</HashCode>
+      <FileName>DataModel\Person.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="smileUp.DataModel.Phase" Collapsed="true">
+    <Position X="15.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModel\Phase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.SmileFile" Collapsed="true">
+    <Position X="17.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAgAAACAAAAAAAAEACBQCAAAUAlAABACAA=</HashCode>
+      <FileName>DataModel\SmileFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.SmileUser" Collapsed="true">
+    <Position X="12.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAQgAAAAAAAACAAAAAAAABAA=</HashCode>
+      <FileName>DataModel\SmileUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.Teeth" Collapsed="true">
+    <Position X="15.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAQEAAAAAAgAAgAAABAAAAAAAAAAAAAARAACBA=</HashCode>
+      <FileName>DataModel\Teeth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.Treatment" Collapsed="true">
+    <Position X="15.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAEAABAAAQAAAAAAQAAAAAAAAAAADIA=</HashCode>
+      <FileName>DataModel\Treatment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.DataModel.Wire" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAAABAAAgAAgAAAQAAAAAAAAAAAAAABAAABA=</HashCode>
+      <FileName>DataModel\Wire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.AdminPasswordDialog" Collapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAABA=</HashCode>
+      <FileName>Forms\AdminPasswordDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.AppointmentForm" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\AppointmentForm.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.ChangePasswordDialog" Collapsed="true">
+    <Position X="9.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAABA=</HashCode>
+      <FileName>Forms\ChangePasswordDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.DentistForm" Collapsed="true">
+    <Position X="7.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAARAAAEAAAAAAEABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\DentistForm.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.DentistList" Collapsed="true">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAQAAAAAAAAAAAAAAAIAAAAAAAAgAAAgAA=</HashCode>
+      <FileName>Forms\DentistList.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.LoginDialog" Collapsed="true">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAgAAAAAAAAAEAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Forms\LoginDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.MeasurementForm" Collapsed="true">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAABAIACACAABAABA=</HashCode>
+      <FileName>Forms\MeasurementForm.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.NotesConfirmationForm" Collapsed="true">
+    <Position X="9.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAgAAAAAAAAMAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\NotesConfirmationForm.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.ScanningWindow" Collapsed="true">
+    <Position X="7.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAEAAAAAAAAAAAAAAAAAAAHAIAAAAAAA=</HashCode>
+      <FileName>Forms\ScanningWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.SettingsDB" Collapsed="true">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\SettingsDB.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.SettingsForm" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABYAAAAAAgAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\SettingsForm.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Forms.TreatmentForm" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAARAAAAAAAAAAEAAAAAAAAAACAEAAAAAAA=</HashCode>
+      <FileName>Forms\TreatmentForm.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Stl.Facet" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="9" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAEgAAAAAAgAAAIAAAAEAAAAAEAAAA=</HashCode>
+      <FileName>Stl\Facet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="smileUp.Stl.Normal" Collapsed="true">
+    <Position X="1.5" Y="9" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAIAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Stl\Normal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Stl.STL" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="8.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAEgAAAAAQgAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Stl\STL.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="smileUp.Stl.Vertex" Collapsed="true">
+    <Position X="1.5" Y="8.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAgAAAAAAAAAAAAAAEAYAE=</HashCode>
+      <FileName>Stl\Vertex.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="smileUp.ViewModels.LoginViewModel" Collapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAMAQAAAAAAAAAAQAAARYAAACAQAAAQAAgBA=</HashCode>
+      <FileName>ViewModels\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.FileDisplayListView" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\FileDisplayListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.SmileFileFilter" Collapsed="true">
+    <Position X="7.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBogAAAAAAAAAEAAAAAAAQAgAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Views\FileFilterSortListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.FileFilterSortListView" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAYAAEAAAABAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Views\FileFilterSortListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.HistoryControl" Collapsed="true">
+    <Position X="5.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAQAAAAAAAAAAAAAEAAIAAABACEAAgEAAFA=</HashCode>
+      <FileName>Views\HistoryControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.PatientDetails" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACCABSAEAAIUSAAIgAEQIAAXgAECGABKmEBAAQAAFA=</HashCode>
+      <FileName>Views\PatientDetails.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.PatientDisplayListView" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\PatientDisplayListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.PersonFilter" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBogAAAAAAAAgEAAAAAAASAgAAAAAAAAAAAABAAIAA=</HashCode>
+      <FileName>Views\PersonFilterSortListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.PersonFilterSortListView" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAYAAEAAAABAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Views\PersonFilterSortListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.SortListView" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAACAMAAAABAACAAAAAEAAAA=</HashCode>
+      <FileName>Views\SortListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.TreatmentDisplayListView" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\TreatmentDisplayListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.TreatmentFilter" Collapsed="true">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBogAAAAAAAAAEAAAAAAAQAgAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Views\TreatmentFilterSortListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.TreatmentFilterSortListView" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAYAAEAAAABAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Views\TreatmentFilterSortListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="smileUp.Views.Welcome" Collapsed="true">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\Welcome.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

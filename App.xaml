@@ -7,10 +7,11 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/WPFSmartLibraryLight35;component/ResourceDictionaries/CommonRD.xaml" />
                 
-                <ResourceDictionary Source="Resources\Skins\Black\BlackResources.xaml"/>
+                <ResourceDictionary Source="Resources\Skins\LightBlue\LightBlueResources.xaml"/>
 <!--
                 <ResourceDictionary Source="Resources\Skins\Silver\SilverResources.xaml"/>
                 <ResourceDictionary Source="Resources\Skins\Black\BlackResources.xaml"/>
+                <ResourceDictionary Source="Resources\Skins\LightBlue\LightBlueResources.xaml"/>
 -->                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
