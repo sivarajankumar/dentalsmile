@@ -40,7 +40,7 @@ CREATE TABLE `dentist` (
 
 /*Data for the table `dentist` */
 
-insert  into `dentist`(`userid`,`fname`,`lname`,`birthdate`,`birthplace`,`address1`,`address2`,`city`,`phone`,`created`,`createdBy`,`modified`,`modifiedBy`,`gender`) values ('DWIM','DWIm','MII','1984-05-19','GK','yk','yk','yk','0921',NULL,NULL,NULL,NULL,'M');
+insert  into `dentist`(`userid`,`fname`,`lname`,`birthdate`,`birthplace`,`address1`,`address2`,`city`,`phone`,`created`,`createdBy`,`modified`,`modifiedBy`,`gender`) values ('DWIM','DWIm','MII','1984-05-19','GK','yk','yk','yk','0921',NULL,NULL,NULL,NULL,'M'),('root','root',NULL,'2013-05-05',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `measurement` */
 
@@ -115,7 +115,7 @@ CREATE TABLE `patient` (
 
 /*Data for the table `patient` */
 
-insert  into `patient`(`id`,`fname`,`lname`,`birthdate`,`birthplace`,`gender`,`address1`,`address2`,`city`,`phone`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001','DWI','MIYANTO','2013-05-19','GK','Male','yk','yk','yk','0821',NULL,NULL,NULL,NULL),('Tue0705130001','dr.wewe','asas','2013-05-07','5/7/2013','Male','asasa','sasa','sasa','1212','2013-05-07','USER',NULL,NULL);
+insert  into `patient`(`id`,`fname`,`lname`,`birthdate`,`birthplace`,`gender`,`address1`,`address2`,`city`,`phone`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001','DWI','MIYANTO','2013-05-19','GK','Male','yk','yk','yk','0821',NULL,NULL,NULL,NULL),('Tue0705130001','dr.wewe','asas','2013-05-07','5/7/2013','Female','asasa','sasa','sasa','1212','2013-05-07','USER','2013-05-10 09:17:42','USER'),('Fri1005130001','qwqwq','wqwq','2013-05-09','wqwq','Male','qwqw','wqwq','wqwq','12121','2013-05-10','USER',NULL,NULL);
 
 /*Table structure for table `pfile` */
 
@@ -170,7 +170,7 @@ CREATE TABLE `smileuser` (
 
 /*Data for the table `smileuser` */
 
-insert  into `smileuser`(`userid`,`password`,`admin`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('DWIM','900150983CD24FB0D6963F7D28E17F72',0,NULL,NULL,NULL,NULL);
+insert  into `smileuser`(`userid`,`password`,`admin`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('DWIM','900150983CD24FB0D6963F7D28E17F72',0,NULL,NULL,NULL,NULL),('root','202CB962AC59075B964B07152D234B70',1,'2013-05-09 10:20:02','DENTALSMILE',NULL,NULL);
 
 /*Table structure for table `tooth` */
 
@@ -195,7 +195,7 @@ CREATE TABLE `treatment` (
   `PATIENT` varchar(13) default NULL,
   `DENTIST` varchar(15) default NULL,
   `tdate` date default NULL,
-  `ttime` time default NULL,
+  `ttime` varchar(10) default NULL,
   `room` varchar(45) default NULL,
   `refId` varchar(16) default NULL,
   `created` date default NULL,
@@ -210,7 +210,7 @@ CREATE TABLE `treatment` (
 
 /*Data for the table `treatment` */
 
-insert  into `treatment`(`id`,`PHASE`,`PATIENT`,`DENTIST`,`tdate`,`ttime`,`room`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001001',0,'SUN0104130001','DWIM','2013-04-05','10:00:00','1',NULL,NULL,NULL,NULL,NULL),('SUN0104130001002',1,'SUN0104130001','DWIM','2013-04-05','10:20:00','1','SUN0104130001001',NULL,NULL,NULL,NULL);
+insert  into `treatment`(`id`,`PHASE`,`PATIENT`,`DENTIST`,`tdate`,`ttime`,`room`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001001',0,'SUN0104130001','DWIM','2013-04-05','10:00:00','1',NULL,NULL,NULL,NULL,NULL),('SUN0104130001002',1,'SUN0104130001','DWIM','2013-04-05','10:20:00','1','SUN0104130001001',NULL,NULL,NULL,NULL),('Fri1005130001001',0,'Fri1005130001','DWIM','0001-01-01','','001','','2013-05-10','USER',NULL,NULL);
 
 /*Table structure for table `treatment_notes` */
 
