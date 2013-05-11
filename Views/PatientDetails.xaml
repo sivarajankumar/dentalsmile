@@ -520,7 +520,7 @@
                             <Button Margin="15,2,10,2" x:Name="InfoButton" Content="_Histories" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="InfoButton_Click"/>
                             <Button Margin="15,2,10,2" x:Name="AddTreatmentButton1" Content="_Add Treatment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="AddTreatmentButton_Click"/>
                             <Button Margin="15,2,10,2" x:Name="InvoiceButton" Content="_Invoice" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
-                            <Button Margin="15,2,10,2" x:Name="AppointmentButton" Content="_Appointment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" />
+                            <Button Margin="15,2,10,2" x:Name="AppointmentButton" Content="_Appointment" HorizontalAlignment="Center" Width="75" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="AppointmentButton_Click"/>
                         </StackPanel>
 
                     </StackPanel>

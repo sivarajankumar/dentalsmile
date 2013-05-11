@@ -22,5 +22,22 @@ namespace smileUp.Forms
         {
             InitializeComponent();
         }
+
+        private void AptCalendar_DisplayMonthChanged(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("AptCalendar_DisplayMonthChanged");
+        }
+
+        private void AptCalendar_DayBoxDoubleClicked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("AptCalendar_DayBoxDoubleClicked");
+
+        }
+
+        private void AptCalendar_AppointmentDblClicked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("AptCalendar_AppointmentDblClicked");
+
+        }
     }
 }

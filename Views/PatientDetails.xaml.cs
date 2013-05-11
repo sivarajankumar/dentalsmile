@@ -536,5 +536,11 @@ namespace smileUp.Views
         {
             this.DataContext = App.patient;
         }
+
+        private void AppointmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppointmentForm ap = new AppointmentForm();
+            ap.ShowDialog();
+        }
     }
 }

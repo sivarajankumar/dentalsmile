@@ -12,7 +12,7 @@ using smileUp.DataModel;
 
 namespace smileUp
 {
-    public class WireVisual3D
+    public class WireVisual3D : SmileVisual3D
     {
         public static readonly DependencyProperty ThicknesProperty = DependencyProperty.Register("ThicknesWire", typeof(double), typeof(WireVisual3D), new UIPropertyMetadata(1.2, ThicknesChanged));
         //public static readonly DependencyProperty ColourProperty = DependencyProperty.Register("ColourTransform", typeof(Brush), typeof(WireVisual3D), new UIPropertyMetadata(Brushes.Blue, ColourChanged));

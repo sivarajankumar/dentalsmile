@@ -86,8 +86,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindableExtender.cs" />
+    <Compile Include="Calendar\Appointment.cs" />
+    <Compile Include="Calendar\DailyView.xaml.cs">
+      <DependentUpon>DailyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calendar\DayBoxAppointmentControl.xaml.cs">
+      <DependentUpon>DayBoxAppointmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calendar\DayBoxControl.xaml.cs">
+      <DependentUpon>DayBoxControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Calendar\MonthView.xaml.cs">
       <DependentUpon>MonthView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calendar\WeekOfDaysControl.xaml.cs">
+      <DependentUpon>WeekOfDaysControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\MeasurementTeeth.cs" />
     <Compile Include="DataModel\Measurement.cs" />
@@ -268,7 +281,23 @@
     <Compile Include="MathHelper.cs" />
     <Compile Include="DataModel\Teeth.cs" />
     <Compile Include="TeethVisual3D.cs" />
+    <Page Include="Calendar\DailyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Calendar\DayBoxAppointmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Calendar\DayBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Calendar\MonthView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Calendar\WeekOfDaysControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -26,6 +26,7 @@ namespace smileUp
         public Dashboard()
         {
             InitializeComponent();
+            
             LoadSettings();
             
             if (App.user != null && App.user.Admin == true)
