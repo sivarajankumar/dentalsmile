@@ -85,6 +85,11 @@
                 <ToggleButton Content="{smileUp:Image /Icons/213.png}" x:Name="MakeWireBtn" ToolTip="Make Wire - Connect Two Braces" Click="MakeWireBtn_Click" />
                 <Button Content="{smileUp:Image /Icons/213.png}" x:Name="MakeAllWireBtn" ToolTip="Make All Braces Connected by Wires" Click="MakeWireBtn_Click" />
             </ToolBar>
+
+            <ToolBar Band="1" FlowDirection="LeftToRight">
+                <ToggleButton Content="{smileUp:Image /Icons/b_list.png}" x:Name="SimulationSettings" ToolTip="Simulation Settings" />
+                <ToggleButton Content="{smileUp:Image /Icons/ForwardGreen.png}" x:Name="RunSimulationBtn" ToolTip="Run Simulation"   />
+            </ToolBar>
         </ToolBarTray>
 
         <avalonDock:DockingManager x:Name="dockManager" Grid.Row="2">

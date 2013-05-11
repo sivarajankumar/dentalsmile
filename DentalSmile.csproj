@@ -612,7 +612,10 @@
   <ItemGroup>
     <Resource Include="Icons\dentalsmile32.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\b_list.png" />
+    <Resource Include="Icons\ForwardGreen.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Photos\UserDefault.png" />
   </ItemGroup>
