@@ -237,5 +237,39 @@ namespace smileUp
             }
         }
 
+        public Dictionary<Int32, SmileVertex> findNeighbours(MeshGeometry3D mesh)
+        {
+            Int32Collection edges = MeshGeometryHelper.FindEdges(mesh);
+            Int32Collection triangles = mesh.TriangleIndices;
+
+            Dictionary<Int32, SmileVertex> l = new Dictionary<Int32, SmileVertex>();
+            for (int j = 0; j < triangles.Count; j++)
+            {
+                SmileVertex v = new SmileVertex();
+                v.me = triangles[j];
+                for (int i = 1; i < edges.Count; i += 2)
+                {
+                    if (edges[i - 1] == triangles[j])
+                    {
+                        v.neighbours.Add(edges[i]);
+                    }
+                    else
+                        if (edges[i] == triangles[j])
+                        {
+                            v.neighbours.Add(edges[i - 1]);
+                        }
+                }
+                if (!l.ContainsKey(v.me))
+                    l.Add(v.me, v);
+            }
+            return l;
+        }
+    }
+
+
+    public class SmileVertex
+    {
+        public Int32 me;
+        public Int32Collection neighbours = new Int32Collection();
     }
 }

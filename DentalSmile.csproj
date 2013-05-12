@@ -85,6 +85,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Algorithm\SegmentationA.cs" />
     <Compile Include="BindableExtender.cs" />
     <Compile Include="Calendar\Appointment.cs" />
     <Compile Include="Calendar\DailyView.xaml.cs">
@@ -125,6 +126,9 @@
     </Compile>
     <Compile Include="Forms\SettingsForm.xaml.cs">
       <DependentUpon>SettingsForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SmileUserForm.xaml.cs">
+      <DependentUpon>SmileUserForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="MeasurementContainer.cs" />
     <Compile Include="CustomEditors\BraceLocationItemSource.cs" />
@@ -350,6 +354,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\SettingsForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\SmileUserForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

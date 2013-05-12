@@ -116,7 +116,6 @@ namespace smileUp
 
     }
 
-
     public enum Gender
     {
         Male, Female

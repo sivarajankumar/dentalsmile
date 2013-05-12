@@ -322,8 +322,8 @@ namespace smileUp
         {
             string tableName = "DENTIST";
             string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
-            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = " + p.UserId;
-
+            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = '" + p.UserId+"'";
+            '
             if (this.OpenDentistConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
@@ -354,7 +354,7 @@ namespace smileUp
         {
             string tableName = "SmileUser";
             string setColumns = "password = '" + md5generated + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
-            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = " + userid;
+            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = '" + userid+"'";
 
             if (this.OpenConnection() == true)
             {
@@ -368,7 +368,8 @@ namespace smileUp
         {
             string tableName = "SmileUser";
             string setColumns = "admin= '" + p + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
-            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = " + userid;
+            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = '" + userid + "'";
+
 
             if (this.OpenConnection() == true)
             {
@@ -446,7 +447,7 @@ namespace smileUp
 
         public List<Dentist> findDentistsByOr(string userid, string firstname, string lastname)
         {
-            string query = "SELECT * FROM DENTIST ";
+            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM SMileUser s WHERE s.userid = d.userid ) isuser FROM DENTIST d";
             bool any = false;
             string where = "";
             if (userid != null)
@@ -489,7 +490,7 @@ namespace smileUp
 
         public List<Dentist> findDentistsByAnd(string userid, string firstname, string lastname)
         {
-            string query = "SELECT * FROM DENTIST ";
+            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM SMileUser s WHERE s.userid = d.userid ) isuser isuser FROM DENTIST d";
             bool any = false;
             string where = "";
             if (userid != null)
@@ -531,7 +532,7 @@ namespace smileUp
 
         public List<Dentist> SelectAllDentists()
         {
-            string query = "SELECT * FROM DENTIST";
+            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM SMileUser s WHERE s.userid = d.userid ) isuser FROM DENTIST d";
             List<Dentist> list = null;
             if (this.OpenDentistConnection() == true)
             {
@@ -563,7 +564,7 @@ namespace smileUp
             p.Address2 = GetStringSafe(dataReader, "address2");
             p.City = GetStringSafe(dataReader, "city");
             p.Phone = GetStringSafe(dataReader, "phone");
-
+            p.IsUser = (dataReader.IsDBNull(dataReader.GetOrdinal("isuser")) ? false: dataReader.GetBoolean("isuser"));
             return p;
         }
 
@@ -636,7 +637,7 @@ namespace smileUp
             SmileUser p = new SmileUser();
 
             p.UserId = dataReader.GetString("userid");
-            p.Person= findDentistByUserId(dataReader.GetString("userid"));
+            p.Dentist = findDentistByUserId(dataReader.GetString("userid"));
 
             return p;
         }
@@ -664,7 +665,7 @@ namespace smileUp
 
         private Dentist findDentistByUserId(string id)
         {
-            string query = "SELECT * FROM DENTIST WHERE userid = @userid";
+            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM SMileUser s WHERE s.userid = d.userid ) isuser FROM DENTIST d WHERE d.userid = @userid";
             Dentist p = null;
             if (this.OpenDentistConnection() == true)
             {
@@ -1368,5 +1369,22 @@ namespace smileUp
             id += idInt.ToString("0000");
             return id;
         }
+
+        internal bool DeleteUserOnly(string p)
+        {
+            string query = "delete SmileUser WHERE userid = @userid";
+
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.Add(new MySqlParameter("userid", p));
+                cmd.ExecuteNonQuery();
+                this.CloseConnection();
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

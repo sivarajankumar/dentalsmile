@@ -180,6 +180,12 @@ namespace smileUp
             Smile.Skin = Properties.Settings.Default.Skin = e.Parameter as string;
             Properties.Settings.Default.Save();            
         }
+
+        private void User_Click(object sender, RoutedEventArgs e)
+        {
+            SmileUserForm f = new SmileUserForm();
+            f.ShowDialog();
+        }
         
     }
 }

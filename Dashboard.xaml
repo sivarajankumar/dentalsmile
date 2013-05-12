@@ -40,7 +40,7 @@
             <Menu x:Name="menuDashboard" VerticalAlignment="Bottom" Margin="5,0,0,0" Style="{DynamicResource MenuStyle}">
                 <MenuItem Header="_Master Data" Style="{DynamicResource MenuItemStyle}">
                     <MenuItem Header="_Dentist" Click="Dentist_Click" />
-                    <MenuItem Header="_User" />
+                    <MenuItem Header="_User" Click="User_Click"/>
                     <MenuItem Header="_Appointment" />
                     <MenuItem Header="_Treatment" />
                 </MenuItem>

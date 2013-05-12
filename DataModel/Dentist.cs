@@ -8,6 +8,6 @@ namespace smileUp.DataModel
     public class Dentist : Person
     {
         public string UserId { get; set; }
-
+        public bool IsUser { get; set; }
     }
 }

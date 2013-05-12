@@ -1,0 +1,18 @@
+﻿<Window x:Class="smileUp.Forms.SmileUserForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SmileUserForm" Height="300" Width="300" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ComboBox Height="26" HorizontalAlignment="Left" Margin="109,49,0,0" Name="cbDentist" VerticalAlignment="Top" Width="157" SelectionChanged="cbDentist_SelectionChanged" DisplayMemberPath="UserId" />
+        <TextBlock Height="27" HorizontalAlignment="Left" Margin="12,57,0,0" Name="textBlock1" Text="Dentist" VerticalAlignment="Top" Width="85" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,99,0,0" Name="textBlock2" Text="Password" VerticalAlignment="Top" Width="85" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="109,99,0,0" Name="txtPasswd" VerticalAlignment="Top" Width="157" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="109,145,0,0" Name="txtConfirm" VerticalAlignment="Top" Width="157" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,149,0,0" Name="textBlock3" Text="Confirm Password" VerticalAlignment="Top" Width="85" />
+        <Button Content="Add User" Height="23" HorizontalAlignment="Left" Margin="193,201,0,0" Name="btnAddUser" VerticalAlignment="Top" Width="75" Click="btnAddUser_Click" />
+        <Button Content="Update Password" Height="23" HorizontalAlignment="Left" Margin="94,201,0,0" Name="btnUpdate" VerticalAlignment="Top" Width="91" Click="btnUpdate_Click" />
+        <Button Content="Delete User" Height="23" HorizontalAlignment="Left" Margin="12,201,0,0" Name="btnDelete" VerticalAlignment="Top" Width="75" Click="btnDelete_Click" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="textBlock4" Text="Form User Management" VerticalAlignment="Top" Width="254" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="109,74,0,0" Name="txtFullname" Text="" VerticalAlignment="Top" Width="157" />
+    </Grid>
+</Window>
