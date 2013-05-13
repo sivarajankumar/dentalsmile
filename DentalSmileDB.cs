@@ -1,4 +1,4 @@
-using System;
+using smileUp.Calendar;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -11,6 +11,7 @@ using smileUp.DataModel;
 using System.Data;
 using System.Security.Cryptography;
 using System.Reflection;
+using System;
 
 namespace smileUp
 {
@@ -609,7 +610,24 @@ namespace smileUp
             Phase p = new Phase();
             
             p.Id = dataReader.GetInt32("id");
-            p.Name= dataReader.GetString("name");
+            p.Name = GetStringSafe(dataReader, "name");
+
+            return p;
+        }
+
+       
+        private Appointment toAppointment(MySqlDataReader dataReader)
+        {
+            Appointment p = new Appointment();
+            
+            p.Id = dataReader.GetInt32("id");
+            p.Subject = GetStringSafe(dataReader, "subject");
+            p.Room = GetStringSafe(dataReader, "room");
+            p.Notes = GetStringSafe(dataReader, "notes");
+            p.Aptime = GetStringSafe(dataReader, "appointment_time");
+            p.ApDate = dataReader.GetDateTime("appointment_date"); ;
+            p.Patient = findPatientById(GetStringSafe(dataReader,"patient"));
+            p.Dentist = findDentistByUserId(GetStringSafe(dataReader, "dentist"));
 
             return p;
         }
@@ -1386,6 +1404,30 @@ namespace smileUp
             }
 
             return false;
+        }
+
+
+        internal List<Appointment> findAppointmentsByPatient(string patient, int month)
+        {
+            string query = "SELECT * FROM APPOINTMENTS WHERE patient = @id and MONTH(appointment_date) = @month";
+            List<Appointment> list = null;
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.Add(new MySqlParameter("id", patient));
+                cmd.Parameters.Add(new MySqlParameter("month", month));
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                list = new List<Appointment>(); 
+                while (dataReader.Read())
+                {
+                    Appointment p = toAppointment(dataReader);
+                    list.Add(p);
+                }
+                dataReader.Close();
+                this.CloseConnection();
+            }
+            return list;        
         }
 
     }

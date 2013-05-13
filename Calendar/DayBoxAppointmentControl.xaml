@@ -5,6 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Border x:Name="BorderElement" CornerRadius="5" BorderBrush="DarkOliveGreen" Background="LightGreen" BorderThickness="1" Margin="2,2,2,1">
-        <TextBlock x:Name="DisplayText" Text="Sample Apt" FontSize="10" Padding="2" TextWrapping="Wrap"/>
+        <TextBlock x:Name="DisplayText" Text="{Binding Path=Subject, FallbackValue=Sample Apt}" FontSize="10" Padding="2" TextWrapping="Wrap"/>
     </Border>
 </UserControl>

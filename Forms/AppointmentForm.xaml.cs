@@ -19,9 +19,27 @@ namespace smileUp.Forms
     /// </summary>
     public partial class AppointmentForm : Window
     {
+        DentalSmileDB DB;
         public AppointmentForm()
         {
             InitializeComponent();
+            DB = new DentalSmileDB();
+            Loaded += new RoutedEventHandler(AppointmentForm_Loaded);
+        }
+
+        void AppointmentForm_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (App.patient != null)
+            {
+                Changed();
+            }
+        }
+
+        private void Changed()
+        {
+            int month = AptCalendar.DisplayStartDate.Month;
+            AptCalendar.Appointments = DB.findAppointmentsByPatient(App.patient.Id, month);
+            AptCalendar.Changed();
         }
 
         private void AptCalendar_DisplayMonthChanged(object sender, RoutedEventArgs e)
@@ -29,7 +47,7 @@ namespace smileUp.Forms
             //MessageBox.Show("AptCalendar_DisplayMonthChanged");
             MonthChangedEventArgs a= e as MonthChangedEventArgs;
             //AptCalendar.DisplayStartDate = a.NewDisplayStartDate;
-            AptCalendar.Changed();
+            Changed();
         }
 
         private void AptCalendar_DayBoxDoubleClicked(object sender, RoutedEventArgs e)

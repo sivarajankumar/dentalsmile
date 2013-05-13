@@ -89,8 +89,8 @@ namespace smileUp.Calendar
                 dayBox.DayNumberLabel.Text = i.ToString();
                 dayBox.Tag = i;
                 dayBox.MouseDoubleClick += new MouseButtonEventHandler(dayBox_MouseDoubleClick);
-                dayBox.PreviewDragEnter += new DragEventHandler(dayBox_PreviewDragEnter);
-                dayBox.PreviewDragLeave += new DragEventHandler(dayBox_PreviewDragLeave);
+                //dayBox.PreviewDragEnter += new DragEventHandler(dayBox_PreviewDragEnter);
+                //dayBox.PreviewDragLeave += new DragEventHandler(dayBox_PreviewDragLeave);
                 
                 //rest the namescope of the daybox in case user drags appointment from this day to another day, then back again
                 //UnregisterName("DayBox" + i.ToString());
@@ -101,6 +101,22 @@ namespace smileUp.Calendar
                 //UnregisterName("DayBox" + i.ToString());
                 //System.Windows.NameScope.SetNameScope(dayBox, new System.Windows.NameScope());
                 //RegisterName("DayBox" + i.ToString(), dayBox);
+
+                if(appointments != null)
+                {
+                    foreach(Appointment a in appointments)
+                    {
+                        if (a.ApDate.Day == i)
+                        {
+                            DayBoxAppointmentControl apt = new DayBoxAppointmentControl();
+                            apt.Name = "Apt" + a.Id;
+                            apt.DataContext = a;
+                            apt.MouseDoubleClick += new MouseButtonEventHandler(appointment_MouseDoubleClick);
+                            dayBox.DayAppointmentsStack.Children.Add(apt);
+                            //dayBox.RegisterName(apt.Name, apt);
+                        }
+                    }
+                }
 
                 if (DateTime.Now.Day == i)
                 {
@@ -114,6 +130,18 @@ namespace smileUp.Calendar
             MonthViewGrid.Children.Add(weekRowCtrl);
         }
 
+        void appointment_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is DayBoxAppointmentControl)
+            {
+                DayBoxAppointmentControl d = e.Source as DayBoxAppointmentControl;
+                Appointment a = (Appointment) d.DataContext;
+                MessageBox.Show("appointment:"+a.Subject);
+            }
+
+
+        }
+
         void dayBox_PreviewDragLeave(object sender, DragEventArgs e)
         {
         }
@@ -124,8 +152,13 @@ namespace smileUp.Calendar
 
         void dayBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.Source is DayBoxControl && e.OriginalSource is DayBoxAppointmentControl) 
+            if (e.Source is DayBoxControl ) 
             {
+                if( e.OriginalSource is DayBoxAppointmentControl){
+                }else if(e.OriginalSource is TextBlock){
+                    //edit appointment
+
+                }
                 NewAppointmentEventArgs ev = new NewAppointmentEventArgs();
                 DayBoxControl d = e.Source as DayBoxControl;
                 ev.RoutedEvent = DayBoxDoubleClickedEvent;
