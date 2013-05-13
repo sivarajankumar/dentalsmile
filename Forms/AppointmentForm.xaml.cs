@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using smileUp.Calendar;
+using System.Windows.Media.Animation;
 
 namespace smileUp.Forms
 {
@@ -52,14 +53,29 @@ namespace smileUp.Forms
 
         private void AptCalendar_DayBoxDoubleClicked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("AptCalendar_DayBoxDoubleClicked");
+            //MessageBox.Show("AptCalendar_DayBoxDoubleClicked");
+            //new appointment
+            NewAppointmentEventArgs aea = e as NewAppointmentEventArgs;
 
+            AppointmentEditForm ef = new AppointmentEditForm();
+            Appointment ap = new Appointment();
+            ap.ApDate = aea.StartDate;
+            ef.DataContext = ap;
+            ef.ShowDialog();
+            Changed();
         }
 
         private void AptCalendar_AppointmentDblClicked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("AptCalendar_AppointmentDblClicked");
+            //MessageBox.Show("AptCalendar_AppointmentDblClicked");
+            //display appointment
+            AppointmentEventArgs aea = e as AppointmentEventArgs;
+            Appointment a = aea.Point;
 
+            AppointmentEditForm ef = new AppointmentEditForm();
+            ef.DataContext = a;
+            ef.ShowDialog();
+            Changed();
         }
     }
 }

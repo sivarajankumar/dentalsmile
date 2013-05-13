@@ -1430,5 +1430,39 @@ namespace smileUp
             return list;        
         }
 
+
+        internal bool insertAppointment(Appointment t)
+        {
+            string tableName = "Appointments";
+            string columns = "(subject, patient, dentist, appointment_date, appointment_time, room, notes, created,createdBy)";
+            string values = "('" + t.Subject + "','" + t.Patient.Id + "','" + t.Dentist.UserId + "','" + t.ApDate.ToString(Smile.DATE_FORMAT) + "'," + t.Aptime + ",'" + t.Room + "','" + t.Notes+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
+            string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
+
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                t.Id = (int)cmd.LastInsertedId;
+                this.CloseConnection();
+
+                return true;
+            }
+            return false;
+        }
+
+        internal bool updateAppointment(Appointment t)
+        {
+            string tableName = "Appointments";
+            string setColumns = "subject='" + t.Subject + "',patient='" + t.Patient.Id + "', dentist='" + t.Dentist.UserId + "', appointment_date='" + t.ApDate.ToString(Smile.DATE_FORMAT) + "', appointment_time='" + t.Aptime + "', room='" + t.Room + "', notes='" + t.Notes+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
+            string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = "+t.Id+"";
+
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            return false;
+        }
     }
 }

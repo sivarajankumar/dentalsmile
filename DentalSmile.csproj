@@ -113,6 +113,9 @@
     <Compile Include="Forms\AdminPasswordDialog.xaml.cs">
       <DependentUpon>AdminPasswordDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AppointmentEditForm.xaml.cs">
+      <DependentUpon>AppointmentEditForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChangePasswordDialog.xaml.cs">
       <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
     </Compile>
@@ -314,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\AdminPasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AppointmentEditForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -136,7 +136,12 @@ namespace smileUp.Calendar
             {
                 DayBoxAppointmentControl d = e.Source as DayBoxAppointmentControl;
                 Appointment a = (Appointment) d.DataContext;
-                MessageBox.Show("appointment:"+a.Subject);
+                //MessageBox.Show("appointment:"+a.Subject);
+                AppointmentEventArgs args = new AppointmentEventArgs();
+                args.Point = a;
+                args.RoutedEvent = AppointmentDblClickedEvent;
+                RaiseEvent(args);
+                e.Handled = true;
             }
 
 
@@ -154,16 +159,24 @@ namespace smileUp.Calendar
         {
             if (e.Source is DayBoxControl ) 
             {
-                if( e.OriginalSource is DayBoxAppointmentControl){
-                }else if(e.OriginalSource is TextBlock){
-                    //edit appointment
+                //VisualTreeAdapter t = new VisualTreeAdapter(e.OriginalSource as DependencyObject);
+                //DependencyObject  k = t.Parent;
 
+                if (e.OriginalSource is TextBlock)
+                {
+                    TextBlock t = e.OriginalSource as TextBlock;
+                    if(t.Name.Equals("DisplayText")){
+                        return;
+                    }
                 }
+
                 NewAppointmentEventArgs ev = new NewAppointmentEventArgs();
                 DayBoxControl d = e.Source as DayBoxControl;
+                ev.StartDate = DisplayStartDate.AddDays(Double.Parse(d.Tag.ToString())-1).Date;
                 ev.RoutedEvent = DayBoxDoubleClickedEvent;
                 RaiseEvent(ev);
                 e.Handled = true;
+
             }
         }
 
@@ -188,7 +201,6 @@ namespace smileUp.Calendar
             args.NewDisplayStartDate = DisplayStartDate;
             args.RoutedEvent = DisplayMonthChangedEvent;
             RaiseEvent(args);
-            //RaiseEvent( args);
         }
         public void AddRowsToMonthGrid(int DaysInMonth, int OffSetDays)
         {
@@ -253,5 +265,10 @@ namespace smileUp.Calendar
         public DateTime EndDate;
         public int CandidateId;
         public int RequirementId;
+    }
+    
+    public class AppointmentEventArgs : RoutedEventArgs
+    {
+        public Appointment Point;
     }
 }
