@@ -27,9 +27,10 @@ namespace smileUp
         private string uid;
         private string password;
         private string port;
-
-        private string user = "USER";
-        public string User { get { return user; } set { this.user = value; } }
+        
+        public string User { 
+            get { return (App.user == null? "USER" : App.user.UserId); }  
+        }
 
         //Constructor
         public DentalSmileDB()
@@ -1205,7 +1206,7 @@ namespace smileUp
                 string tableName = "Treatment_Notes";
                 string columns = "(treatment, notes, pfile, description, created, createdBy)";
                 string values = "";
-                values = "('" + treatment.Id + "','" + resume + "','" + file.Id + "','" + description+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
+                values = "('" + treatment.Id + "','" + resume + "','" + (file == null ? null : file.Id) + "','" + description + "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
                 string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
                 MySqlCommand cmd = new MySqlCommand(query, connection);

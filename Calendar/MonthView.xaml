@@ -21,7 +21,7 @@
             </Image>
             <Image Name="MonthGoNext" Source="/Resources/Images/ForwardGreen.png" Height="24" Margin="6,0,6,0"
                    MouseLeftButtonUp="MonthGoNext_MouseLeftButtonUp"/>
-            <Label x:Name="MonthYearLabel" Content="March 2009" FontSize="14" FontFamily="Arial" VerticalAlignment="Center"/>
+            <Label x:Name="MonthYearLabel" Content="March 2009" Background="{DynamicResource MainBackgroundBrush}" FontSize="14" FontFamily="Arial" VerticalAlignment="Center"/>
         </StackPanel>
         <Grid Grid.Row="1" Background="AliceBlue">
             <Grid.ColumnDefinitions>
@@ -34,13 +34,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="1" Content="Sunday" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
-            <Label Grid.Column="2" Content="Monday" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
-            <Label Grid.Column="3" Content="Tuesday" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
-            <Label Grid.Column="4" Content="Wednesday" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
-            <Label Grid.Column="5" Content="Thursday" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
-            <Label Grid.Column="6" Content="Friday" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
-            <Label Grid.Column="7" Content="Saturday" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Grid.Column="1" Content="Sunday" Background="{DynamicResource MainBackgroundBrush}" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
+            <Label Grid.Column="2" Content="Monday" Background="{DynamicResource MainBackgroundBrush}" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
+            <Label Grid.Column="3" Content="Tuesday" Background="{DynamicResource MainBackgroundBrush}"  FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
+            <Label Grid.Column="4" Content="Wednesday" Background="{DynamicResource MainBackgroundBrush}" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
+            <Label Grid.Column="5" Content="Thursday" Background="{DynamicResource MainBackgroundBrush}"  FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
+            <Label Grid.Column="6" Content="Friday" Background="{DynamicResource MainBackgroundBrush}" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,1,0"/>
+            <Label Grid.Column="7" Content="Saturday" Background="{DynamicResource MainBackgroundBrush}" FontSize="9" Margin="2,0,0,2" Padding="0,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
         <!--<StackPanel x:Name="MonthViewStack" Grid.Row="2">
             

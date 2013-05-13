@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using smileUp.Calendar;
 
 namespace smileUp.Forms
 {
@@ -25,7 +26,10 @@ namespace smileUp.Forms
 
         private void AptCalendar_DisplayMonthChanged(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("AptCalendar_DisplayMonthChanged");
+            //MessageBox.Show("AptCalendar_DisplayMonthChanged");
+            MonthChangedEventArgs a= e as MonthChangedEventArgs;
+            //AptCalendar.DisplayStartDate = a.NewDisplayStartDate;
+            AptCalendar.Changed();
         }
 
         private void AptCalendar_DayBoxDoubleClicked(object sender, RoutedEventArgs e)

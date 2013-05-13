@@ -40,7 +40,7 @@ CREATE TABLE `dentist` (
 
 /*Data for the table `dentist` */
 
-insert  into `dentist`(`userid`,`fname`,`lname`,`birthdate`,`birthplace`,`address1`,`address2`,`city`,`phone`,`created`,`createdBy`,`modified`,`modifiedBy`,`gender`) values ('DWIM','DWIm','MII','1984-05-19','GK','yk','yk','yk','0921',NULL,NULL,NULL,NULL,'M'),('root','root',NULL,'2013-05-05',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `dentist`(`userid`,`fname`,`lname`,`birthdate`,`birthplace`,`address1`,`address2`,`city`,`phone`,`created`,`createdBy`,`modified`,`modifiedBy`,`gender`) values ('DWIM','DWIm','MII','1984-05-19','GK','yk','yk','yk','0921',NULL,NULL,NULL,NULL,'M'),('root','root',NULL,'2013-05-05',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('x','x','x','2013-05-05','x',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `measurement` */
 
@@ -139,7 +139,7 @@ CREATE TABLE `pfile` (
 
 /*Data for the table `pfile` */
 
-insert  into `pfile`(`PATIENT`,`id`,`filename`,`description`,`type`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`,`screenshot`) values ('SUN0104130001','SUN0104130001001','sdefault.obj',NULL,1,NULL,NULL,NULL,NULL,NULL,'default.jpg');
+insert  into `pfile`(`PATIENT`,`id`,`filename`,`description`,`type`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`,`screenshot`) values ('SUN0104130001','SUN0104130001001','sdefault.obj',NULL,2,NULL,NULL,NULL,NULL,NULL,'default.jpg');
 
 /*Table structure for table `phase` */
 
@@ -152,6 +152,8 @@ CREATE TABLE `phase` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `phase` */
+
+insert  into `phase`(`id`,`name`) values (1,'REGISTERED'),(2,'SCANNING'),(3,'MANIPULATION'),(4,'TREATMENT I'),(5,'TREATMENT II'),(6,'TREATMENT III'),(7,'BRACES'),(8,'WIRING'),(9,'PRINTING');
 
 /*Table structure for table `smileuser` */
 
@@ -170,7 +172,7 @@ CREATE TABLE `smileuser` (
 
 /*Data for the table `smileuser` */
 
-insert  into `smileuser`(`userid`,`password`,`admin`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('DWIM','900150983CD24FB0D6963F7D28E17F72',0,NULL,NULL,NULL,NULL),('root','202CB962AC59075B964B07152D234B70',1,'2013-05-09 10:20:02','DENTALSMILE',NULL,NULL);
+insert  into `smileuser`(`userid`,`password`,`admin`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('DWIM','900150983CD24FB0D6963F7D28E17F72',0,NULL,NULL,NULL,NULL),('root','202CB962AC59075B964B07152D234B70',1,'2013-05-09 10:20:02','DENTALSMILE',NULL,NULL),('x','D41D8CD98F00B204E9800998ECF8427E',0,'2013-05-12 01:35:09','USER',NULL,NULL);
 
 /*Table structure for table `tooth` */
 
@@ -210,7 +212,7 @@ CREATE TABLE `treatment` (
 
 /*Data for the table `treatment` */
 
-insert  into `treatment`(`id`,`PHASE`,`PATIENT`,`DENTIST`,`tdate`,`ttime`,`room`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001001',0,'SUN0104130001','DWIM','2013-04-05','10:00:00','1',NULL,NULL,NULL,NULL,NULL),('SUN0104130001002',1,'SUN0104130001','DWIM','2013-04-05','10:20:00','1','SUN0104130001001',NULL,NULL,NULL,NULL),('Fri1005130001001',0,'Fri1005130001','DWIM','0001-01-01','','001','','2013-05-10','USER',NULL,NULL);
+insert  into `treatment`(`id`,`PHASE`,`PATIENT`,`DENTIST`,`tdate`,`ttime`,`room`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001001',1,'SUN0104130001','DWIM','2013-04-05','10:00:00','1',NULL,NULL,NULL,NULL,NULL),('SUN0104130001002',2,'SUN0104130001','DWIM','2013-04-05','10:20:00','1','SUN0104130001001',NULL,NULL,NULL,NULL),('Fri1005130001001',1,'Fri1005130001','DWIM','0001-01-01','','001','','2013-05-10','USER',NULL,NULL);
 
 /*Table structure for table `treatment_notes` */
 

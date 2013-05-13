@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using HelixToolkit.Wpf;
 using smileUp.DataModel;
+using System.Windows.Data;
 
 
 namespace smileUp
@@ -276,6 +277,20 @@ namespace smileUp
         protected static void OuterBraceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((BraceVisual3D)d).locateBrace();
+        }
+
+
+        public static readonly DependencyProperty TargetTeethTransformProperty = DependencyProperty.Register("TargetTeethTransform", typeof(Transform3D), typeof(BraceVisual3D), new PropertyMetadata(TeethTransformChanged));
+        protected static void TeethTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        { 
+            //TODO: Teeth movement affect to Brace Movement
+            //Brace.Transform = Teeth.Transform - Brace.Position;
+
+        }
+
+        public virtual void Bind1(TeethVisual3D source)
+        {
+            BindingOperations.SetBinding(this, TargetTeethTransformProperty, new Binding("Transform") { Source = source });
         }
 
     }

@@ -85,6 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Algorithm\CubicSpline\ArrayUtil.cs" />
+    <Compile Include="Algorithm\CubicSpline\CubicSpline.cs" />
+    <Compile Include="Algorithm\CubicSpline\Program.cs" />
+    <Compile Include="Algorithm\CubicSpline\TriDiagonalMatrix.cs" />
     <Compile Include="Algorithm\SegmentationA.cs" />
     <Compile Include="BindableExtender.cs" />
     <Compile Include="Calendar\Appointment.cs" />

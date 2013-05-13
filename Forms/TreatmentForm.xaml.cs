@@ -41,7 +41,7 @@ namespace smileUp.Forms
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (phaseCombo.SelectedValue == null)
+            if (phaseCombo.SelectedValue != null)
             {
                 Treatment d = new Treatment();
                 d.Phase = phases.ElementAt(phaseCombo.SelectedIndex);
@@ -53,6 +53,9 @@ namespace smileUp.Forms
 
                 if (db.InsertTreatment(d))
                 {
+                    if(!txtResumeMedic.Text.Equals(string.Empty) || !txtRemarks.Text.Equals(string.Empty)){
+                        db.insertTreatmentNotes(d, txtResumeMedic.Text, null, txtRemarks.Text);
+                    }
                     MessageBox.Show("Success inserted");
                     clear();
                 }

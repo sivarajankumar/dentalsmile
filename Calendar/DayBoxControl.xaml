@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
         <Border x:Name="DayLabelRowBorder" CornerRadius="2" Grid.Row="0" BorderBrush="{x:Null}" 
                 Background="{DynamicResource BlueGradientBrush}">
-            <Label x:Name="DayNumberLabel" Content="1" FontWeight="Bold" FontFamily="Arial"/>
+            <TextBlock x:Name="DayNumberLabel" Text="1" FontWeight="Bold" FontFamily="Arial"/>
         </Border>
         <StackPanel Grid.Row="1" x:Name="DayAppointmentsStack" HorizontalAlignment="Stretch" Background="White" 
                     VerticalAlignment="Stretch">
