@@ -16,6 +16,30 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`dentalsmile` /*!40100 DEFAULT CHARACTER
 
 USE `dentalsmile`;
 
+/*Table structure for table `appointments` */
+
+DROP TABLE IF EXISTS `appointments`;
+
+CREATE TABLE `appointments` (
+  `id` int(11) NOT NULL auto_increment,
+  `appointment_date` date default NULL,
+  `appointment_time` varchar(10) default NULL,
+  `patient` varchar(13) default NULL,
+  `dentist` varchar(13) default NULL,
+  `room` varchar(50) default NULL,
+  `created` datetime default NULL,
+  `createdBy` varchar(13) default NULL,
+  `modified` datetime default NULL,
+  `modifiedBy` varchar(13) default NULL,
+  `notes` varchar(255) default NULL,
+  `subject` varchar(100) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `appointments` */
+
+insert  into `appointments`(`id`,`appointment_date`,`appointment_time`,`patient`,`dentist`,`room`,`created`,`createdBy`,`modified`,`modifiedBy`,`notes`,`subject`) values (1,'2013-05-15','10:00','SUN0104130001','SUN0104130001','1','2013-01-01 00:00:00',NULL,NULL,NULL,NULL,'Test'),(2,'2013-05-10','13:00','SUN0104130001','SUN0104130001','1','2013-01-01 00:00:00',NULL,NULL,NULL,NULL,'Appointment');
+
 /*Table structure for table `dentist` */
 
 DROP TABLE IF EXISTS `dentist`;
@@ -212,7 +236,7 @@ CREATE TABLE `treatment` (
 
 /*Data for the table `treatment` */
 
-insert  into `treatment`(`id`,`PHASE`,`PATIENT`,`DENTIST`,`tdate`,`ttime`,`room`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001001',1,'SUN0104130001','DWIM','2013-04-05','10:00:00','1',NULL,NULL,NULL,NULL,NULL),('SUN0104130001002',2,'SUN0104130001','DWIM','2013-04-05','10:20:00','1','SUN0104130001001',NULL,NULL,NULL,NULL),('Fri1005130001001',1,'Fri1005130001','DWIM','0001-01-01','','001','','2013-05-10','USER',NULL,NULL);
+insert  into `treatment`(`id`,`PHASE`,`PATIENT`,`DENTIST`,`tdate`,`ttime`,`room`,`refId`,`created`,`createdBy`,`modified`,`modifiedBy`) values ('SUN0104130001001',1,'SUN0104130001','DWIM','2013-04-05','10:00:00','1',NULL,NULL,NULL,NULL,NULL),('SUN0104130001002',2,'SUN0104130001','DWIM','2013-04-05','10:20:00','1','SUN0104130001001',NULL,NULL,NULL,NULL),('Fri1005130001001',1,'Fri1005130001','DWIM','0001-01-01','','001','','2013-05-10','USER',NULL,NULL),('SUN0104130001005',4,'SUN0104130001','root','2013-05-13','12:00:18','2','','2013-05-13','root',NULL,NULL);
 
 /*Table structure for table `treatment_notes` */
 
@@ -227,11 +251,12 @@ CREATE TABLE `treatment_notes` (
   `created` datetime default NULL,
   `createdBy` varchar(45) default NULL,
   PRIMARY KEY  (`id`),
-  KEY `fk_TREATMENT_NOTES_TREATMENT_PFILE` (`TREATMENT`,`PFILE`),
-  CONSTRAINT `fk_TREATMENT_NOTES_TREATMENT_PFILE` FOREIGN KEY (`TREATMENT`, `PFILE`) REFERENCES `treatment_pfile` (`TREATMENT`, `PFILE`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_TREATMENT_NOTES_TREATMENT_PFILE` (`TREATMENT`,`PFILE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `treatment_notes` */
+
+insert  into `treatment_notes`(`id`,`TREATMENT`,`PFILE`,`notes`,`description`,`created`,`createdBy`) values (1,'SUN0104130001005','','sww','sa','2013-05-13 12:00:18','root');
 
 /*Table structure for table `treatment_pfile` */
 
