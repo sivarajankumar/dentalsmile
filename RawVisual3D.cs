@@ -138,6 +138,7 @@ namespace smileUp
             
             //MeshGeometry3D worldMesh = GetMesh();//ToWorldMesh();
             MeshGeometry3D worldMesh = ToWorldMesh();
+            var n = _plane.Normal;
             var nn = _plane.Normal;
             nn.Negate();
             nn.Normalize();
@@ -145,7 +146,6 @@ namespace smileUp
             //var geo1 = ToLocalMesh(geo);
             var model = new GeometryModel3D(geo, MaterialHelper.CreateMaterial(Colors.Tomato));
             
-            var n = _plane.Normal;
             
             this.Cut(p, n);
             showManipulator = false;

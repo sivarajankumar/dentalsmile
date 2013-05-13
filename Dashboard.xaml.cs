@@ -59,6 +59,7 @@ namespace smileUp
                 dlg.ShowDialog();
             }
 
+            Smile.Phases = DB.SelectAllPhases();
             
             if (App.user == null)
             {

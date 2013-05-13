@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="319*" />
         </Grid.RowDefinitions>
-        <Grid HorizontalAlignment="Left" Margin="22,39,0,0" Name="grid1" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="63" Grid.RowSpan="3">
+        <Grid HorizontalAlignment="Left" Margin="21,54,0,0" Name="grid1" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="63" Grid.Row="2" Width="219">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -35,14 +35,15 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Content="Phase:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-            <ComboBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,6,0,0" Name="phaseCombo" VerticalAlignment="Top" Width="120" />
-            <Label Content="Room:" Grid.Row="5" HorizontalAlignment="Left" Margin="3,4,0,2" VerticalAlignment="Center" />
-                <TextBox Grid.Column="1" Grid.Row="5" Height="23" HorizontalAlignment="Left" Margin="3" Name="roomTextBox" Text="{Binding Path=birthplace, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+                <RowDefinition Height="5*" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Phase:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" Name="textBlock2"   />
+            <ComboBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,6,0,0" Name="phaseCombo" VerticalAlignment="Top" Width="120" DataContext="{Binding}" DisplayMemberPath="Name" SelectedValuePath="Id" />
+            <TextBlock Text="Room:" Grid.Row="5" HorizontalAlignment="Left" Margin="3,7,0,9" VerticalAlignment="Center" Name="textBlock3"   />
+            <TextBox Grid.Column="1" Grid.Row="5" Height="23" HorizontalAlignment="Left" Margin="3" Name="roomTextBox" Text="{Binding Path=birthplace, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
         </Grid>
         <Button Grid.Row="2" Height="23" Margin="25,110,25,229" Content="Reset" Click="Button_Click_1" />
         <Button Grid.Row="2" Grid.Column="1" Height="23" Margin="15,110,35,229" Content="Create" Click="Button_Click" />
-        <TextBlock Grid.ColumnSpan="3" Grid.Row="2" Height="24" HorizontalAlignment="Left" Margin="21,9,0,0" Name="textBlock1" Text="Entry Data Treatetment [outside of Scanning and Manipulation]" VerticalAlignment="Top" Width="275" />
+        <TextBlock Grid.ColumnSpan="3" Grid.Row="2" Height="30" HorizontalAlignment="Left" Margin="21,9,0,0" Name="textBlock1" Text="Entry Data Treatment [outside of Scanning and Manipulation]" VerticalAlignment="Top" Width="275" TextWrapping="Wrap" />
     </Grid>
 </Window>

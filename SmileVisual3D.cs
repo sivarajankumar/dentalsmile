@@ -202,7 +202,7 @@ namespace smileUp
             MeshGeometry3D worldMesh = ToWorldMesh();
             var geo = MeshGeometryHelper.Cut(worldMesh, position, normal);
             MeshGeometry3D localMesh = ToLocalMesh(geo);
-
+            //MeshGeometry3D localMesh = geo;
             if (this.Content is Model3DGroup)
             {
                 Model3DGroup g = (Model3DGroup)this.Content;

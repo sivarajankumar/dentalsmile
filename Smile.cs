@@ -31,10 +31,10 @@ namespace smileUp
         public static string Skin = Properties.Settings.Default.Skin;
 
         public const int NONE = -1;
-        public const int REGISTERED = 0;
-        public const int SCANNING = 1;
-        public const int MANIPULATION = 2;
-        public const int PRINTING = 3;
+        public const int REGISTERED = 1;
+        public const int SCANNING = 2;
+        public const int MANIPULATION = 3;
+        public const int PRINTING = 4;
 
         public static string DISPLAY_DATE_FORMAT = "dd-MMM-yyyy";
         public static string DATE_FORMAT = "yyyy-MM-dd";
@@ -58,7 +58,7 @@ namespace smileUp
             return false;
         }
 
-        public static List<Phase> GetPhases()
+        public static List<Phase> GetPhases1()
         {
             List<Phase> results = new List<Phase>();
             Phase p = new Phase();            
@@ -83,7 +83,7 @@ namespace smileUp
 
             return results;
         }
-        public static Phase GetPhase(int type)
+        public static Phase GetPhase1(int type)
         {
             Phase p = new Phase();
             if (type == REGISTERED)
@@ -113,7 +113,15 @@ namespace smileUp
             return p;
         }
 
-
+        public static List<Phase> Phases { get; set; }
+        public static Phase GetPhase(int type)
+        {
+            foreach (Phase p in Phases)
+            {
+                if (p.Id == type) return p;
+            }
+            return null;
+        }
     }
 
     public enum Gender

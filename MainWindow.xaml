@@ -23,8 +23,8 @@
         </Grid.RowDefinitions>
         <Menu VerticalAlignment="Bottom" Margin="5,0,0,0" Style="{DynamicResource MenuStyle}">
             <MenuItem Header="_Patient" Style="{DynamicResource MenuItemStyle}">
-                <MenuItem Header="_New Patient" Click="Patient_Click"/>
-                <MenuItem Header="_Search Patient" Click="SearchPatient_Click"/>
+                <MenuItem Header="_New Patient" />
+                <MenuItem Header="_Search Patient" />
             </MenuItem>
             <MenuItem Header="_File" Style="{DynamicResource MenuItemStyle}">
                 <MenuItem Header="_Open..." Command="{Binding FileOpenCommand}"/>
@@ -73,8 +73,9 @@
                 <ToggleButton Content="{smileUp:Image /Icons/202.png}" x:Name="TeethMarkerBtn"  ToolTip="Teeth Marker" Click="TeethMarkerBtn_Click" />
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">
-                <ToggleButton Content="{smileUp:Image /Icons/227.png}" x:Name="MeasurementLineBtn" ToolTip="Draw Measurement Line" Click="MeasurementLineBtn_Click" />
-                <ToggleButton Content="{smileUp:Image /Icons/227.png}" x:Name="AutoMeasurementLineBtn" ToolTip="Teeth Measurement" Click="AutoMeasurementLineBtn_Click"  />   
+                <ToggleButton Content="{smileUp:Image /Icons/131.png}" x:Name="MeasurementLineBtn" ToolTip="Draw Measurement Line" Click="MeasurementLineBtn_Click" />
+                <ToggleButton Content="{smileUp:Image /Icons/212.png}" x:Name="AutoMeasurementLineBtn" ToolTip="Teeth Measurement" Click="AutoMeasurementLineBtn_Click"  />
+                <ToggleButton Content="{smileUp:Image /Icons/227.png}" x:Name="ArchsBtn" ToolTip="Draw Archs" Click="ArchsBtn_Click"/>
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">
                 <Button Content="{smileUp:Image /Icons/teeth.png}" x:Name="AddTeethBtn" ToolTip="AddTeeth" Click="AddTeethBtn_Click" />
@@ -132,7 +133,9 @@
 
                             </avalonDock:LayoutAnchorable>
                             <avalonDock:LayoutAnchorable Title="Patient Data" CanClose="False" CanFloat="False" CanHide="False">
+                                <!--
                                 <views:PatientDetails x:Name="patientDetailsControl" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                                -->
                             </avalonDock:LayoutAnchorable>
                         </avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorablePane>

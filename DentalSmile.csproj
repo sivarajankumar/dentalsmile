@@ -583,7 +583,7 @@
     <Resource Include="Icons\del_teeth.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\3dengine\helixtoolkit-07a74f1fe190\Source\HelixToolkit.Wpf\HelixToolkit.Wpf_NET40.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\3dengine\helixtoolkit_07a74f1fe190\Source\HelixToolkit.Wpf\HelixToolkit.Wpf_NET40.csproj">
       <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
       <Name>HelixToolkit.Wpf_NET40</Name>
     </ProjectReference>
@@ -629,6 +629,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\ForwardGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\measure32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\110.png" />
+    <Resource Include="Icons\112.png" />
+    <Resource Include="Icons\114.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\120.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\131.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\205.png" />
+    <Resource Include="Icons\212.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

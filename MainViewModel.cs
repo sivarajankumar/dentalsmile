@@ -919,7 +919,12 @@ namespace smileUp
             if (RawVisual != null)
             {
                 GeometryModel3D gumModel = RawVisual.cutByPlane();
-                if (JawVisual == null) JawVisual = new JawVisual3D(new Patient());
+                if (JawVisual == null)
+                {
+                    Patient p = App.patient;
+                    if (p == null) p = new Patient();
+                    JawVisual = new JawVisual3D(p);
+                }
                 JawVisual.replaceGum(gumModel);
                 MessageBox.Show("Processing is done.", "Cutting Mesh");
             }
@@ -1036,6 +1041,8 @@ namespace smileUp
                 if (JawVisual != null && models.Count > 0)
                 {
                     JawVisual.addTeeth(models);
+                    //add points as archs
+                    JawVisual.selectedGum.Archs = points;
                 }
                 MessageBox.Show("Processing is done.", "Manual Segmentation");
             }
@@ -1093,6 +1100,11 @@ namespace smileUp
             JawVisual.updateBraceLocation(braceid, oldLocation, newValue);
         }
 
+
+        internal void displayArchs(bool p)
+        {
+            JawVisual.displayArchs(p);
+        }
     }
 
     public interface IFileDialogService

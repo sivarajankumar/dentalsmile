@@ -17,6 +17,7 @@ namespace smileUp.DataModel
         public string Description { get; set; }
         public string Screenshot { get { return screenshot; } set { this.screenshot = value; } }
         public int Type { get { return type; } set { this.type = value; } }
+        public Phase Phase { get; set; }
         public string RefId { get; set; }
 
         

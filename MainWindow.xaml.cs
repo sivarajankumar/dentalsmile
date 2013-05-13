@@ -67,7 +67,9 @@ namespace smileUp
         DispatcherTimer _timer = new DispatcherTimer();
         int cont = 0;
 
-        App app;
+        public bool IsDirty = false;
+
+        //App app;
         
         //Stand Alone
         public MainWindow()
@@ -83,9 +85,10 @@ namespace smileUp
             _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
 
             measurementForm = new MeasurementForm(this);
-            app = Application.Current as App;
+            //app = Application.Current as App;
             
             //mForm = new Forms.MeasurementForm(new Treatment(), new SmileFile());
+            navigateButton("demo");
         }
 
         //INTEGRATION with Dashboard
@@ -93,7 +96,7 @@ namespace smileUp
         {
             InitializeComponent();
 
-            app = Application.Current as App;
+            //app = Application.Current as App;
 
             if (App.patient == null)
             {
@@ -119,7 +122,12 @@ namespace smileUp
             _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
 
             mForm = new Forms.MeasurementForm(treatment,file);
-            
+            navigateButton("integration");
+        }
+
+        private void navigateButton(string p)
+        {
+           //TODO: enable/disable button just for demo and for integration
         }
 
         private void OnLoaded(object sender, EventArgs e)
@@ -1319,6 +1327,11 @@ namespace smileUp
          {
              vm.StlFileExport();
              //MessageBox.Show("I'm sorry, this feature isn't implemented yet.");
+         }
+
+         private void ArchsBtn_Click(object sender, RoutedEventArgs e)
+         {
+             vm.displayArchs(ArchsBtn.IsChecked.Value);
          }
     }
 

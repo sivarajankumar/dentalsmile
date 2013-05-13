@@ -21,17 +21,19 @@ namespace smileUp.Forms
     public partial class TreatmentForm : Window
     {
         DentalSmileDB db;
-        App app;
         List<Phase> phases;
 
         public TreatmentForm()
         {
             InitializeComponent();
 
-            app = Application.Current as App;
             db = new DentalSmileDB();
-            phases = db.SelectAllPhases();
-            phaseCombo.DataContext = phases;
+            phases = Smile.Phases = db.SelectAllPhases();
+            //phases = Smile.GetPhases();
+            //phases.Remove(Smile.GetPhase(Smile.SCANNING));
+            //phases.Remove(Smile.GetPhase(Smile.MANIPULATION));
+
+            phaseCombo.ItemsSource = phases;
 
             roomTextBox.Text = Smile.Room;
         }
@@ -39,18 +41,21 @@ namespace smileUp.Forms
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Treatment d = new Treatment();
-            d.Phase = phases.ElementAt(phaseCombo.SelectedIndex);
-            d.Patient = App.patient;
-            d.Dentist = App.user.Dentist;
-            d.Room = roomTextBox.Text.ToLower();
-            d.TreatmentDate = DateTime.Now;
-            d.TreatmentTime = DateTime.Now.ToString(Smile.TIME_FORMAT);
-
-            if (db.InsertTreatment(d))
+            if (phaseCombo.SelectedValue == null)
             {
-                MessageBox.Show("Success inserted");
-                clear();
+                Treatment d = new Treatment();
+                d.Phase = phases.ElementAt(phaseCombo.SelectedIndex);
+                d.Patient = App.patient;
+                d.Dentist = App.user.Dentist;
+                d.Room = roomTextBox.Text.ToLower();
+                d.TreatmentDate = DateTime.Now;
+                d.TreatmentTime = DateTime.Now.ToString(Smile.TIME_FORMAT);
+
+                if (db.InsertTreatment(d))
+                {
+                    MessageBox.Show("Success inserted");
+                    clear();
+                }
             }
         }
 

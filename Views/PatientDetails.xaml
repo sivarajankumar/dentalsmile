@@ -782,7 +782,7 @@
                                     <views:SortListViewColumn SortProperty="Phase"  Header="Phase" Width="90">
                                         <views:SortListViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Path=Type}" Foreground="{DynamicResource FontColor}" />
+                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Path=Phase.Name}" Foreground="{DynamicResource FontColor}" />
                                             </DataTemplate>
                                         </views:SortListViewColumn.CellTemplate>
                                     </views:SortListViewColumn>

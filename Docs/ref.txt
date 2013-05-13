@@ -4,3 +4,6 @@ http://www.3ders.org/articles/20130430-conrad-online-store-now-sells-velleman-3d
 http://arxiv.org/ftp/arxiv/papers/1211/1211.1345.pdf
 http://www.caselab.okstate.edu/ocharle/projects/cubicspline.pdf
 
+http://blogs.msdn.com/b/danlehen/archive/2004/07/19/188075.aspx - Coordinate System
+http://blogs.msdn.com/b/danlehen/archive/2004/08/08/210961.aspx - Transform
+http://blogs.msdn.com/b/danlehen/archive/2005/10/09/478923.aspx - Visual3D

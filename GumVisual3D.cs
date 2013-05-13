@@ -20,6 +20,7 @@ namespace smileUp
         public BraceContainer bc;
         public WireContainer wc;
 
+
         String id;
         public String Id
         {
@@ -340,5 +341,26 @@ namespace smileUp
             }
         }
 
+        public Point3DCollection Archs { get; set; }
+        private ModelVisual3D arch3D;
+
+        public void displayArchs(bool display){
+            if (display)
+            {
+                if (Archs != null)
+                {
+                    arch3D = new TubeVisual3D { Diameter = .08, Path = Archs, Fill = Brushes.Pink };
+                    this.Children.Add(arch3D);
+                }
+            }
+            else
+            {
+                if(this.Children.Contains(arch3D))
+                {
+                    this.Children.Remove(arch3D);
+                    arch3D = null;
+                }
+            }
+        }
     }
 }

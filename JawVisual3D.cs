@@ -491,5 +491,11 @@ namespace smileUp
             return null;
         }
 
+
+        internal void displayArchs(bool p)
+        {
+            if(selectedGum != null)
+                selectedGum.displayArchs(p);
+        }
     }
 }

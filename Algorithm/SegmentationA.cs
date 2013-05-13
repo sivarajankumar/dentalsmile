@@ -16,6 +16,7 @@ namespace smileUp.Algorithm
             //drawArch(); //using cubicSpline
             //detectTeeth(); //convert to 2D and detect 
         }
+
         void createOcclusalPlane(){
             //find 3 highest point from 3parts
             Point3D p0 = new Point3D();
@@ -25,6 +26,8 @@ namespace smileUp.Algorithm
             Vector3D n = CalculateNormal(p0, p1, p2);
             double d = Vector3D.DotProduct(new Vector3D(p2.X, p2.Y, p2.Z), n);
             Vector3D pPlane = Vector3D.Multiply(d, n);
+            //to Point3D
+            
             //d1 = n * p2;
             //Point3D p = d1 / n; //d1 = n* p ;
             //float dist = Vector3D.dotProduct(p.normal, (Vector3D.Subtract(point, p.point)));

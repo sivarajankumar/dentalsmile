@@ -323,7 +323,7 @@ namespace smileUp
             string tableName = "DENTIST";
             string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = '" + p.UserId+"'";
-            '
+            
             if (this.OpenDentistConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, dentistConnection);
@@ -596,7 +596,8 @@ namespace smileUp
             p.Screenshot = GetStringSafe(dataReader, "screenshot");
             p.Type = dataReader.GetInt32("type");
             p.RefId = GetStringSafe(dataReader, "refid");
-            
+            p.Phase = findPhaseById(p.Type);
+
             if(nested) p.Patient = findPatientById(GetStringSafe(dataReader, "patient"));
 
             return p;
@@ -623,8 +624,8 @@ namespace smileUp
             p.RefId = GetStringSafe(dataReader, "refid");
 
             p.Patient = findPatientById(GetStringSafe(dataReader, "patient"));
-            //p.Phase = findPhaseById(dataReader.GetInt32("phase"));
-            p.Phase = Smile.GetPhase(dataReader.GetInt32("phase"));
+            p.Phase = findPhaseById(dataReader.GetInt32("phase"));
+            //p.Phase = Smile.GetPhase(dataReader.GetInt32("phase"));
             p.Dentist = findDentistByUserId(GetStringSafe(dataReader, "dentist"));
 
             p.Files = findSmileFilesByTreatmentId(p.Id);
