@@ -1033,7 +1033,7 @@ namespace smileUp
 
         public string getSmileFileNewId(string patientid)
         {
-            string query = "SELECT MAX(id) FROM ( SELECT MAX(SUBSTR(id, 14)) id FROM PFILE WHERE patient = @patient UNION SELECT 0 id FROM DUAL ) a";
+            string query = "SELECT MAX(id) id FROM ( SELECT MAX(SUBSTR(id, 14)) id FROM PFILE WHERE patient = @patient UNION SELECT 0 id FROM DUAL ) a";
             int p = 0;
             if (this.OpenConnection() == true)
             {
@@ -1463,6 +1463,27 @@ namespace smileUp
                 return true;
             }
             return false;
+        }
+
+        internal SmileFile findSmileFileById(string id)
+        {
+            string query = "SELECT * FROM PFile WHERE id = @id";
+            SmileFile p = null;
+            if (this.OpenPatientConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, patientConnection);
+                cmd.Parameters.Add(new MySqlParameter("id", id));
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    p = toSmileFile(dataReader, false);
+                }
+                dataReader.Close();
+                this.ClosePatientConnection();
+
+            }
+            return p;
         }
     }
 }

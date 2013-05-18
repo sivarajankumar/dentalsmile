@@ -1,7 +1,7 @@
 ﻿<Window x:Class="smileUp.Forms.NotesConfirmationForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Notes Confirmation Dialog" Height="331" Width="300">
+        Title="Notes Confirmation Dialog" Height="331" Width="300" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBox Height="61" HorizontalAlignment="Left" Margin="24,172,0,0" Name="txtNotes" VerticalAlignment="Top" Width="242" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="24,143,0,0" Name="textBlock1" Text="File Description:" VerticalAlignment="Top" />

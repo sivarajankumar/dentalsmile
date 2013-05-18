@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:smileUp.Views"
         xmlns:smileUp="clr-namespace:smileUp" Title="{Binding ApplicationTitle}" Height="600" Width="740" 
         Background="LightBlue" 
-        Unloaded="Window_Unloaded">
+        Unloaded="Window_Unloaded" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ContextMenu x:Key="MyContextMenu">
             <MenuItem Header="Send" />
@@ -22,10 +22,11 @@
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <Menu VerticalAlignment="Bottom" Margin="5,0,0,0" Style="{DynamicResource MenuStyle}">
-            <MenuItem Header="_Patient" Style="{DynamicResource MenuItemStyle}">
+            <!--<MenuItem Header="_Patient" Style="{DynamicResource MenuItemStyle}">
                 <MenuItem Header="_New Patient" />
                 <MenuItem Header="_Search Patient" />
             </MenuItem>
+            -->
             <MenuItem Header="_File" Style="{DynamicResource MenuItemStyle}">
                 <MenuItem Header="_Open..." Command="{Binding FileOpenCommand}"/>
                 <MenuItem Header="_Export..." Command="{Binding FileExportCommand}"/>

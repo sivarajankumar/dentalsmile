@@ -16,9 +16,9 @@ namespace smileUp
         //public static string SCANNED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ScannedFiles\\";
         //public static string MANIPULATED_PATH = "D:\\dbaparm\\dwim\\private\\s2\\thesis\\dentalsmile\\Resources\\ManipulatedFiles\\";
         
-        public static string SCANNED_PATH = Properties.Settings.Default.ScannedPath;
-        public static string MANIPULATED_PATH = Properties.Settings.Default.ManipulatedPath;
-        public static string PHOTOS_PATH = Properties.Settings.Default.PhotoPath;
+        public static string SCANNED_PATH = Properties.Settings.Default.ScannedPath +"\\";
+        public static string MANIPULATED_PATH = Properties.Settings.Default.ManipulatedPath +"\\";
+        public static string PHOTOS_PATH = Properties.Settings.Default.PhotoPath +"\\";
 
         public static string DbHost = Properties.Settings.Default.DbHost;
         public static string DbPort = Properties.Settings.Default.DbPort;

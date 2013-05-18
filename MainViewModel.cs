@@ -440,6 +440,7 @@ namespace smileUp
             //e.Export(CurrentModel);
             ((SmileObjExporter)e).jawVisual = JawVisual;
             ((SmileObjExporter)e).Export(JawVisual, Patient);
+            e.Close();
 
             string screenShot = "JAW" + SmileFile.Id + ".png";
             path = Smile.MANIPULATED_PATH + screenShot;
@@ -485,6 +486,7 @@ namespace smileUp
             //e.Export(CurrentModel);
             ((SmileObjExporter)e).rawVisual = RawVisual;
             ((SmileObjExporter)e).Export(RawVisual, Patient);
+            e.Close();
         }
 
         private void FileExport()

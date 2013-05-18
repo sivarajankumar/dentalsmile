@@ -469,6 +469,7 @@ namespace smileUp.Views
         {
             TreatmentForm f = new TreatmentForm();
             f.ShowDialog();
+            InfoButton_Click(sender, e);
         }
 
         private void btnStartManipulation_Click(object sender, RoutedEventArgs e)
@@ -479,10 +480,19 @@ namespace smileUp.Views
                 SmileFile file = HistoryFileListView.SelectedItem as SmileFile;
 
                 App.patient = t.Patient;
-
-                MainWindow m = new MainWindow(t, file, true);
+                MainWindow m = null;
+                if (t.Phase.Id.Equals(Smile.MANIPULATION))
+                {
+                    SmileFile reffile = DB.findSmileFileById(file.RefId);
+                    m = new MainWindow(t, reffile, true);
+                }
+                else
+                {
+                    m = new MainWindow(t, file, true);
+                }
                 m.ShowDialog();
                 //this.Close();
+                InfoButton_Click(sender, e);
             }
         }
         private void btnNewScan_Click(object sender, RoutedEventArgs e)
@@ -490,6 +500,7 @@ namespace smileUp.Views
             ScanningForm s = new ScanningForm();
             s.Show();
             //s.Close();
+            InfoButton_Click(sender, e);
         }
 
         private void btnContinueManipulation_Click(object sender, RoutedEventArgs e)
@@ -502,6 +513,7 @@ namespace smileUp.Views
                 MainWindow m = new MainWindow(t, file, true);
                 m.ShowDialog();
                 //this.Close();
+                InfoButton_Click(sender, e);
             }
         }
         private void navigateButton(int type)
@@ -542,5 +554,6 @@ namespace smileUp.Views
             AppointmentForm ap = new AppointmentForm();
             ap.ShowDialog();
         }
+
     }
 }

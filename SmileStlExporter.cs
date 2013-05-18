@@ -159,11 +159,14 @@ namespace smileUp
 
         private Vector3D CalculateNormal(ref Point3D p0, ref Point3D p1, ref Point3D p2)
         {
-            Vector3D v0 = new Vector3D(
-              p1.X - p0.X, p1.Y - p0.Y, p1.Z - p0.Z);
-            Vector3D v1 = new Vector3D(
-              p2.X - p1.X, p2.Y - p1.Y, p2.Z - p1.Z);
-            return Vector3D.CrossProduct(v0, v1);
+            Vector3D u = p1 - p0;
+            Vector3D v = p2 - p0;
+            Vector3D w = Vector3D.CrossProduct(u, v);
+            w.Normalize();
+            return w;    
+            //Vector3D v0 = new Vector3D(p1.X - p0.X, p1.Y - p0.Y, p1.Z - p0.Z);
+            //Vector3D v1 = new Vector3D(p2.X - p1.X, p2.Y - p1.Y, p2.Z - p1.Z);
+            //return Vector3D.CrossProduct(v0, v1);
         }
 
         public void Traverse<T>(Visual3D visual, Action<T, Transform3D> action) where T : Model3D
