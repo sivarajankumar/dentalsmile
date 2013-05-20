@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C7E67BDC-CA63-418E-ACFB-731902C0DDEE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>smileUp</RootNamespace>
+    <AssemblyName>DentalSmile</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\dentalsmile32.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AvalonDock, Version=2.0.1746.0, Culture=neutral, PublicKeyToken=96637cf0d3eefdfb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Components\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="QuantumConcepts.Common">
+      <HintPath>Components\QuantumConcepts.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFLibrary">
+      <HintPath>Components\WPFLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFSmartLibraryLight35">
+      <HintPath>Components\WPFSmartLibraryLight35.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>Components\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Algorithm\CubicSpline\ArrayUtil.cs" />
+    <Compile Include="Algorithm\CubicSpline\CubicSpline.cs" />
+    <Compile Include="Algorithm\CubicSpline\Program.cs" />
+    <Compile Include="Algorithm\CubicSpline\TriDiagonalMatrix.cs" />
+    <Compile Include="Algorithm\SegmentationA.cs" />
+    <Compile Include="Algorithm\SegmentationB.cs" />
+    <Compile Include="BindableExtender.cs" />
+    <Compile Include="Calendar\Appointment.cs" />
+    <Compile Include="Calendar\DailyView.xaml.cs">
+      <DependentUpon>DailyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calendar\DayBoxAppointmentControl.xaml.cs">
+      <DependentUpon>DayBoxAppointmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calendar\DayBoxControl.xaml.cs">
+      <DependentUpon>DayBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calendar\MonthView.xaml.cs">
+      <DependentUpon>MonthView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calendar\WeekOfDaysControl.xaml.cs">
+      <DependentUpon>WeekOfDaysControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomEditors\TeethColorMappingItemSource.cs" />
+    <Compile Include="DataModel\MeasurementTeeth.cs" />
+    <Compile Include="DataModel\Measurement.cs" />
+    <Compile Include="DataModel\Photo.cs" />
+    <Compile Include="Forms\AdminPasswordDialog.xaml.cs">
+      <DependentUpon>AdminPasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AppointmentEditForm.xaml.cs">
+      <DependentUpon>AppointmentEditForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangePasswordDialog.xaml.cs">
+      <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsDB.xaml.cs">
+      <DependentUpon>SettingsDB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LoginDialog.xaml.cs">
+      <DependentUpon>LoginDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MeasurementForm.xaml.cs">
+      <DependentUpon>MeasurementForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NotesConfirmationForm.xaml.cs">
+      <DependentUpon>NotesConfirmationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.xaml.cs">
+      <DependentUpon>SettingsForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SmileUserForm.xaml.cs">
+      <DependentUpon>SmileUserForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MeasurementContainer.cs" />
+    <Compile Include="CustomEditors\BraceLocationItemSource.cs" />
+    <Compile Include="Forms\AppointmentForm.xaml.cs">
+      <DependentUpon>AppointmentForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ManipulationWindow.xaml.cs">
+      <DependentUpon>ManipulationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PatientForm.xaml.cs">
+      <DependentUpon>PatientForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PatientList.xaml.cs">
+      <DependentUpon>PatientList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ScanningWindow.xaml.cs">
+      <DependentUpon>ScanningWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TreatmentList.xaml.cs">
+      <DependentUpon>TreatmentList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\SmileUser.cs" />
+    <Compile Include="DataModel\Person.cs" />
+    <Compile Include="Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TreatmentForm.xaml.cs">
+      <DependentUpon>TreatmentForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DentistForm.xaml.cs">
+      <DependentUpon>DentistForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DentistList.xaml.cs">
+      <DependentUpon>DentistList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Phase.cs" />
+    <Compile Include="DataModel\Dentist.cs" />
+    <Compile Include="DentalSmileDB.cs" />
+    <Compile Include="ListMenusControl.xaml.cs">
+      <DependentUpon>ListMenusControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Smile.cs" />
+    <Compile Include="DataModel\SmileFile.cs" />
+    <Compile Include="ListFilesControl.xaml.cs">
+      <DependentUpon>ListFilesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NavigationControl.xaml.cs">
+      <DependentUpon>NavigationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPatientControl.xaml.cs">
+      <DependentUpon>SearchPatientControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PatientDetailsControl.xaml.cs">
+      <DependentUpon>PatientDetailsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseMarker.cs" />
+    <Compile Include="BraceContainer.cs" />
+    <Compile Include="BraceVisual3D.cs" />
+    <Compile Include="DataModel\Brace.cs" />
+    <Compile Include="CustomEditors\TeethMappingItemSource.cs" />
+    <Compile Include="DataModel\Treatment.cs" />
+    <Compile Include="SmileStlExporter.cs" />
+    <Compile Include="Stl\Facet.cs" />
+    <Compile Include="Stl\Normal.cs" />
+    <Compile Include="Stl\STL.cs" />
+    <Compile Include="Stl\Vertex.cs" />
+    <Compile Include="ValueConverters.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="Views\FileFilterSortListView.cs" />
+    <Compile Include="Views\FileDisplayListView.cs" />
+    <Compile Include="Views\TreatmentFilterSortListView.cs" />
+    <Compile Include="Views\TreatmentDisplayListView.cs" />
+    <Compile Include="Views\HistoryControl.xaml.cs">
+      <DependentUpon>HistoryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatientDetails.xaml.cs">
+      <DependentUpon>PatientDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatientDisplayListView.cs" />
+    <Compile Include="Views\FilterDialog.xaml.cs">
+      <DependentUpon>FilterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PersonFilterSortListView.cs" />
+    <Compile Include="Views\FilterText.xaml.cs">
+      <DependentUpon>FilterText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginControl.xaml.cs">
+      <DependentUpon>LoginControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatientListView.xaml.cs">
+      <DependentUpon>PatientListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SortListView.cs" />
+    <Compile Include="Views\Welcome.xaml.cs">
+      <DependentUpon>Welcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WpfDashboard.xaml.cs">
+      <DependentUpon>WpfDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DBConnect.cs" />
+    <Compile Include="EllipticalLayoutPanel.cs" />
+    <Compile Include="GumContainer.cs" />
+    <Compile Include="ImageToggleButton.cs" />
+    <Compile Include="MeasurementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MeasurementForm.designer.cs">
+      <DependentUpon>MeasurementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orthoprojectDataSet.Designer.cs" />
+    <Compile Include="Overlay.cs" />
+    <Compile Include="PatientRecordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatientRecordForm.Designer.cs">
+      <DependentUpon>PatientRecordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScanningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScanningForm.Designer.cs">
+      <DependentUpon>ScanningForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPatient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchPatient.Designer.cs">
+      <DependentUpon>SearchPatient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TeethTextItem.cs" />
+    <Compile Include="TextItem.cs" />
+    <Compile Include="ToothContainer.cs" />
+    <Compile Include="WireContainer.cs" />
+    <Compile Include="WireVisual3D.cs" />
+    <Compile Include="CustomEditors\CustomAttributeEditorWire.cs" />
+    <Compile Include="DataModel\Wire.cs" />
+    <Compile Include="CustomEditors\Editors.cs" />
+    <Compile Include="CustomEditors\CustomAttributeEditorBrace.cs" />
+    <Compile Include="CustomEditors\CustomAttributeEditorTeeth.cs" />
+    <Compile Include="Dialogs\ProgressDialog.xaml.cs" />
+    <Compile Include="DataModel\Patient.cs" />
+    <Compile Include="SmileObjExporter.cs" />
+    <Compile Include="SmileVisual3D.cs" />
+    <Compile Include="VisualTreeAdapter.cs" />
+    <Compile Include="SmileObjReader.cs" />
+    <Compile Include="SmileModelImporter.cs" />
+    <Compile Include="RawVisual3D.cs" />
+    <Compile Include="GeometryGenerator.cs" />
+    <Compile Include="GumVisual3D.cs" />
+    <Compile Include="JawVisual3D.cs" />
+    <Compile Include="MathHelper.cs" />
+    <Compile Include="DataModel\Teeth.cs" />
+    <Compile Include="TeethVisual3D.cs" />
+    <Page Include="Calendar\DailyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Calendar\DayBoxAppointmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Calendar\DayBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Calendar\MonthView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Calendar\WeekOfDaysControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AdminPasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AppointmentEditForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AppointmentForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\ChangePasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\SettingsDB.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\LoginDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\ManipulationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\MeasurementForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\NotesConfirmationForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\PatientForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\PatientList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\ScanningWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\SettingsForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\SmileUserForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\TreatmentForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\DentistForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\DentistList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\TreatmentList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ListMenusControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ListFilesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NavigationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\LoginDialogRD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Skins\Black\BlackResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Skins\LightBlue\LightBlueResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Skins\Silver\SilverResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchPatientControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PatientDetailsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FilterDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FilterText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatientDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatientListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Welcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ProgressDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="ImageExtension.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\Skins\BaseSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Skins\BlackSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Observable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="MeasurementForm.resx">
+      <DependentUpon>MeasurementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatientRecordForm.resx">
+      <DependentUpon>PatientRecordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScanningForm.resx">
+      <DependentUpon>ScanningForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchPatient.resx">
+      <DependentUpon>SearchPatient.cs</DependentUpon>
+    </EmbeddedResource>
+    <Resource Include="Helps\SampleText.rtf" />
+    <Resource Include="Helps\CutText.rtf" />
+    <Resource Include="Helps\SlicesText.rtf" />
+    <Resource Include="Helps\WireText.rtf" />
+    <Resource Include="Helps\WireDrawedText.rtf" />
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="orthoprojectDataSet.xsc">
+      <DependentUpon>orthoprojectDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="orthoprojectDataSet.xsd" />
+    <None Include="orthoprojectDataSet.xss">
+      <DependentUpon>orthoprojectDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\101.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\225.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\106.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\202.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\210.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\102.png" />
+    <Resource Include="Icons\103.png" />
+    <Resource Include="Icons\104.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\227.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\132.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\126.png" />
+    <Resource Include="Icons\128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\109.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\213.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Helps\Slices.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\brace.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\del_brace.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\teeth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\del_teeth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\helixtoolkit_07a74f1fe190\Source\HelixToolkit.Wpf\HelixToolkit.Wpf_NET40.csproj">
+      <Project>{3F3B4548-A9DB-4874-86F7-E7C4FEC8A351}</Project>
+      <Name>HelixToolkit.Wpf_NET40</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\teeth16.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\teeth16s.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\logo_241818_web.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\cooltext989270166.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\agent.ico" />
+    <Resource Include="Resources\Icons\agents.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\3dprint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Photos\default.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ManipulatedFiles\default.jpg" />
+    <Resource Include="Resources\ScannedFiles\default.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\dentalsmile32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\b_list.png" />
+    <Resource Include="Icons\ForwardGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Photos\UserDefault.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ForwardGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\measure32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\110.png" />
+    <Resource Include="Icons\112.png" />
+    <Resource Include="Icons\114.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\120.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\131.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\205.png" />
+    <Resource Include="Icons\212.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
