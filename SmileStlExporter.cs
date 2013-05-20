@@ -42,14 +42,16 @@ namespace smileUp
             this.stlExporter = new STL();
             faces = new List<Facet>();
         }
-
         public void Export(Visual3D visual, Patient p)
         {
             this.patient = p;
             Traverse<GeometryModel3D>(visual, this.ExportModel);
+            finished = true;
+        }
+        public void WriteExport()
+        {
             stlExporter.Facets = faces;
             stlExporter.Write(this.writer);
-            finished = true;
         }
         public void Close()
         {
@@ -127,6 +129,7 @@ namespace smileUp
 */
             if (m.TriangleIndices != null)
             {
+                //int ni = 0;
                 for (int i = 0; i < m.TriangleIndices.Count; i += 3)
                 {
                     int i0 = m.TriangleIndices[i];
@@ -140,13 +143,14 @@ namespace smileUp
 //                  this.writer.WriteLine("f {0} {1} {2}", formatIndices(i0), formatIndices(i1), formatIndices(i2));
 
                     Vector3D n = CalculateNormal(ref p0, ref p1, ref p2);
+                    //Vector3D n = m.Normals[ni++];
                     //TODO: Add Facet (normal, vertices)
-                    Facet f = new Facet(new Normal((decimal)n.X, (decimal)n.Y, (decimal)n.Z),
+                    Facet f = new Facet(new Normal((float)n.X, (float)n.Y, (float)n.Z),
                         new List<Vertex>()
                         {
-                            new Vertex( (decimal)p0.X, (decimal)p0.Y, (decimal)p0.Z),
-                            new Vertex( (decimal)p1.X, (decimal)p1.Y, (decimal)p1.Z),
-                            new Vertex( (decimal)p2.X, (decimal)p2.Y, (decimal)p2.Z)
+                            new Vertex( (float)p0.X, (float)p0.Y, (float)p0.Z),
+                            new Vertex( (float)p1.X, (float)p1.Y, (float)p1.Z),
+                            new Vertex( (float)p2.X, (float)p2.Y, (float)p2.Z)
                         }
                         ,0);
                     faces.Add(f);
@@ -162,11 +166,13 @@ namespace smileUp
             Vector3D u = p1 - p0;
             Vector3D v = p2 - p0;
             Vector3D w = Vector3D.CrossProduct(u, v);
-            w.Normalize();
-            return w;    
+            //w.Normalize();
+            //return w;    
             //Vector3D v0 = new Vector3D(p1.X - p0.X, p1.Y - p0.Y, p1.Z - p0.Z);
             //Vector3D v1 = new Vector3D(p2.X - p1.X, p2.Y - p1.Y, p2.Z - p1.Z);
-            //return Vector3D.CrossProduct(v0, v1);
+            //Vector3D w = Vector3D.CrossProduct(v0, v1);
+            //w.Normalize();
+            return w;
         }
 
         public void Traverse<T>(Visual3D visual, Action<T, Transform3D> action) where T : Model3D
@@ -184,19 +190,19 @@ namespace smileUp
                 if (visual is TeethVisual3D)
                 {
                     TeethVisual3D t = (TeethVisual3D)visual;
-                    stlExporter.Name = string.Format("{0}", t.Id);
+                    //stlExporter.Name = string.Format("{0}", t.Id);
 //                    this.writer.WriteLine(string.Format("g jaw_{0}", t.Id));
                 }
                 else if (visual is GumVisual3D)
                 {
                     GumVisual3D t = (GumVisual3D)visual;
-                    stlExporter.Name = string.Format("{0}", t.Id);
+                    //stlExporter.Name = string.Format("{0}", t.Id);
 //                    this.writer.WriteLine(string.Format("g jaw_{0}", t.Id));
                 }
                 else if (visual is BraceVisual3D)
                 {
                     BraceVisual3D t = (BraceVisual3D)visual;
-                    stlExporter.Name = string.Format("{0}", t.Id);
+                    //stlExporter.Name = string.Format("{0}", t.Id);
 //                    this.writer.WriteLine(string.Format("g jaw_{0}", t.Id));
                 }
                 else if (visual is WireVisual3D)

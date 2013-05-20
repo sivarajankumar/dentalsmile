@@ -37,21 +37,23 @@ namespace smileUp
         }
   
 
-        public GumVisual3D(JawVisual3D parent)
-            : this(parent, Colors.BurlyWood)
+        public GumVisual3D(JawVisual3D parent, string id)
+            : this(parent, Colors.BurlyWood, id)
         {
            
         }
 
-        public GumVisual3D(JawVisual3D p, Color color)
+        public GumVisual3D(JawVisual3D p, Color color, string id)
         {
             this.parent = p;
             gc = this.parent.gc;
             tc = this.parent.tc;
             bc = this.parent.bc;
             wc = this.parent.wc;
-
-            Id = "gum" + p.gums.Count.ToString("00") + "." + p.patient.Id;
+            if (id == null)
+                Id = "gum" + p.gums.Count.ToString("00") + "." + p.patient.Id;
+            else
+                Id = id;
 
             sample(color);
 
@@ -245,7 +247,8 @@ namespace smileUp
             }
 
             int intID = getTeethIDint(t.Id);
-            teethDictionaries.Add(intID, t.Id);
+            if (!teethDictionaries.ContainsKey(intID))
+                teethDictionaries.Add(intID, t.Id);
 
             Material material = MaterialHelper.CreateMaterial(TeethVisual3D.getTeethColor(intID));
             ((GeometryModel3D)t.Content).Material = material;

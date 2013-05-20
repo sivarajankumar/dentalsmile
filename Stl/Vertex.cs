@@ -11,13 +11,13 @@ namespace smileUp.Stl
 {
     public class Vertex : IEquatable<Vertex>
     {
-        public decimal X { get; set; }
-        public decimal Y { get; set; }
-        public decimal Z { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
 
         public Vertex() { }
 
-        public Vertex(decimal x, decimal y, decimal z)
+        public Vertex(float x, float y, float z)
             : this()
         {
             this.X = x;
@@ -30,7 +30,7 @@ namespace smileUp.Stl
             const string regex = @"\s*(facet normal|vertex)\s+(?<X>[^\s]+)\s+(?<Y>[^\s]+)\s+(?<Z>[^\s]+)";
 
             string data = null;
-            decimal x, y, z;
+            float x, y, z;
             Match match = null;
             NumberStyles numberStyle = (NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign);
 
@@ -47,15 +47,15 @@ namespace smileUp.Stl
             if (!match.Success)
                 return null;
 
-            if (!decimal.TryParse(match.Groups["X"].Value, numberStyle, CultureInfo.CurrentCulture, out x))
+            if (!float.TryParse(match.Groups["X"].Value, numberStyle, CultureInfo.CurrentCulture, out x))
                 //throw new FormatException(string.Format("Could not parse X coordinate \"{0}\" as a decimal.",match.Groups["X"]));
             throw new FormatException("Could not parse X coordinate \"{0}\" as a decimal.".FormatString(match.Groups["X"]));
 
-            if (!decimal.TryParse(match.Groups["Y"].Value, numberStyle, CultureInfo.CurrentCulture, out y))
+            if (!float.TryParse(match.Groups["Y"].Value, numberStyle, CultureInfo.CurrentCulture, out y))
                 //throw new FormatException(string.Format("Could not parse Y coordinate \"{0}\" as a decimal.",match.Groups["Y"]));
             throw new FormatException("Could not parse Y coordinate \"{0}\" as a decimal.".FormatString(match.Groups["Y"]));
 
-            if (!decimal.TryParse(match.Groups["Z"].Value, numberStyle, CultureInfo.CurrentCulture, out z))
+            if (!float.TryParse(match.Groups["Z"].Value, numberStyle, CultureInfo.CurrentCulture, out z))
                 //throw new FormatException(string.Format("Could not parse Z coordinate \"{0}\" as a decimal.",match.Groups["Z"]));
             throw new FormatException("Could not parse Z coordinate \"{0}\" as a decimal.".FormatString(match.Groups["Z"]));
 
@@ -84,9 +84,9 @@ namespace smileUp.Stl
 
             return new Vertex()
             {
-                X = (decimal)BitConverter.ToSingle(data, 0),
-                Y = (decimal)BitConverter.ToSingle(data, 4),
-                Z = (decimal)BitConverter.ToSingle(data, 8)
+                X = (float)BitConverter.ToDouble(data, 0),
+                Y = (float)BitConverter.ToDouble(data, 4),
+                Z = (float)BitConverter.ToDouble(data, 8)
             };
         }
 

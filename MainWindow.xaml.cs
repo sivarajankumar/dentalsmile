@@ -64,7 +64,7 @@ namespace smileUp
         // Using a DependencyProperty as the backing store for MainWindow.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MainWindowProperty = DependencyProperty.RegisterAttached("MainWindow", typeof(MainWindow), typeof(MainWindow), null);
         */
-        DispatcherTimer _timer = new DispatcherTimer();
+        //DispatcherTimer _timer = new DispatcherTimer();
         int cont = 0;
 
         public bool IsDirty = false;
@@ -132,10 +132,10 @@ namespace smileUp
 
         private void OnLoaded(object sender, EventArgs e)
         {
-            _timer.Interval = new System.TimeSpan(0, 0, 0, 0, 1000);
-            _timer.Tick += new System.EventHandler(OnTimerEvent);
+           // _timer.Interval = new System.TimeSpan(0, 0, 0, 0, 1000);
+            //_timer.Tick += new System.EventHandler(OnTimerEvent);
 
-            _timer.Start();
+            //_timer.Start();
 
         }
 

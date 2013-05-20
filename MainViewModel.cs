@@ -413,6 +413,8 @@ namespace smileUp
                     }
                 }
                 
+                ((SmileStlExporter)e).WriteExport();
+                
                 ((SmileStlExporter)e).Close();
 
                 if(((SmileStlExporter)e).Finish)

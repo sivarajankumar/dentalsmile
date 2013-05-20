@@ -90,6 +90,7 @@
     <Compile Include="Algorithm\CubicSpline\Program.cs" />
     <Compile Include="Algorithm\CubicSpline\TriDiagonalMatrix.cs" />
     <Compile Include="Algorithm\SegmentationA.cs" />
+    <Compile Include="Algorithm\SegmentationB.cs" />
     <Compile Include="BindableExtender.cs" />
     <Compile Include="Calendar\Appointment.cs" />
     <Compile Include="Calendar\DailyView.xaml.cs">
@@ -107,6 +108,7 @@
     <Compile Include="Calendar\WeekOfDaysControl.xaml.cs">
       <DependentUpon>WeekOfDaysControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomEditors\TeethColorMappingItemSource.cs" />
     <Compile Include="DataModel\MeasurementTeeth.cs" />
     <Compile Include="DataModel\Measurement.cs" />
     <Compile Include="DataModel\Photo.cs" />

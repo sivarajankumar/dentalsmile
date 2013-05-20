@@ -100,7 +100,6 @@ namespace smileUp.Stl
             //writer.Write(string.Format("end{0}",this.ToString()));
             writer.Write("end{0}".FormatString(this.ToString()));
         }
-
         public void Write(BinaryWriter writer)
         {
             //Write the header and facet count.

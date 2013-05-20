@@ -237,15 +237,15 @@ namespace smileUp
             }
         }
 
-        public Dictionary<Int32, SmileVertex> findNeighbours(MeshGeometry3D mesh)
+        public static Dictionary<Int32, SmileEdge> findNeighbours(MeshGeometry3D mesh)
         {
             Int32Collection edges = MeshGeometryHelper.FindEdges(mesh);
             Int32Collection triangles = mesh.TriangleIndices;
 
-            Dictionary<Int32, SmileVertex> l = new Dictionary<Int32, SmileVertex>();
+            Dictionary<Int32, SmileEdge> l = new Dictionary<Int32, SmileEdge>();
             for (int j = 0; j < triangles.Count; j++)
             {
-                SmileVertex v = new SmileVertex();
+                SmileEdge v = new SmileEdge();
                 v.me = triangles[j];
                 for (int i = 1; i < edges.Count; i += 2)
                 {
@@ -264,12 +264,27 @@ namespace smileUp
             }
             return l;
         }
+
+        public static Vector3D CalculateNormal(Point3D p0, Point3D p1, Point3D p2)
+        {
+            Vector3D u = p1 - p0;
+            Vector3D v = p2 - p0;
+            Vector3D w = Vector3D.CrossProduct(u, v);
+            //w.Normalize();
+            //return w;    
+            //Vector3D v0 = new Vector3D(p1.X - p0.X, p1.Y - p0.Y, p1.Z - p0.Z);
+            //Vector3D v1 = new Vector3D(p2.X - p1.X, p2.Y - p1.Y, p2.Z - p1.Z);
+            //Vector3D w = Vector3D.CrossProduct(v0, v1);
+            //w.Normalize();
+            return w;
+        }
     }
 
 
-    public class SmileVertex
+    public class SmileEdge
     {
         public Int32 me;
         public Int32Collection neighbours = new Int32Collection();
     }
+
 }

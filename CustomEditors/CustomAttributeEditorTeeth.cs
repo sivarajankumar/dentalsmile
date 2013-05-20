@@ -48,6 +48,17 @@ namespace smileUp.CustomEditors
             set;
         }
 
+
+        [Category("Information")]
+        [DisplayName("Color")]
+        [Description("This property uses the ListBox as the default editor.")]
+        //[Editor(typeof(DropDownListEditor), typeof(DropDownListEditor))]
+        [ItemsSource(typeof(TeethColorMappingItemSource))]
+        public string Color
+        {
+            get;
+            set;
+        }
         [Category("Measurement")]
         [DisplayName("Length(mm)")]
         [Editor(typeof(TextBoxEditor), typeof(TextBoxEditor))]
@@ -64,11 +75,11 @@ namespace smileUp.CustomEditors
             teeth.Type = "Teeth";
             //TODO: assign the model data to the editor
             teeth.Id = model.Id;
+
             String tn = model.Id;
             Match mt = Regex.Match(tn, @"teeth\d\d");
             if (mt.Value == "") { mt = Regex.Match(tn, @"teeth\d"); tn = mt.Value.Substring("teeth".Length, 1); }
             else { tn = mt.Value.Substring("teeth".Length, 2); }
-
             //tn = tn.Substring("teeth".Length, 2);
             int itn = 0;
             int.TryParse(tn, out itn);

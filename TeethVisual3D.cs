@@ -86,8 +86,11 @@ namespace smileUp
         public CombinedManipulator Manipulator { get; set; }
         String id;
 
+        public static readonly DependencyProperty ColorProperty
+           = DependencyProperty.Register("ColorTeeth", typeof(Brush), typeof(TeethVisual3D),new UIPropertyMetadata(ColorChanged));
+
         public static readonly DependencyProperty IdProperty
-           = DependencyProperty.Register("Id", typeof(String), typeof(TeethVisual3D),
+           = DependencyProperty.Register("IdTeeth", typeof(String), typeof(TeethVisual3D),
                                          new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public String Id
@@ -100,6 +103,19 @@ namespace smileUp
             get {
                 id = (String) GetValue(IdProperty);
                 return id; 
+            }
+        }
+
+        public Brush Color
+        {
+            set
+            {
+                SetValue(ColorProperty, value);
+                //if(Model != null) Model.Colour = value;
+            }
+            get
+            {
+                return (Brush)GetValue(ColorProperty);
             }
         }
 
@@ -370,5 +386,9 @@ namespace smileUp
 
         }
 
+        protected static void ColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -132,10 +132,10 @@ namespace smileUp
         }
 
         //Add new GUM to GumContainer
-        public GumVisual3D addNewGum()
+        public GumVisual3D addNewGum(string id)
         {
             GumVisual3D gum = null;
-            gum = new GumVisual3D(this);
+            gum = new GumVisual3D(this,id);
             gums.Add(gum.Id, gum);
             selectedGum = gum;
             gc.Children.Add(gum);
@@ -261,7 +261,7 @@ namespace smileUp
             {
                 if (gums.Count == 0)
                 {
-                    addNewGum();
+                    addNewGum(null);
                 }
             }
         }

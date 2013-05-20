@@ -919,7 +919,7 @@ namespace smileUp
                 jaw.gums.TryGetValue(p, out gum);
                 if (gum == null)
                 {
-                    gum = jaw.addNewGum();
+                    gum = jaw.addNewGum(p);
                     //jaw.Children.Add(gum);
                 }
                 return gum;

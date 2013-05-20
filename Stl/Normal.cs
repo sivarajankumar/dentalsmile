@@ -11,7 +11,7 @@ namespace smileUp.Stl
     {
         public Normal() { }
 
-        public Normal(decimal x, decimal y, decimal z)
+        public Normal(float x, float y, float z)
             : this()
         {
             this.X = x;

@@ -96,8 +96,8 @@ namespace smileUp
             double X = r.SizeX / part;
             double Y = r.SizeY / part;
             double Z = r.SizeZ / part;
-
-            this.Transform = new ScaleTransform3D(2, 2, 2);
+            Point3D tw = this.parent.ToWorld(new Point3D(2, 2, 2));
+            this.Transform = new ScaleTransform3D(tw.ToVector3D());
         }
 
         private void locateBrace()
@@ -139,7 +139,7 @@ namespace smileUp
 
         internal void sample(Color color)
         {
-            sample(MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Blue)));
+            sample(MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Red)));
         }
 
 
