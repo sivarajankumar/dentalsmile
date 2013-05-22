@@ -13,15 +13,25 @@ namespace smileUp
         {
 
         }
+        public Dictionary<Point3D, BoxVisual3D> boxes = new Dictionary<Point3D, BoxVisual3D>();
 
         public void addBox(Point3D point)
         {
-            BoxVisual3D box = new BoxVisual3D();
+            BoxVisual3D box;
+            boxes.TryGetValue(point, out box);
+
+            if (box != null)
+            {
+                this.Children.Remove(box);
+                boxes.Remove(point);
+            }
+            box= new BoxVisual3D();
             box.Center = point;
             box.Width = 1;
             box.Height = 1;
             box.Length= 1;
             this.Children.Add(box);
+            boxes.Add(point, box);
         }
 
         public void removeBox(BoxVisual3D box)
@@ -31,7 +41,7 @@ namespace smileUp
 
         public Dictionary<Point3D, TubeVisual3D> lines = new Dictionary<Point3D, TubeVisual3D>();
 
-        internal void drawLine(Point3D start, Point3D pt)
+        internal void drawLine(Point3D start, Point3D pt, bool hit)
         {
             TubeVisual3D line;
             lines.TryGetValue(start, out line);
@@ -49,7 +59,9 @@ namespace smileUp
             this.Children.Add(line);
 
             addBox(start);
-            addBox(pt);
+            if(hit) addBox(pt);
         }
+
+
     }
 }

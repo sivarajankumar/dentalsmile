@@ -595,6 +595,7 @@ namespace smileUp
                             //measurementForm.addRow(teeth, "auto");
                             mForm.addRowTeeth(teeth, "man");
                         }
+                        //vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt);
                     }
                     return;
                 }
@@ -605,6 +606,7 @@ namespace smileUp
                     teeth.Model.Length = MathHelper.mm_converter(length);
                     //measurementForm.addRow(teeth, "auto");
                     mForm.addRowTeeth(teeth, "auto");
+                    //vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)centerPoint);
                     return;
                 }
 
@@ -790,7 +792,9 @@ namespace smileUp
             if (MeasurementLineBtn.IsChecked == true)
             {
                 if (mpoints.Count > 0 && pt != null)
-                    vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt);
+                    vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt, false);
+                //if(mpoints.Count  == 2 && pt != null)
+                    //vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt, true);                
             }
  
             //TODO: detect collision between visual3d
@@ -1291,7 +1295,7 @@ namespace smileUp
 
             //var group = new JawVisual3D(p1, p2);
             //view1.Children.Add(group);
-            vm.JawVisual.mc.drawLine(p1, p2);
+            vm.JawVisual.mc.drawLine(p1, p2, true);
             mpoints.Clear();
         }
 
