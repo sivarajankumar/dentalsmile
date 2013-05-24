@@ -276,7 +276,7 @@ namespace smileUp
         
         public void InsertPatient(Patient p)
         {
-            string tableName = "PATIENT";
+            string tableName = "patient";
             string columns = "(id, fname, lname, birthdate, birthplace, gender, address1,address2,city,phone,created, createdby)";
             string values = "('" + p.Id + "','" + p.FirstName + "','" + p.LastName + "','" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "','" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
             string query = "INSERT INTO "+tableName + " "+ columns +" values "+ values +" ;";
@@ -290,7 +290,7 @@ namespace smileUp
         }
         public void UpdatePatient(Patient p)
         {
-            string tableName = "PATIENT";
+            string tableName = "patient";
             string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = '"+p.Id+"'";
 
@@ -304,7 +304,7 @@ namespace smileUp
 
         public bool InsertDentist (Dentist p)
         {
-            string tableName = "DENTIST";
+            string tableName = "dentist";
             string columns = "(userid, fname, lname, birthdate, birthplace, gender,address1,address2,city,phone, created,createdBy)";
             string values = "('" + p.UserId + "','" + p.FirstName + "','" + p.LastName + "','" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "','" + p.BirthPlace + "','" + p.Gender + "','" + p.Address1 + "','" + p.Address2 + "','" + p.City + "','" + p.Phone + "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
@@ -322,7 +322,7 @@ namespace smileUp
 
         public void UpdateDentist (Dentist p)
         {
-            string tableName = "DENTIST";
+            string tableName = "dentist";
             string setColumns = "fname = '" + p.FirstName + "', lname= '" + p.LastName + "', birthdate = '" + p.BirthDate.ToString(Smile.DATE_FORMAT) + "', birthplace= '" + p.BirthPlace + "', gender= '" + p.Gender + "',address1= '" + p.Address1 + "',address2= '" + p.Address2 + "',city= '" + p.City + "',phone= '" + p.Phone + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = '" + p.UserId+"'";
             
@@ -336,7 +336,7 @@ namespace smileUp
 
         public bool InsertUser(SmileUser p)
         {
-            string tableName = "SmileUser";
+            string tableName = "smileuser";
             string columns = "(userid, password, created,createdBy)";
             string values = "('" + p.UserId + "','" + p.Password+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
@@ -354,7 +354,7 @@ namespace smileUp
 
         public void SetPassword(string md5generated, string userid)
         {
-            string tableName = "SmileUser";
+            string tableName = "smileuser";
             string setColumns = "password = '" + md5generated + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = '" + userid+"'";
 
@@ -368,7 +368,7 @@ namespace smileUp
         
         public void SetAdmin(bool p, string userid)
         {
-            string tableName = "SmileUser";
+            string tableName = "smileuser";
             string setColumns = "admin= '" + p + "', modified = '" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy= '"+User+"' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = '" + userid + "'";
 
@@ -386,7 +386,7 @@ namespace smileUp
         {
             if (t.Id == null)
                 t.Id = getTreatmentNewId(t.Patient.Id);
-            string tableName = "TREATMENT";
+            string tableName = "treatment";
             string columns = "(id, phase, dentist, patient, tdate, ttime, room, refid, created,createdBy)";
             string values = "('" + t.Id + "'," + t.Phase.Id + ",'" + t.Dentist.UserId + "','" + t.Patient.Id + "','" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "','" + t.TreatmentTime + "','" + t.Room + "','"  + t.RefId+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
@@ -403,7 +403,7 @@ namespace smileUp
 
         public void UpdateTreatment(Treatment t)
         {
-            string tableName = "TREATMENT";
+            string tableName = "treatment";
             string setColumns = "phase =" + t.Phase.Id + ", dentist='" + t.Dentist.UserId + "', patient='" + t.Patient.Id + "', tdate='" + t.TreatmentDate.ToString(Smile.DATE_FORMAT) + "', ttime='" + t.TreatmentTime + "',room='" + t.Room + "',refid='" + t.RefId+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = '" + t.Id + "'";
 
@@ -417,7 +417,7 @@ namespace smileUp
 
         public bool InsertFileInfo(SmileFile t)
         {
-            string tableName = "PFILE";
+            string tableName = "pfile";
             string columns = "(id, filename, description, patient, screenshot, type, refid, created,createdBy)";
             string values = "('" + t.Id + "','" + t.FileName + "','" + t.Description + "','" + t.Patient.Id + "','" + t.Screenshot + "'," + t.Type + ",'" + t.RefId+ "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
@@ -435,7 +435,7 @@ namespace smileUp
 
         public void UpdateFileInfo(SmileFile t)
         {
-            string tableName = "PFILE";
+            string tableName = "pfile";
             string setColumns = "filename='" + t.FileName + "', description='" + t.Description + "', patient='" + t.Patient.Id + "', screenshot='" + t.Screenshot + "', type=" + t.Type + ", refid='" + t.RefId+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE id = '" + t.Id + "'";
 
@@ -449,7 +449,7 @@ namespace smileUp
 
         public List<Dentist> findDentistsByOr(string userid, string firstname, string lastname)
         {
-            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM SMileUser s WHERE s.userid = d.userid ) isuser FROM DENTIST d";
+            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM smileuser s WHERE s.userid = d.userid ) isuser FROM dentist d";
             bool any = false;
             string where = "";
             if (userid != null)
@@ -492,7 +492,7 @@ namespace smileUp
 
         public List<Dentist> findDentistsByAnd(string userid, string firstname, string lastname)
         {
-            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM SMileUser s WHERE s.userid = d.userid ) isuser isuser FROM DENTIST d";
+            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM smileuser s WHERE s.userid = d.userid ) isuser isuser FROM dentist d";
             bool any = false;
             string where = "";
             if (userid != null)
@@ -534,7 +534,7 @@ namespace smileUp
 
         public List<Dentist> SelectAllDentists()
         {
-            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM SMileUser s WHERE s.userid = d.userid ) isuser FROM DENTIST d";
+            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM smileuser s WHERE s.userid = d.userid ) isuser FROM dentist d";
             List<Dentist> list = null;
             if (this.OpenDentistConnection() == true)
             {
@@ -664,7 +664,7 @@ namespace smileUp
 
         private Phase findPhaseById(int id)
         {
-            string query = "SELECT * FROM Phase WHERE id= @id";
+            string query = "SELECT * FROM phase WHERE id= @id";
             Phase p = null;
             if (this.OpenPhaseConnection() == true)
             {
@@ -685,7 +685,7 @@ namespace smileUp
 
         private Dentist findDentistByUserId(string id)
         {
-            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM SMileUser s WHERE s.userid = d.userid ) isuser FROM DENTIST d WHERE d.userid = @userid";
+            string query = "SELECT d.*, (SELECT COUNT(s.userid) isuser FROM smileuser s WHERE s.userid = d.userid ) isuser FROM dentist d WHERE d.userid = @userid";
             Dentist p = null;
             if (this.OpenDentistConnection() == true)
             {
@@ -706,7 +706,7 @@ namespace smileUp
 
         public bool login(string id, string password, ref SmileUser p)
         {
-            string query = "SELECT * FROM SmileUser WHERE LCASE(userid) = LCASE(@userid)";
+            string query = "SELECT * FROM smileuser WHERE LCASE(userid) = LCASE(@userid)";
             string dbpassword  = null;
             bool isAdmin = false;
             if (this.OpenConnection() == true)
@@ -757,7 +757,7 @@ namespace smileUp
         }
         private SmileUser findUserByUserId(string id)
         {
-            string query = "SELECT * FROM SmileUser WHERE userid = @userid";
+            string query = "SELECT * FROM smileuser WHERE userid = @userid";
             SmileUser p = null;
             if (this.OpenConnection() == true)
             {
@@ -778,7 +778,7 @@ namespace smileUp
         
         private List<SmileFile> findSmileFilesByTreatmentId(string treatmentId)
         {
-            string query = "SELECT f.* FROM TREATMENT_PFILE t, PFILE f WHERE t.Treatment = @id AND t.Pfile = f.Id";
+            string query = "SELECT f.* FROM treatment_pfile t, pfile f WHERE t.treatment = @id AND t.pfile = f.Id";
             List<SmileFile> list = null;
             if (this.OpenFileConnection() == true)
             {
@@ -800,7 +800,7 @@ namespace smileUp
 
         private Patient findPatientById(string id)
         {
-            string query = "SELECT * FROM PATIENT WHERE id = @id";
+            string query = "SELECT * FROM patient WHERE id = @id";
             Patient p = null;
             if (this.OpenPatientConnection() == true)
             {
@@ -821,7 +821,7 @@ namespace smileUp
 
         public List<Patient> SelectAllPatient()
         {
-            string query = "SELECT * FROM PATIENT";
+            string query = "SELECT * FROM patient";
             List<Patient> list = null;
             if (this.OpenPatientConnection() == true)
             {
@@ -995,7 +995,7 @@ namespace smileUp
 
         internal List<Phase> SelectAllPhases()
         {
-            string query = "SELECT * FROM PHASE";
+            string query = "SELECT * FROM phase";
             List<Phase> list = null;
             if (this.OpenPhaseConnection() == true)
             {
@@ -1015,8 +1015,8 @@ namespace smileUp
 
         public bool insertTreatmentFiles(Treatment treatment, SmileFile file)
         {
-            string tableName = "TREATMENT_PFILE";
-            string columns = "(TREATMENT, PFILE)";
+            string tableName = "treatment_pfile";
+            string columns = "(treatment, pfile)";
             string values = "('" + treatment.Id + "','" + file.Id+ "')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
 
@@ -1033,7 +1033,7 @@ namespace smileUp
 
         public string getSmileFileNewId(string patientid)
         {
-            string query = "SELECT MAX(id) id FROM ( SELECT MAX(SUBSTR(id, 14)) id FROM PFILE WHERE patient = @patient UNION SELECT 0 id FROM DUAL ) a";
+            string query = "SELECT MAX(id) id FROM ( SELECT MAX(SUBSTR(id, 14)) id FROM pfile WHERE patient = @patient UNION SELECT 0 id FROM DUAL ) a";
             int p = 0;
             if (this.OpenConnection() == true)
             {
@@ -1056,7 +1056,7 @@ namespace smileUp
 
         public string getTreatmentNewId(string patientid)
         {
-            string query = "SELECT MAX(id) id FROM ( SELECT MAX(SUBSTR(id, 14))  id FROM TREATMENT WHERE patient = @patient UNION SELECT 0 id FROM DUAL ) a ";
+            string query = "SELECT MAX(id) id FROM ( SELECT MAX(SUBSTR(id, 14))  id FROM treatment WHERE patient = @patient UNION SELECT 0 id FROM DUAL ) a ";
             int p = 0;
             if (this.OpenConnection() == true)
             {
@@ -1081,7 +1081,7 @@ namespace smileUp
 
         public List<Treatment> findTreatmentsByPatientId(string patientid)
         {
-            string query = "SELECT * FROM TREATMENT WHERE patient = @id";
+            string query = "SELECT * FROM treatment WHERE patient = @id";
             List<Treatment> list = null;
             if (this.OpenConnection() == true)
             {
@@ -1103,7 +1103,7 @@ namespace smileUp
 
         public List<Treatment> findTreatments()
         {
-            string query = "SELECT * FROM TREATMENT";
+            string query = "SELECT * FROM treatment";
             List<Treatment> list = null;
             if (this.OpenConnection() == true)
             {
@@ -1126,7 +1126,7 @@ namespace smileUp
         {
             if (this.OpenConnection() == true)
             {
-                string tableName = "MeasurementTeeth";
+                string tableName = "measurementteeth";
                 string columns = "(measurementid, teethId, length, spoint, epoint,type)";
                 string values = "";
                 foreach (MeasurementTeeth m in results)
@@ -1149,7 +1149,7 @@ namespace smileUp
         {
             if (this.OpenConnection() == true)
             {
-                string tableName = "Measurement";
+                string tableName = "measurement";
                 string columns = "(patient, treatment, pfile, type, created, createdBy)";
                 string values = "";
                 values = "('" + measurement.Patient + "','" + measurement.Treatment + "','" + measurement.Pfile + "'," + measurement.Type + ",'" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','"+User+"')";
@@ -1169,7 +1169,7 @@ namespace smileUp
 
         internal List<Treatment> findTreatmentsByOr(string id, string tdate, string patient, string dentist)
         {
-            string query = "SELECT * FROM TREATMENT ";
+            string query = "SELECT * FROM treatment ";
             bool any = false;
             string where = "";
             if (id != null)
@@ -1221,7 +1221,7 @@ namespace smileUp
         {
             if (this.OpenConnection() == true)
             {
-                string tableName = "Treatment_Notes";
+                string tableName = "treatment_notes";
                 string columns = "(treatment, notes, pfile, description, created, createdBy)";
                 string values = "";
                 values = "('" + treatment.Id + "','" + resume + "','" + (file == null ? null : file.Id) + "','" + description + "','" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','" + User + "')";
@@ -1262,7 +1262,7 @@ namespace smileUp
 
         internal void updateAdmin(string p)
         {
-            string tableName = "SmileUser";
+            string tableName = "smileuser";
             string setColumns = "password='" + CalculateMD5Hash(p)+ "', modified='" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "', modifiedBy='" + User + "' ";
             string query = "UPDATE " + tableName + " SET " + setColumns + " WHERE userid = 'root'";
 
@@ -1276,7 +1276,7 @@ namespace smileUp
 
         internal SmileUser selectDefaultAdmin()
         {
-            string query = "SELECT * FROM SmileUser WHERE userid= @userid";
+            string query = "SELECT * FROM smileuser WHERE userid= @userid";
             SmileUser p = null;
             if (this.OpenPhaseConnection() == true)
             {
@@ -1296,7 +1296,7 @@ namespace smileUp
 
         internal bool InsertDefaultAdmin(string p)
         {
-            string tableName = "SmileUser";
+            string tableName = "smileuser";
             string columns = "(userid, password, admin, created,createdBy)";
             string values = "('root','" + CalculateMD5Hash(p)+ "',1,'" + DateTime.Now.ToString(Smile.LONG_DATE_FORMAT) + "','DENTALSMILE')";
             string query = "INSERT INTO " + tableName + " " + columns + " values " + values + " ;";
@@ -1320,7 +1320,7 @@ namespace smileUp
 
         internal bool findPatientByNameAndBirthDate(string fname, string lname, string bdate)
         {
-            string query = "SELECT * FROM PATIENT ";
+            string query = "SELECT * FROM patient ";
             bool any = false;
             string where = "";
             if (fname!= null)
@@ -1358,7 +1358,7 @@ namespace smileUp
         }
         private int countPatientByCreated()
         {
-            string query = "SELECT Count(*) FROM PATIENT WHERE created = '"+ DateTime.Now.ToString(Smile.DATE_FORMAT) + "'";
+            string query = "SELECT Count(*) FROM patient WHERE created = '"+ DateTime.Now.ToString(Smile.DATE_FORMAT) + "'";
             int Count = -1;
 
             //Open Connection
@@ -1392,7 +1392,7 @@ namespace smileUp
 
         internal bool DeleteUserOnly(string p)
         {
-            string query = "delete SmileUser WHERE userid = @userid";
+            string query = "delete smileuser WHERE userid = @userid";
 
             if (this.OpenConnection() == true)
             {
@@ -1467,7 +1467,7 @@ namespace smileUp
 
         internal SmileFile findSmileFileById(string id)
         {
-            string query = "SELECT * FROM PFile WHERE id = @id";
+            string query = "SELECT * FROM pfile WHERE id = @id";
             SmileFile p = null;
             if (this.OpenPatientConnection() == true)
             {

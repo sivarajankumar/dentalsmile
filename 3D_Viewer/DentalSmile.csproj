@@ -89,6 +89,9 @@
     <Compile Include="Algorithm\CubicSpline\CubicSpline.cs" />
     <Compile Include="Algorithm\CubicSpline\Program.cs" />
     <Compile Include="Algorithm\CubicSpline\TriDiagonalMatrix.cs" />
+    <Compile Include="Algorithm\Jacobi.cs" />
+    <Compile Include="Algorithm\JacobiC.cs" />
+    <Compile Include="Algorithm\Mesh3D.cs" />
     <Compile Include="Algorithm\SegmentationA.cs" />
     <Compile Include="Algorithm\SegmentationB.cs" />
     <Compile Include="BindableExtender.cs" />

@@ -24,6 +24,7 @@ using smileUp.CustomEditors;
 using System.Text.RegularExpressions;
 using System.Windows.Controls.Primitives;
 using smileUp.DataModel;
+using smileUp.Algorithm;
 
 namespace smileUp
 {
@@ -1336,6 +1337,12 @@ namespace smileUp
          private void ArchsBtn_Click(object sender, RoutedEventArgs e)
          {
              vm.displayArchs(ArchsBtn.IsChecked.Value);
+         }
+
+         private void AutoSegmentMeshBtn_Click(object sender, RoutedEventArgs e)
+         {
+             vm.AutoSegmentMesh();
+
          }
     }
 

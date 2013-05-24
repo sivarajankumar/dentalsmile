@@ -47,8 +47,9 @@ namespace smileUp.Forms
             string epoint = teeth.Model.EndPosition;
             MeasurementTeeth m = new MeasurementTeeth(teeth.Id, teeth.Model.Length, spoint, epoint,type);
             tooth.Add(m);
-            
-            DataContext = tooth;
+            resultDataGrid.ItemsSource = null;
+            resultDataGrid.ItemsSource = tooth;
+            //DataContext = tooth;
         }
         
         private void saveBtn_Click(object sender, RoutedEventArgs e)

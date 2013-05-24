@@ -21,6 +21,7 @@ namespace smileUp
     using System.Windows.Media;
     using smileUp.DataModel;
     using smileUp.Forms;
+    using smileUp.Algorithm;
 
     public class VisualElement
     {
@@ -1108,6 +1109,13 @@ namespace smileUp
         internal void displayArchs(bool p)
         {
             JawVisual.displayArchs(p);
+        }
+
+        internal void AutoSegmentMesh()
+        {
+            SegmentationB b = new SegmentationB();
+            b._MeanCurvature(RawVisual.GetMesh());
+
         }
     }
 

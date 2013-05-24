@@ -91,6 +91,7 @@
             <ToolBar Band="1" FlowDirection="LeftToRight">
                 <ToggleButton Content="{smileUp:Image /Icons/b_list.png}" x:Name="SimulationSettings" ToolTip="Simulation Settings" />
                 <ToggleButton Content="{smileUp:Image /Icons/ForwardGreen.png}" x:Name="RunSimulationBtn" ToolTip="Run Simulation"   />
+                <Button Content="{smileUp:Image /Icons/106.png}" x:Name="AutoSegmentMeshBtn" ToolTip="Auto Segmentation" Click="AutoSegmentMeshBtn_Click"/>
             </ToolBar>
         </ToolBarTray>
 
