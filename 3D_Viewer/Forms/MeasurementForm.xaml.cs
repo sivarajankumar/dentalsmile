@@ -29,7 +29,7 @@ namespace smileUp.Forms
             InitializeComponent();
             app = Application.Current as App;
             tooth = new List<MeasurementTeeth>();
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             
             //TODO: DB.User = app.user.UserId;
 

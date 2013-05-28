@@ -26,7 +26,7 @@ namespace smileUp.Forms
         public AppointmentEditForm()
         {
             InitializeComponent();
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             
             dentists = DB.SelectAllDentists();
             cbDentist.ItemsSource = dentists;

@@ -44,6 +44,7 @@ namespace smileUp
                 
                 if(generatedSample) sample(color);
 
+                Bind(parent);
                 //BindingOperations.SetBinding(this, TransformProperty, new Binding("TargetTransform") { Source = this });
                 //BindingOperations.SetBinding(this.Manipulator,CombinedManipulator.TargetTransformProperty,new Binding("TargetTransform") { Source = this });
 
@@ -281,14 +282,25 @@ namespace smileUp
 
 
         public static readonly DependencyProperty TargetTeethTransformProperty = DependencyProperty.Register("TargetTeethTransform", typeof(Transform3D), typeof(BraceVisual3D), new PropertyMetadata(TeethTransformChanged));
+        //public static readonly DependencyProperty TargetTeethTransformProperty = DependencyProperty.Register("TargetTeethTransform", typeof(Transform3D), typeof(BraceVisual3D), new FrameworkPropertyMetadata(Transform3D.Identity, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         protected static void TeethTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         { 
             //TODO: Teeth movement affect to Brace Movement
             //Brace.Transform = Teeth.Transform - Brace.Position;
+            if(d is BraceVisual3D){
+                BraceVisual3D brace = d as BraceVisual3D;
+                if (brace != null)
+                {
+                    Transform3D bt = brace.Transform;
+                    Transform3D tt = brace.parent.Transform;
+                    brace.Transform = bt;
+                }
+            }
 
         }
 
-        public virtual void Bind1(TeethVisual3D source)
+        public virtual void Bind(TeethVisual3D source)
         {
             BindingOperations.SetBinding(this, TargetTeethTransformProperty, new Binding("Transform") { Source = source });
         }

@@ -27,7 +27,7 @@ namespace smileUp.Forms
         {
             InitializeComponent();
              
-            db = new DentalSmileDB();
+            db = DentalSmileDBFactory.GetInstance();
             DataContext = doctor;
         }
 

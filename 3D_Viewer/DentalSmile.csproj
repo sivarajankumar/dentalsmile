@@ -111,6 +111,9 @@
     <Compile Include="Calendar\WeekOfDaysControl.xaml.cs">
       <DependentUpon>WeekOfDaysControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DentalSmileDBMySQL.cs" />
+    <Compile Include="DentalSmileDBFactory.cs" />
+    <Compile Include="TeethRootVisual3D.cs" />
     <Compile Include="CustomEditors\TeethColorMappingItemSource.cs" />
     <Compile Include="DataModel\MeasurementTeeth.cs" />
     <Compile Include="DataModel\Measurement.cs" />

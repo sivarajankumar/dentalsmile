@@ -103,7 +103,7 @@ namespace smileUp.ViewModels
 		private void initializeAllCommands()
 		{
 			this.SubmitCommand = new ActionCommand( this.ExecuteSubmit, this.CanExecuteSubmit );
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
 		}
 
 		private void getAllUser()

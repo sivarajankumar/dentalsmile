@@ -28,7 +28,7 @@ namespace smileUp.Forms
             InitializeComponent();
             
             app = Application.Current as App;
-            db = new DentalSmileDB();
+            db = DentalSmileDBFactory.GetInstance();
             
         }
 

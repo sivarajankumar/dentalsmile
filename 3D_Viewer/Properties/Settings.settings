@@ -42,5 +42,8 @@
     <Setting Name="Skin" Type="System.String" Scope="User">
       <Value Profile="(Default)">Black</Value>
     </Setting>
+    <Setting Name="DbType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mysql</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

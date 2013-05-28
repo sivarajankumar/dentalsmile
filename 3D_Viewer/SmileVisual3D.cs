@@ -210,6 +210,8 @@ namespace smileUp
 
                 Model3DGroup gr = new Model3DGroup();
                 var m = new GeometryModel3D(localMesh, gm.Material);
+                m.BackMaterial = MaterialHelper.CreateMaterial(Brushes.Black);
+
                 gr.Children.Add(m);
                 this.Content = gr;
             }
@@ -217,6 +219,7 @@ namespace smileUp
             {
                 GeometryModel3D gm = (GeometryModel3D)this.Content;
                 var m = new GeometryModel3D(localMesh, gm.Material);
+                m.BackMaterial = MaterialHelper.CreateMaterial(Brushes.Black);
                 this.Content = m;
             }            
         }
@@ -225,7 +228,6 @@ namespace smileUp
         {
             Int32Collection edges = MeshGeometryHelper.FindEdges(mesh);
             Point3DCollection pos = mesh.Positions;
-            int x = 1;
             for (int i = 1; i < edges.Count; i += 2)
             {
                 Point3DCollection paths = new Point3DCollection();
@@ -236,7 +238,20 @@ namespace smileUp
                 this.Children.Add(t);
             }
         }
-
+        public void drawBorderEdges(MeshGeometry3D mesh)
+        {
+            Int32Collection edges = MeshGeometryHelper.FindBorderEdges(mesh);
+            Point3DCollection pos = mesh.Positions;
+            for (int i = 1; i < edges.Count; i += 2)
+            {
+                Point3DCollection paths = new Point3DCollection();
+                paths.Add(pos[edges[i - 1]]);
+                paths.Add(pos[edges[i]]);
+                TubeVisual3D t = new TubeVisual3D { Diameter = 0.02, Path = paths, Fill = Brushes.Yellow };
+                //t.Transform = new TranslateTransform3D(1, 1, 1);
+                this.Children.Add(t);
+            }
+        }
         public static Dictionary<Int32, SmileEdge> findNeighbours(MeshGeometry3D mesh)
         {
             Int32Collection edges = MeshGeometryHelper.FindEdges(mesh);

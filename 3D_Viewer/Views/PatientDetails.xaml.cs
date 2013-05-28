@@ -35,7 +35,7 @@ namespace smileUp.Views
             InitializeComponent();
             app = Application.Current as App;
 
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             DetailsEdit.Visibility = Visibility.Collapsed;
             DetailsAdd.Visibility = Visibility.Collapsed;
             DetailsList.Visibility = Visibility.Collapsed;
@@ -553,6 +553,16 @@ namespace smileUp.Views
         {
             AppointmentForm ap = new AppointmentForm();
             ap.ShowDialog();
+        }
+
+        private void ReloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            patients = DB.SelectAllPatient();
+            PatientListView.ItemsSource = null;
+            PatientListView.ItemsSource = patients;
+            ignoreSelection = false;
+            navigateButton();
+
         }
 
     }

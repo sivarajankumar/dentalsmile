@@ -219,7 +219,7 @@ namespace smileUp
             //Elements = new List<VisualElement>();
             //foreach (var c in hv.Children) Elements.Add(new VisualElement(c));
 
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             Treatment = new Treatment();
             SmileFile = new SmileFile();
             Patient = new Patient();
@@ -269,7 +269,7 @@ namespace smileUp
 
         private void handleManipulationData(Treatment treatment, SmileFile file, bool duplicate)
         {
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             app = Application.Current as App;
             if (App.patient == null) App.patient = new Patient();
             Patient = App.patient;
@@ -1098,7 +1098,10 @@ namespace smileUp
         {
             JawVisual.displayWireContainer(f);
         }
-
+        internal void ShowHideGumVisual(bool f)
+        {
+            JawVisual.displayGumContainer(f);
+        }
 
         public void updateBraceLocation(string braceid, int oldLocation, int newValue)
         {
@@ -1114,9 +1117,17 @@ namespace smileUp
         internal void AutoSegmentMesh()
         {
             SegmentationB b = new SegmentationB();
-            b._MeanCurvature(RawVisual.GetMesh());
-
+            ModelVisual3D m = new ModelVisual3D();
+            MeshGeometry3D mg = b.AutoSnake(RawVisual.GetMesh());
+            GeometryModel3D g = new GeometryModel3D();
+            g.Geometry = mg;
+            g.Material = MaterialHelper.CreateMaterial(Brushes.Black);
+            g.BackMaterial = MaterialHelper.CreateMaterial(Brushes.Yellow);
+            m.Content = g;
+            JawVisual.Children.Add(m);
         }
+
+       
     }
 
     public interface IFileDialogService

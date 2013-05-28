@@ -23,7 +23,7 @@ namespace smileUp.Forms
         {
             InitializeComponent();
 
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
         }
 
         private void btnChange_Click(object sender, RoutedEventArgs e)

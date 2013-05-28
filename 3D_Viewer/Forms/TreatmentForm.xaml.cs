@@ -27,11 +27,11 @@ namespace smileUp.Forms
         {
             InitializeComponent();
 
-            db = new DentalSmileDB();
+            db = DentalSmileDBFactory.GetInstance();
             phases = Smile.Phases = db.SelectAllPhases();
             //phases = Smile.GetPhases();
-            //phases.Remove(Smile.GetPhase(Smile.SCANNING));
-            //phases.Remove(Smile.GetPhase(Smile.MANIPULATION));
+            phases.Remove(Smile.GetPhase(Smile.SCANNING));
+            phases.Remove(Smile.GetPhase(Smile.MANIPULATION));
 
             phaseCombo.ItemsSource = phases;
 

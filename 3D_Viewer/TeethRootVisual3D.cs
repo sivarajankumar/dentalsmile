@@ -12,19 +12,18 @@ using smileUp.DataModel;
 
 namespace smileUp
 {
-    public class TeethVisual3D : SmileVisual3D
+    public class TeethRootVisual3D : SmileVisual3D
     {
         public GumContainer gc;
         public ToothContainer tc;
         public BraceContainer bc;
         public WireContainer wc;
-        TeethRootVisual3D root;
 
-        public TeethVisual3D(GumVisual3D parent)
+        public TeethRootVisual3D(TeethVisual3D parent)
             : this(Colors.Pink, parent)
         {
         }
-        public TeethVisual3D(Color color, GumVisual3D p)
+        public TeethRootVisual3D(Color color, TeethVisual3D p)
         {
             if (p != null)
             {
@@ -34,7 +33,7 @@ namespace smileUp
                 bc = this.parent.bc;
                 wc = this.parent.wc;
 
-                Id = p.Id + "_teeth" + tc.Children.Count.ToString("00") + "." + p.Parent.patient.Id;
+                Id = p.Id + "_rootth" + tc.Children.Count.ToString("00") + "." + p.Parent.Parent.patient.Id;
                 
                 if (model == null) model = new Teeth();
                 model.Id = Id;
@@ -42,19 +41,14 @@ namespace smileUp
 
                 sample(color);
 
-                //addTeethRoot();
+                //Adding Teeth Label
+                //TextVisual3D text = new TextVisual3D();
+                //text.Text = Id.ToString();
+                //this.Children.Add(text);
+                
                 //showHideBoundingBox();
             }
 
-        }
-
-        public void addTeethRoot()
-        {
-            if(root != null && this.Children.Contains(root)){
-                this.Children.Remove(root);
-            }
-            root = new TeethRootVisual3D(this);
-            this.Children.Add(root);
         }
         public static Color getTeethColor(int num) {
 
@@ -70,19 +64,24 @@ namespace smileUp
         {
             ///*
             GeometryModel3D bigCubeModel = GeometryGenerator.CreateCubeModel();
-            bigCubeModel.Material = new DiffuseMaterial(new SolidColorBrush(color));
+            bigCubeModel.Material = MaterialHelper.CreateMaterial(new SolidColorBrush(color));
 
             this.Content = bigCubeModel;
-
+            Rect3D r = this.Parent.Content.Bounds;
+            double min = Math.Min(r.SizeX, Math.Min(r.SizeY, r.SizeZ));
             Transform3DGroup transformGroup = new Transform3DGroup();
-            transformGroup.Children.Add(new TranslateTransform3D(0.5 * parent.Children.Count, 0, 0));
+            //transformGroup.Children.Add(new TranslateTransform3D(0.5 * parent.Children.Count, 0, 0));
+            //transformGroup.Children.Add(new TranslateTransform3D(new Point3D(r.X, r.Y, r.Z).ToVector3D()));
+            //transformGroup.Children.Add(new ScaleTransform3D(new Vector3D(r.SizeY, r.SizeY, r.SizeY), new Point3D(r.X,r.Y,r.Z)));
+            transformGroup.Children.Add(new TranslateTransform3D(parent.rootPoint().ToVector3D()));
+            transformGroup.Children.Add(new ScaleTransform3D(new Vector3D(min, min, min), parent.rootPoint()));
             this.Transform = transformGroup;
             //*/
         }
 
 
-        private GumVisual3D parent;
-        public GumVisual3D Parent
+        private TeethVisual3D parent;
+        public TeethVisual3D Parent
         {
             set { parent = value; }
             get { return parent; }        
@@ -93,10 +92,10 @@ namespace smileUp
         String id;
 
         public static readonly DependencyProperty ColorProperty
-           = DependencyProperty.Register("ColorTeeth", typeof(Brush), typeof(TeethVisual3D),new UIPropertyMetadata(ColorChanged));
+           = DependencyProperty.Register("ColorTeethRoot", typeof(Brush), typeof(TeethRootVisual3D), new UIPropertyMetadata(ColorChanged));
 
         public static readonly DependencyProperty IdProperty
-           = DependencyProperty.Register("IdTeeth", typeof(String), typeof(TeethVisual3D),
+           = DependencyProperty.Register("IdTeethRoot", typeof(String), typeof(TeethRootVisual3D),
                                          new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public String Id
@@ -234,127 +233,15 @@ namespace smileUp
         {
             Rect3D bounds = this.Content.Bounds;
             
-            var x = bounds.X + (bounds.SizeX / 2);
-            var y = bounds.Y + (bounds.SizeY / 2);
-            var z = bounds.Z + (bounds.SizeZ / 2);
+            var x = bounds.X - (bounds.SizeX / 2);
+            var y = bounds.Y - (bounds.SizeY / 2);
+            var z = bounds.Z - (bounds.SizeZ / 2);
 
             Point3D p = new Point3D(x,y,z);
             
             return p;
         }
-        
-        public Point3D rootPoint()
-        {
-            Rect3D bounds = this.Content.Bounds;
 
-            var x = bounds.X + (bounds.SizeX/2);
-            var y = bounds.Y - (bounds.SizeY);
-            var z = bounds.Z + (bounds.SizeZ/2);
-
-            Point3D p = new Point3D(x, y, z);
-
-            return p;
-        }
-
-        /// <summary>
-        /// @Deprecated
-        /// Not used anymore since changes in CONTAINER design.
-        /// <see cref="addNewBrace"/>
-        /// </summary>
-        public BraceVisual3D addBrace()
-        {
-            BraceVisual3D brace = null;
-            GumVisual3D gum = this.parent;
-            gum.braceDictionaries.TryGetValue(this.Id, out brace);
-            //TODO: If multiple brace in one teeth?
-
-            if (brace == null)
-            {
-                brace = new BraceVisual3D(Colors.Yellow, this, true);
-                this.Children.Add(brace);
-                gum.braces.Add(brace);
-
-                gum.braceDictionaries.Add(this.Id, brace);
-                /*if (selectedPoint != null)
-                {
-                    Transform3DGroup transformGroup = new Transform3DGroup();
-                    transformGroup.Children.Add(new TranslateTransform3D(ToWorld(selectedPoint.ToVector3D())));
-                    brace.Transform = transformGroup;
-                }*/
-            }
-
-            return brace;
-
-        }
-
-        /// <summary>
-        /// @Deprecated
-        /// Not used anymore since changes in CONTAINER design.
-        /// <see cref="deleteBrace"/>
-        /// </summary>
-        internal void removeBrace()
-        {
-            BraceVisual3D brace = null;
-            GumVisual3D gum = this.parent;
-            gum.braceDictionaries.TryGetValue(this.Id, out brace);
-            //TODO: If multiple brace in one teeth?
-
-            if (brace != null)
-            {
-                
-                clearManipulator();
-                this.Children.Remove(brace);
-                gum.braces.Remove(brace);
-                gum.braceDictionaries.Remove(this.Id);
-                gum.Parent.removeWire(brace);
-                brace = null;
-            }
-        }
-
-        //==============using new architecture (container) =================
-        public BraceVisual3D addNewBrace()
-        {
-            BraceVisual3D brace = null;
-            GumVisual3D gum = this.parent;
-            gum.braceDictionaries.TryGetValue(this.Id, out brace);
-            //TODO: If multiple brace in one teeth?
-
-            if (brace == null)
-            {
-                brace = new BraceVisual3D(Colors.Yellow, this, true);
-                bc.Children.Add(brace);
-                gum.braces.Add(brace);
-
-                gum.braceDictionaries.Add(this.Id, brace);
-                
-                /*if (selectedPoint != null)
-                {
-                    Transform3DGroup transformGroup = new Transform3DGroup();
-                    transformGroup.Children.Add(new TranslateTransform3D(ToWorld(selectedPoint.ToVector3D())));
-                    brace.Transform = transformGroup;
-                }*/
-            }
-
-            return brace;
-        }
-
-        internal void deleteBrace()
-        {
-            BraceVisual3D brace = null;
-            GumVisual3D gum = this.parent;
-            gum.braceDictionaries.TryGetValue(this.Id, out brace);
-            //TODO: If multiple brace in one teeth?
-
-            if (brace != null)
-            {
-                cleanManipulator();
-                bc.Children.Remove(brace);
-                gum.braces.Remove(brace);
-                gum.braceDictionaries.Remove(this.Id);
-                gum.Parent.removeWire(brace);
-                brace = null;
-            }
-        }
 
         internal void cleanManipulator()
         {
@@ -401,11 +288,6 @@ namespace smileUp
                 _manipulator.Length = _manipulator.Diameter * 0.75;
                 _manipulator.Bind(this);
                 Bind(_manipulator);
-
-                addTeethRoot();
-                //test
-                //MeshGeometry3D mesh = GetMesh();
-                //drawBorderEdges(mesh);
             }
             tc.Children.Add(_manipulator);
 
@@ -413,11 +295,7 @@ namespace smileUp
 
         protected static void ColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is TeethVisual3D)
-            {
-                ((GeometryModel3D)((TeethVisual3D)d).Content).Material = MaterialHelper.CreateMaterial(((TeethVisual3D)d).Color);
-                ((GeometryModel3D)((TeethVisual3D)d).Content).BackMaterial = ((GeometryModel3D)((TeethVisual3D)d).Content).Material;
-            }
+
         }
     }
 }

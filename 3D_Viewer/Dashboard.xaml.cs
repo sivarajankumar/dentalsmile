@@ -42,14 +42,14 @@ namespace smileUp
         private void LoadSettings()
         {
             app = Application.Current as App;
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
 
                 //if (Smile.INSTALL)
             if(!DB.TestConnectionString())
             {
                 SettingsDB dbForm = new SettingsDB();
                 dbForm.ShowDialog();
-                DB = new DentalSmileDB();
+                DB = DentalSmileDBFactory.GetInstance();
             }
 
             //detect if Admin  is NULL

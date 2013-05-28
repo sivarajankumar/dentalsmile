@@ -938,6 +938,10 @@ namespace smileUp
             vm.showHideJawVisual(ShowHideJawVisualBtn.IsChecked.Value);
         }
 
+        private void ShowHideGumVisualBtn_Click(object sender, RoutedEventArgs e)
+        {
+            vm.ShowHideGumVisual(ShowHideGumVisualBtn.IsChecked.Value);
+        }
         private void ShowHideTeethVisualBtn_Click(object sender, RoutedEventArgs e)
         {
             vm.ShowHideTeethVisual(ShowHideTeethVisualBtn.IsChecked.Value);
@@ -1344,6 +1348,8 @@ namespace smileUp
              vm.AutoSegmentMesh();
 
          }
+
+        
     }
 
 }

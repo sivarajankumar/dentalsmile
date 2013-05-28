@@ -25,6 +25,7 @@ namespace smileUp
         public static string DbUserId = Properties.Settings.Default.DbUserId;
         public static string DbPassword = Properties.Settings.Default.DbPassword;
         public static string DbDatabase = Properties.Settings.Default.DbDatabase;
+        public static string DbType = Properties.Settings.Default.DbType;
 
         public static bool INSTALL = Properties.Settings.Default.InstallationMode;
         public static string Room = Properties.Settings.Default.Room;

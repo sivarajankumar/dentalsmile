@@ -25,7 +25,7 @@ namespace smileUp.Forms
         public SmileUserForm()
         {
             InitializeComponent();
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             dentist = new List<Dentist>();
 
             LoadDentist();

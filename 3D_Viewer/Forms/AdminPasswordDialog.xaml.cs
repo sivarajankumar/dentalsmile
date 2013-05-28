@@ -22,7 +22,7 @@ namespace smileUp.Forms
         public AdminPasswordDialog()
         {
             InitializeComponent();
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -48,6 +48,11 @@ namespace smileUp.Forms
                 MessageBox.Show("Password is Invalid.");
                 txtPasswd.Focus();
             }
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            //if(App.user == null) App.Current.Shutdown();
         }
     }
 }

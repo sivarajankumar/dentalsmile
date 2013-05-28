@@ -28,7 +28,7 @@ namespace smileUp.Views
         public FilterDialog()
         {
             InitializeComponent();
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             family = DB.SelectAllPatient();
             ICollectionView view = System.Windows.Data.CollectionViewSource.GetDefaultView(family);
             view.SortDescriptions.Add(new SortDescription("FirstName", ListSortDirection.Ascending));

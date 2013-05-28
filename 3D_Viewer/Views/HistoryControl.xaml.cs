@@ -27,7 +27,7 @@ namespace smileUp.Views
         public HistoryControl()
         {
             InitializeComponent();
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             app = Application.Current as App;
 
             if (App.patient != null)

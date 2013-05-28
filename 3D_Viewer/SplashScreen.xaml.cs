@@ -64,14 +64,14 @@ namespace smileUp
             //Smile.DbDatabase = Properties.Settings.Default.DbDatabase = "xx";
             //Smile.INSTALL = Properties.Settings.Default.InstallationMode = true;
 
-            DentalSmileDB DB = new DentalSmileDB();
+            DentalSmileDB DB = DentalSmileDBFactory.GetInstance();
             ///TODO
             //test DB connection, if fail changes configuration
             if (Smile.INSTALL)
             {
                 SettingsDB dbForm = new SettingsDB();
                 dbForm.ShowDialog();
-                DB = new DentalSmileDB();
+                DB = DentalSmileDBFactory.GetInstance();
             }
 
             //detect if Admin  is NULL

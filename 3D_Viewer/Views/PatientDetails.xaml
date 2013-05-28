@@ -656,6 +656,7 @@
                             <TextBlock Text="Patient (" Style="{DynamicResource SectionHeaderStyle}" Width="46.1366666666667" Height="20" />
                             <TextBlock Text="{Binding Path=Items.Count, ElementName=PatientListView}" FontWeight="Normal" Style="{DynamicResource SectionHeaderStyle}" Height="20" />
                             <TextBlock Text=")" Style="{DynamicResource SectionHeaderStyle}" Width="4.05" Height="20" />
+                            <Button x:Name="ReloadButton" Content="Reload" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="ReloadButton_Click" HorizontalAlignment="Right" Margin="0,0,10,0" DockPanel.Dock="Right" Width="50" Height="20"/>
                             <Button x:Name="HideFindButton" Content="Hide" Style="{DynamicResource BlackButtonStyle}" FontSize="10" Click="HideFindButton_Click" HorizontalAlignment="Right" Margin="0,0,10,0" DockPanel.Dock="Right" Width="50" Height="20"/>
                         </DockPanel>
                         <DockPanel HorizontalAlignment="Stretch" DockPanel.Dock="Top">

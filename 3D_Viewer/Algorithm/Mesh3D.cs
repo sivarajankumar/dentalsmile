@@ -10,6 +10,7 @@ namespace smileUp.Algorithm
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media.Media3D;
+    using System.Linq;
     using HelixToolkit.Wpf;
 
     /// <summary>
@@ -27,7 +28,7 @@ namespace smileUp.Algorithm
         {
             this.Vertices = new List<Point3D>();
             this.Faces = new List<int[]>();
-            this.Edges = new List<int>();
+            this.Edges = new List<int[]>();
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace smileUp.Algorithm
             }
 
             this.Faces = new List<int[]>();
-            this.Edges = new List<int>();
+            this.Edges = new List<int[]>();
             var tri = new int[3];
             int i = 0;
             foreach (var index in triangleIndices)
@@ -86,7 +87,7 @@ namespace smileUp.Algorithm
         /// Gets the edges.
         /// </summary>
         /// <value> The edges. </value>
-        public IList<int> Edges { get; private set; }
+        public IList<int[]> Edges { get; private set; }
 
         /// <summary>
         /// Gets the faces.
@@ -129,7 +130,7 @@ namespace smileUp.Algorithm
                 {
                     Vertices = new List<Point3D>(this.Vertices),
                     Faces = new List<int[]>(this.Faces),
-                    Edges = new List<int>(this.Edges)
+                    Edges = new List<int[]>(this.Edges)
                 };
         }
 
@@ -187,7 +188,12 @@ namespace smileUp.Algorithm
                     if (this.Faces[i][j] == v0 && this.Faces[i][(j + 1) % m] == v1)
                     {
                         return i;
-                    }
+                    }else
+                        if (this.Faces[i][j] == v1 && this.Faces[i][(j + 1) % m] == v0)
+                        {
+                            return i;
+                        }
+
                 }
             }
 
@@ -251,8 +257,7 @@ namespace smileUp.Algorithm
         /// </returns>
         public int[] GetNeighbourVertices(int vertexIndex)
         {
-            
-            return null;//this.Edges[vertexIndex];
+            return this.Edges[vertexIndex];
         }
 
         /// <summary>
@@ -506,12 +511,11 @@ namespace smileUp.Algorithm
         {
             var dict = new HashSet<ulong>();
 
-            //var edges = new List<List<int>>(this.Vertices.Count);
-            //foreach (var v in this.Vertices)
-            //{
-            //    edges.Add(new List<int>(5));
-            //}
-            var edges = new List<int>();
+            var edges = new List<HashSet<int>>(this.Vertices.Count);
+            foreach (var v in this.Vertices)
+            {
+                edges.Add(new HashSet<int>());
+            }
             
             foreach (var f in this.Faces)
             {                
@@ -519,28 +523,26 @@ namespace smileUp.Algorithm
                 {
                     int v0 = f[i];
                     int v1 = f[(i + 1) % f.Length];
-
-                    int vmin = Math.Min(v0, v1);
-                    int vmax = Math.Max(v0, v1);
-                    ulong key = CreateKey((uint)vmin, (uint)vmax);
-                    if (!dict.Contains(key))
-                    {
-                        edges.Add(vmin);
-                        edges.Add(vmax);
-                        dict.Add(key);
-                    }
+                    //int vmin = Math.Min(v0, v1);
+                    //int vmax = Math.Max(v0, v1);
+                    //ulong key = CreateKey((uint)vmin, (uint)vmax);
+                    //if (!dict.Contains(key))
+                    //{
+                    //    edges.Add(vmin);
+                    //    edges.Add(vmax);
+                    //    dict.Add(key);
+                    //}
                     //edges[vmin].Add(vmax);
-                    //edges[v0].Add(v1);
-                    //edges[v1].Add(v0);
+                    edges[v0].Add(v1);
+                    edges[v1].Add(v0);
                 }
             }
 
             this.Edges.Clear();
-            //foreach (var e in edges)
-            //{
-            //    this.Edges.Add(e.ToArray());
-            //}
-            this.Edges = edges;
+            foreach (var e in edges)
+            {
+                this.Edges.Add(e.ToArray());
+            }
         }
         private static ulong CreateKey(uint i0, uint i1)
         {

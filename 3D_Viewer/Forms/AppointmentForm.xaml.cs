@@ -24,7 +24,7 @@ namespace smileUp.Forms
         public AppointmentForm()
         {
             InitializeComponent();
-            DB = new DentalSmileDB();
+            DB = DentalSmileDBFactory.GetInstance();
             Loaded += new RoutedEventHandler(AppointmentForm_Loaded);
         }
 
