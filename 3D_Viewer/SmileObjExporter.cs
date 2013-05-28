@@ -484,7 +484,8 @@ namespace smileUp
 
             if (dm != null)
             {
-                var adjustedAmbientColor = dm.AmbientColor.ChangeIntensity(0.2);
+                //var adjustedAmbientColor = dm.AmbientColor.ChangeIntensity(0.2);
+                var adjustedAmbientColor = dm.AmbientColor.ChangeIntensity(1);
 
                 // this.mwriter.WriteLine(string.Format("Ka {0}", this.ToColorString(adjustedAmbientColor)));
                 var scb = dm.Brush as SolidColorBrush;
@@ -536,7 +537,8 @@ namespace smileUp
                 // model (BLIN77).  The color includes an ambient constant term, and a 
                 // diffuse and specular shading term for each light source.  The formula 
                 // is: color = KaIa + Kd { SUM j=1..ls, (N*Lj)Ij } + Ks { SUM j=1..ls, ((H*Hj)^Ns)Ij }
-                illum = 2;
+                illum = 1;
+                //illum = 2;
 
                 // Specifies the specular exponent for the current material.  This defines the focus of the specular highlight.
                 // "exponent" is the value for the specular exponent.  A high exponent results in a tight, concentrated highlight.  Ns values normally range from 0 to 1000.

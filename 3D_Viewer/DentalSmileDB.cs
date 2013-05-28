@@ -1084,7 +1084,7 @@ namespace smileUp
 
         public List<Treatment> findTreatmentsByPatientId(string patientid)
         {
-            string query = "SELECT * FROM treatment WHERE patient = '" + patientid + "'";
+            string query = "SELECT * FROM treatment WHERE patient = '" + patientid + "' ORDER BY tdate DESC, ttime DESC";
             List<Treatment> list = null;
             if (this.OpenConnection() == true)
             {
@@ -1106,7 +1106,7 @@ namespace smileUp
 
         public List<Treatment> findTreatments()
         {
-            string query = "SELECT * FROM treatment";
+            string query = "SELECT * FROM treatment ORDER BY tdate DESC, ttime DESC";
             List<Treatment> list = null;
             if (this.OpenConnection() == true)
             {

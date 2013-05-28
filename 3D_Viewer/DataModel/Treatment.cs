@@ -5,7 +5,7 @@ using System.Text;
 
 namespace smileUp.DataModel
 {
-    public class Treatment
+    public class Treatment : IComparable<Treatment>
     {
         public string Id { get; set; }
         public Phase Phase { get; set; }
@@ -17,5 +17,16 @@ namespace smileUp.DataModel
         
         public List<SmileFile> Files { get; set; }
         public string RefId { get; set; }
+
+        public int CompareTo(Treatment t)
+        {        
+            if (TreatmentDate.CompareTo(t.TreatmentDate) > 0)
+                return 1;
+            if (TreatmentTime.CompareTo(t.TreatmentTime) > 0)
+                return 1;
+            if (Id.CompareTo(t.Id) > 0)
+                return 1;
+            return 0;
+        }
     }
 }

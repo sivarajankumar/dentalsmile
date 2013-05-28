@@ -2,10 +2,11 @@
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Xml.Serialization;
+using System;
 
 namespace smileUp.DataModel
 {
-    public class SmileFile
+    public class SmileFile : IComparable<SmileFile>
     {
         private string fileName = "default.obj";
         private string screenshot = "default.png";
@@ -73,6 +74,13 @@ namespace smileUp.DataModel
                     return ManipulatedScreenshot;
                 return null;
             }
+        }
+
+        public int CompareTo(SmileFile other)
+        {
+            if (Id.CompareTo(other.Id) > 0)
+                return 1;
+            return 0;
         }
     }
 }

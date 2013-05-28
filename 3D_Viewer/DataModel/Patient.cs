@@ -7,7 +7,7 @@ using System;
 
 namespace smileUp.DataModel
 {
-    public class Patient : Person
+    public class Patient : Person, IComparable<Patient>
     {
         private string id = "001";
         private string name = "MrX";
@@ -33,7 +33,16 @@ namespace smileUp.DataModel
                 return Smile.PHOTOS_PATH + "" + photo;
             } 
         }
-        
 
+
+
+        public int CompareTo(Patient other)
+        {
+            if (Id.CompareTo(other.Id) > 0)
+                return 1;
+            if (FirstName.CompareTo(other.FirstName) > 0)
+                return 1;
+            return 0;
+        }
     }
 }
