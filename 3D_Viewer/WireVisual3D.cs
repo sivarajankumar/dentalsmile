@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using HelixToolkit.Wpf;
 using System.Windows.Data;
 using smileUp.DataModel;
+using smileUp.Algorithm.CubicSpline;
 
 namespace smileUp
 {
@@ -39,10 +40,42 @@ namespace smileUp
                 model.Brace1 = brace1.Model;
                 model.Brace2 = brace2.Model;
 
-                Point3DCollection contours = new Point3DCollection();
-                contours.Add(brace1.ToWorld(brace1.centroid()));
-                contours.Add(brace2.ToWorld(brace2.centroid()));
+                Point3D c1 = brace1.centroid();
+                Point3D c2 = brace2.centroid();
+                /*
+                int n = 6;
+                // Create the data to be fitted
+                float[] x = new float[n];
+                float[] y = new float[n];
+                Random rand = new Random(1);
+                float xf = (float)(c2.X - c1.X)/n;
+                float yf = (float)(c2.Y - c1.Y) / n;
+                for (int i = 0; i < n; i++)
+                {
+                    x[i] = (float) c1.X + (i * xf);
+                    y[i] = (float) c1.Y + (i * yf);
+                }
+                int upsampleFactor = 10;
+                int nInterpolated = n * upsampleFactor;
+                float[] xs = new float[nInterpolated];
 
+                for (int i = 0; i < nInterpolated; i++)
+                {
+                    xs[i] = (float)i * (n - 1) / (float)(nInterpolated - 1);
+                }
+                CubicSpline spline = new CubicSpline();
+                float[] ys = spline.FitAndEval(x, y, xs, true);
+                */
+                Point3DCollection contours = new Point3DCollection();
+                contours.Add(brace1.ToWorld(c1));
+                /*for (int i = 0; i < xs.Length; i++)
+                {
+                    contours.Add(new Point3D(xs[i], ys[i], c1.Z));
+                }*/
+                contours.Add(brace2.ToWorld(c2));
+                
+                this.Children.Clear();
+   
                 TubeVisual3D tube = new TubeVisual3D { Diameter = 1.02, Path = contours, Fill = b };
                 this.Children.Add(tube);
         }
@@ -158,7 +191,8 @@ namespace smileUp
             if (d is WireVisual3D)
             {
                 WireVisual3D dt = (WireVisual3D)d;
-                
+                dt.contours(dt.brush);
+                /*
                 Point3DCollection contours = new Point3DCollection();
                 contours.Add(dt.brace1.ToWorld(dt.brace1.centroid()));
                 contours.Add(dt.brace2.ToWorld(dt.brace2.centroid()));
@@ -167,6 +201,7 @@ namespace smileUp
                 
                 TubeVisual3D tube = new TubeVisual3D { Diameter = 1.02, Path = contours, Fill = dt.brush };
                 dt.Children.Add(tube);                
+                */
             }
         }
         public virtual void Bind(BraceVisual3D source1, BraceVisual3D source2)

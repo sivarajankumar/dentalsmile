@@ -17,7 +17,9 @@
         <Border DockPanel.Dock="Top" Background="{DynamicResource PanelGradientBrush}" Style="{DynamicResource BorderStyle}" x:Name="DetailsBodyBorder" BorderThickness="1,0,1,1" CornerRadius="0,0,10,10">
             <DockPanel>
                 <Border DockPanel.Dock="Top" Style="{DynamicResource DetailsBorderStyle}" Margin="0,0,0,0" BorderThickness="0,1,0,0" CornerRadius="0,0,0,0" Padding="0,0,0,0" Height="350" Opacity="1" Background="{x:Null}">
-                    <TextBlock Text="Dental.Smile is bla bla bla." />                     
+                    <StackPanel>
+                        <TextBlock Text="Dental.Smile adalah aplikasi desktop " />
+                    </StackPanel>
                 </Border>
             </DockPanel>
         </Border>

@@ -562,7 +562,10 @@ namespace smileUp
             p.UserId = GetStringSafe(dataReader, "userid");
             p.FirstName = GetStringSafe(dataReader, "fname");
             p.LastName = GetStringSafe(dataReader, "lname");
-            p.BirthDate = dataReader.GetDateTime(dataReader.GetOrdinal("birthdate"));
+            if (!dataReader.IsDBNull(dataReader.GetOrdinal("birthdate")))
+            {
+                p.BirthDate = dataReader.GetDateTime(dataReader.GetOrdinal("birthdate"));
+            }
             p.BirthPlace = GetStringSafe(dataReader, "birthplace");
             p.Gender = GetStringSafe(dataReader, "gender");
             p.Address1 = GetStringSafe(dataReader, "address1");
@@ -580,7 +583,11 @@ namespace smileUp
             p.Id = GetStringSafe(dataReader, "id");
             p.FirstName = GetStringSafe(dataReader, "fname");
             p.LastName = GetStringSafe(dataReader, "lname");
-            p.BirthDate = dataReader.GetDateTime(dataReader.GetOrdinal("birthdate"));
+            //p.BirthDate = dataReader.GetDateTime(dataReader.GetOrdinal("birthdate"));
+            if (!dataReader.IsDBNull(dataReader.GetOrdinal("birthdate")))
+            {
+                p.BirthDate = dataReader.GetDateTime(dataReader.GetOrdinal("birthdate"));
+            }
             p.BirthPlace = GetStringSafe(dataReader, "birthplace");
             p.Gender = GetStringSafe(dataReader, "gender");
             p.Address1 = GetStringSafe(dataReader, "address1");
@@ -664,6 +671,40 @@ namespace smileUp
 
             return p;
         }
+
+        private Measurement toMeasurement(IDataReader dataReader)
+        {
+            Measurement p = new Measurement();
+
+            p.Id = Convert.ToInt32(GetStringSafe(dataReader, "id"));
+            p.Patient = GetStringSafe(dataReader, "patient");
+            p.Pfile = GetStringSafe(dataReader, "pfile");
+            p.Treatment = GetStringSafe(dataReader, "treatment");
+            p.Type = GetStringSafe(dataReader, "type");
+
+            return p;
+        }
+
+        private MeasurementTeeth toTeethMeasurement(IDataReader dataReader)
+        {
+            MeasurementTeeth p = new MeasurementTeeth();
+
+            p.Identity = GetStringSafe(dataReader, "teethid");
+            p.Length = Convert.ToDouble(GetStringSafe(dataReader, "length"));
+            p.SPoint = GetStringSafe(dataReader, "Spoint");
+            p.EPoint = GetStringSafe(dataReader, "EPoint");
+            p.Type = GetStringSafe(dataReader, "type");
+            if (GetStringSafe(dataReader, "modified").ToString() == "")
+            { p.ModifiedDate = GetStringSafe(dataReader, "created".ToString()).ToString(); }
+            else
+            { p.ModifiedDate = GetStringSafe(dataReader, "modified").ToString(); }
+            p.Loaded = true;
+
+
+            return p;
+        }
+
+
 
         private Phase findPhaseById(int id)
         {
@@ -1494,5 +1535,51 @@ namespace smileUp
             }
             return p;
         }
+
+        public Measurement findMeasurementByFileId(string id)
+        {
+            //string query = "SELECT * FROM Measurement WHERE pfile = @id";
+            string query = "SELECT * FROM    measurement WHERE pfile = '"+id+"' and  ID = (SELECT MAX(ID) FROM measurement)";
+            Measurement p = null;
+            if (this.OpenConnection() == true)
+            {
+                IDbCommand cmd = getSqlCommand(query, connection);
+                //cmd.Parameters.Add(new MySqlParameter("id", id));
+
+                IDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    p = toMeasurement(dataReader);
+                }
+                dataReader.Close();
+                this.CloseConnection();
+            }
+            return p;
+        }
+
+        public List<MeasurementTeeth> SelectTeethById(string measurementid)
+        {
+            //string query = "SELECT * FROM measurementteeth where measurementid = @measurementid ";
+            string query = "SELECT a.id, a.teethid, a.measurementid, a.length, a.spoint, a.epoint, a.type,  b.created, b.modified FROM measurementteeth a , measurement b WHERE a.measurementid = "+measurementid+" AND b.id = a.measurementid";
+            List<MeasurementTeeth> list = null;
+            if (this.OpenConnection() == true)
+            {
+                list = new List<MeasurementTeeth>();
+                IDbCommand cmd = getSqlCommand(query, connection);
+                //cmd.Parameters.Add(new MySqlParameter("measurementid", measurementid));
+                IDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    MeasurementTeeth p = toTeethMeasurement(dataReader);
+                    list.Add(p);
+                }
+                dataReader.Close();
+                this.CloseConnection();
+            }
+            return list;
+        }
+
+
     }
 }

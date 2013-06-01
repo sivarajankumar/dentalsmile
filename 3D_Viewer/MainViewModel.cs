@@ -621,73 +621,87 @@ namespace smileUp
         }
 
         private void LoadRawFile(string CurrentModelPath)
-        {        
-            CurrentModel = ModelImporter.Load(CurrentModelPath);
-            Model3DGroup group = new Model3DGroup();
-            if (CurrentModel != null)
+        {
+            try
             {
-                var mb = new MeshBuilder(false, false);
-                Rect3D r = CurrentModel.Bounds;
-
-                Model3DGroup g = (Model3DGroup)CurrentModel;
-                foreach (GeometryModel3D gm in g.Children)
+                CurrentModel = ModelImporter.Load(CurrentModelPath);
+                Model3DGroup group = new Model3DGroup();
+                if (CurrentModel != null)
                 {
-                    MeshGeometry3D mesh = (MeshGeometry3D)gm.Geometry;
-                    Point3DCollection ind = mesh.Positions;
-                    for (int i = 0; i < ind.Count; i++)
+                    var mb = new MeshBuilder(false, false);
+                    Rect3D r = CurrentModel.Bounds;
+
+                    Model3DGroup g = (Model3DGroup)CurrentModel;
+                    foreach (GeometryModel3D gm in g.Children)
                     {
-                        var p0 = ind[i];
+                        MeshGeometry3D mesh = (MeshGeometry3D)gm.Geometry;
+                        Point3DCollection ind = mesh.Positions;
+                        for (int i = 0; i < ind.Count; i++)
+                        {
+                            var p0 = ind[i];
 
-                        p0 = new Point3D(p0.X + (-(r.X + (r.SizeX / 2))), p0.Y + (-(r.Y + (r.SizeY / 2))), p0.Z + (-(r.Z + (r.SizeZ / 2))));
+                            p0 = new Point3D(p0.X + (-(r.X + (r.SizeX / 2))), p0.Y + (-(r.Y + (r.SizeY / 2))), p0.Z + (-(r.Z + (r.SizeZ / 2))));
 
-                        mb.Positions.Add(p0);
+                            mb.Positions.Add(p0);
+                        }
+
+                        for (int i = 0; i < mesh.TriangleIndices.Count; i++)
+                        {
+                            mb.TriangleIndices.Add(mesh.TriangleIndices[i]);
+                        }
+
                     }
+                    var geom = new GeometryModel3D(mb.ToMesh(), MaterialHelper.CreateMaterial(Colors.BlueViolet));
+                    geom.BackMaterial = MaterialHelper.CreateMaterial(Colors.Chocolate);
+                    group.Children.Add(geom);
 
-                    for (int i = 0; i < mesh.TriangleIndices.Count; i++)
-                    {
-                        mb.TriangleIndices.Add(mesh.TriangleIndices[i]);
-                    }
-
+                    CurrentModel = group;
+                    if (RawVisual == null) RawVisual = new RawVisual3D(RootVisual);
+                    RawVisual.Content = CurrentModel;
+                    RawVisual.ShowBoundingBox = true;
+                    RawVisual.showHideBoundingBox();
+                    RootVisual.Children.Add(RawVisual);
+                    smileMode = "RAW";
+                    ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
+                    HelixView.ZoomExtents(100);
                 }
-                var geom = new GeometryModel3D(mb.ToMesh(), MaterialHelper.CreateMaterial(Colors.BlueViolet));
-                geom.BackMaterial = MaterialHelper.CreateMaterial(Colors.Chocolate);
-                group.Children.Add(geom);
-
-                CurrentModel = group;
-                if (RawVisual == null) RawVisual = new RawVisual3D(RootVisual);
-                RawVisual.Content = CurrentModel;
-                RawVisual.ShowBoundingBox = true;
-                RawVisual.showHideBoundingBox();
-                RootVisual.Children.Add(RawVisual);
-                smileMode = "RAW";
-                ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
-                HelixView.ZoomExtents(100);
             }
+            catch (FileNotFoundException fnfe)
+            {
+                MessageBox.Show("File not found. Make sure your Path Setting is correct.");
+            }            
         }
 
         private void LoadJawFile(string CurrentModelPath)
         {
-            JawVisual3D jv = null;
-            jv = (JawVisual3D)SmileModelImporter.Load(CurrentModelPath);
-            if (jv != null)
+            try
             {
-                if(RootVisual.Children.Contains(JawVisual)) RootVisual.Children.Remove(JawVisual);
-                JawVisual = null;
-                JawVisual = jv;
-                RootVisual.Children.Add(JawVisual);
-                smileMode = "JAW";
-
-                if (JawVisual.selectedGum != null)
+                JawVisual3D jv = null;
+                jv = (JawVisual3D)SmileModelImporter.Load(CurrentModelPath);
+                if (jv != null)
                 {
-                    drawWires();
+                    if (RootVisual.Children.Contains(JawVisual)) RootVisual.Children.Remove(JawVisual);
+                    JawVisual = null;
+                    JawVisual = jv;
+                    RootVisual.Children.Add(JawVisual);
+                    smileMode = "JAW";
+
+                    if (JawVisual.selectedGum != null)
+                    {
+                        drawWires();
+                    }
+
+                    //if (!HelixView.Viewport.Children.Contains(RootVisual))                    HelixView.Viewport.Children.Add(RootVisual);
+                    window.chartPanel.Visibility = Visibility.Visible;
+                    ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
                 }
 
-                //if (!HelixView.Viewport.Children.Contains(RootVisual))                    HelixView.Viewport.Children.Add(RootVisual);
-                window.chartPanel.Visibility = Visibility.Visible;
-                ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
+                HelixView.ZoomExtents(100);
             }
-
-            HelixView.ZoomExtents(100);
+            catch (FileNotFoundException fnfe)
+            {
+                MessageBox.Show("File not found. Make sure your Path Setting is correct.");
+            }            
         }
 
         private void FileOpen()

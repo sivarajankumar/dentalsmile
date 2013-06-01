@@ -811,10 +811,14 @@ namespace smileUp.Algorithm
                     double kHi = _MeanCurvature(m3d, vi);
                     kH.Add(kHi);
                     //Console.WriteLine("end mean");
-                    if (kHi < eThreshold)
+                    if (j == 2 && (kH[i] < eThreshold || kH[i-1] < eThreshold || kH[i-2] < eThreshold))
                     {
                         newmb.Positions.Add(positions[i]);
+                        newmb.Positions.Add(positions[i-1]);
+                        newmb.Positions.Add(positions[i-2]);
                         newmb.TriangleIndices.Add(i);
+                        newmb.TriangleIndices.Add(i-1);
+                        newmb.TriangleIndices.Add(i-2);
                     }
                 }
             }

@@ -6,13 +6,13 @@ using System;
 
 namespace smileUp.DataModel
 {
-    public class Brace
+    public class Brace : Observable
     {
         [XmlAttribute("Position")]
         public string XmlPosition
         {
             get { return Position.ToString(); }
-            set { Position = Point3D.Parse(value.Replace(';',',')); }
+            set { Position = Point3D.Parse(value.Replace(';', ',')); RaisePropertyChanged("Position"); }
         }
 
         [XmlAttribute("Colour")]

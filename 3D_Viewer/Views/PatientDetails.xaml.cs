@@ -497,10 +497,11 @@ namespace smileUp.Views
         }
         private void btnNewScan_Click(object sender, RoutedEventArgs e)
         {
-            ScanningForm s = new ScanningForm();
-            s.Show();
+            MessageBox.Show("Please go to 3D-Scanner Software!");
+            //ScanningForm s = new ScanningForm();
+            //s.Show();
             //s.Close();
-            InfoButton_Click(sender, e);
+            //InfoButton_Click(sender, e);
         }
 
         private void btnContinueManipulation_Click(object sender, RoutedEventArgs e)

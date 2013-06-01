@@ -517,7 +517,7 @@ namespace smileUp
                 }
             }
 
-            // Illumination model 1
+/*            // Illumination model 1
             // This is a diffuse illumination model using Lambertian shading. The 
             // color includes an ambient constant term and a diffuse shading term for 
             // each light source.  The formula is
@@ -573,6 +573,7 @@ namespace smileUp
             // Reflection: Ray trace off
             // 10		Casts shadows onto invisible surfaces
             this.mwriter.WriteLine(string.Format("illum {0}", illum));
+*/
         }
 
         /// <summary>

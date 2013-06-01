@@ -667,6 +667,10 @@
     <Resource Include="Icons\205.png" />
     <Resource Include="Icons\212.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\glyph_measure.png" />
+    <Resource Include="Icons\measure_jangka.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

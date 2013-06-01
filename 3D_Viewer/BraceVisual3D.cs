@@ -286,15 +286,37 @@ namespace smileUp
 
         protected static void TeethTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         { 
+            
             //TODO: Teeth movement affect to Brace Movement
             //Brace.Transform = Teeth.Transform - Brace.Position;
             if(d is BraceVisual3D){
                 BraceVisual3D brace = d as BraceVisual3D;
                 if (brace != null)
                 {
-                    Transform3D bt = brace.Transform;
-                    Transform3D tt = brace.parent.Transform;
-                    brace.Transform = bt;
+                    Transform3D go = e.OldValue as Transform3D;
+                    Transform3D gn= e.NewValue as Transform3D;
+                    if (go != null && gn != null)
+                    {
+                        Transform3D bt = brace.Transform;
+                        if (gn is TranslateTransform3D)
+                        {
+                            Matrix3D btm = bt.Value;
+                            btm.OffsetX = btm.OffsetX + (gn.Value.OffsetX - go.Value.OffsetX);
+                            btm.OffsetY = btm.OffsetY + (gn.Value.OffsetY - go.Value.OffsetY);
+                            btm.OffsetZ = btm.OffsetZ + (gn.Value.OffsetZ - go.Value.OffsetZ);
+                            bt = new TranslateTransform3D(btm.OffsetX, btm.OffsetY, btm.OffsetZ);
+                        }
+                        if (gn is RotateTransform3D)
+                        {
+                            //bt = new RotateTransform3D();
+                        }
+
+                        if (gn is ScaleTransform3D)
+                        {
+                            //bt = new ScaleTransform3D();
+                        }
+                        brace.Transform = bt;
+                    }
                 }
             }
 

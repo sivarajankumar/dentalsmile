@@ -67,6 +67,7 @@ namespace smileUp
             DentalSmileDB DB = DentalSmileDBFactory.GetInstance();
             ///TODO
             //test DB connection, if fail changes configuration
+            //if (true)
             if (Smile.INSTALL)
             {
                 SettingsDB dbForm = new SettingsDB();

@@ -75,8 +75,13 @@
                 <ToggleButton Content="{smileUp:Image /Icons/202.png}" x:Name="TeethMarkerBtn"  ToolTip="Teeth Marker" Click="TeethMarkerBtn_Click" />
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">
-                <ToggleButton Content="{smileUp:Image /Icons/131.png}" x:Name="MeasurementLineBtn" ToolTip="Draw Measurement Line" Click="MeasurementLineBtn_Click" />
+                <!--<ToggleButton Content="{smileUp:Image /Icons/glyph_measure.png}" x:Name="SetMeasurementLineBtn" ToolTip="Draw Measurement Line" Click="SetMeasurementBtn_Click" />-->
+                <ToggleButton Content="{smileUp:Image /Icons/glyph_measure.png}" x:Name="MeasurementLineBtn" ToolTip="Draw Measurement Line" Click="MeasurementLineBtn_Click" />
+                <ToggleButton Content="{smileUp:Image /Icons/measure32.png}" x:Name="AutoMeasurementLineBtn" ToolTip="Click Tooth for Measurement" Click="AutoMeasurementLineBtn_Click"  />
+                <ToggleButton Content="{smileUp:Image /Icons/measure_jangka.png}" x:Name="loadMeasurement" ToolTip="Load Measurement Result" Click="LoadMeasurementBtn_Click"  />
+<!--                <ToggleButton Content="{smileUp:Image /Icons/131.png}" x:Name="MeasurementLineBtn" ToolTip="Draw Measurement Line" Click="MeasurementLineBtn_Click" />
                 <ToggleButton Content="{smileUp:Image /Icons/212.png}" x:Name="AutoMeasurementLineBtn" ToolTip="Teeth Measurement" Click="AutoMeasurementLineBtn_Click"  />
+-->
                 <ToggleButton Content="{smileUp:Image /Icons/227.png}" x:Name="ArchsBtn" ToolTip="Draw Archs" Click="ArchsBtn_Click"/>
             </ToolBar>
             <ToolBar Band="1" FlowDirection="LeftToRight">

@@ -402,7 +402,7 @@ namespace smileUp
                 _manipulator.Bind(this);
                 Bind(_manipulator);
 
-                addTeethRoot();
+                //addTeethRoot();
                 //test
                 //MeshGeometry3D mesh = GetMesh();
                 //drawBorderEdges(mesh);

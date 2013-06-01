@@ -283,16 +283,20 @@ namespace smileUp
 
                 Point3D pp = new Point3D(0, 0, 0);
                 Vector3D nn = Point3D.Subtract(p0, pp);
-
+                if (i == 1)
+                {
+                    nn = Point3D.Subtract(pi, pp);
+                }
                 var g1 = MeshGeometryHelper.Cut(worldMesh, pp, nn);
+                this.Children.Add(new RectangleVisual3D { Origin = ToLocal(pp), Normal = nn, Fill = new SolidColorBrush(Colors.LightGoldenrodYellow), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Blue)) });
 
                 if (i > 1) n0.Negate();
                 //var geo = MeshGeometryHelper.Cut(worldMesh, p0, n0);
                 var geo = MeshGeometryHelper.Cut(g1, p0, n0);
-                //this.Children.Add(new RectangleVisual3D { Origin = p0, Normal = n0, Fill = new SolidColorBrush(Colors.LightGoldenrodYellow), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Blue)) });
-
+                this.Children.Add(new RectangleVisual3D { Origin = ToLocal(p0), Normal = n0, Fill = new SolidColorBrush(Colors.LightGoldenrodYellow), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Blue)) });
+                //Console.WriteLine(i+" = "+p0.ToString());
                 var geo1 = MeshGeometryHelper.Cut(geo, pi, ni);
-                //this.Children.Add(new RectangleVisual3D { Origin = pi, Normal = ni, Fill = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
+                this.Children.Add(new RectangleVisual3D { Origin = ToLocal(pi), Normal = ni, Fill = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
 
                 //var geo2 = ToLocalMesh(geo1);
                 

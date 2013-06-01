@@ -122,7 +122,7 @@ namespace smileUp
             Loaded += new RoutedEventHandler(OnLoaded);
             _propertyGrid.PropertyValueChanged += new Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventHandler(_propertyGrid_PropertyValueChanged);
 
-            mForm = new Forms.MeasurementForm(treatment,file);
+            mForm = new Forms.MeasurementForm(treatment,file, this);
             navigateButton("integration");
         }
 
@@ -604,7 +604,12 @@ namespace smileUp
                 {
                     var centerPoint = teeth.centroid();
                     double length = centerPoint.X * 2;
-                    teeth.Model.Length = MathHelper.mm_converter(length);
+                    mpoints.Add(new Point3D(centerPoint.X + (length / 2), centerPoint.Y, centerPoint.Z));
+                    mpoints.Add(new Point3D(centerPoint.X - (length / 2), centerPoint.Y, centerPoint.Z));
+
+                    //teeth.Model.Length = MathHelper.mm_converter(length);
+                    teeth.Model.Length = length;
+                    createLine(mpoints[0], mpoints[1]);
                     //measurementForm.addRow(teeth, "auto");
                     mForm.addRowTeeth(teeth, "auto");
                     //vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)centerPoint);
@@ -701,7 +706,10 @@ namespace smileUp
 
                         if (i == 1)
                         {
+                            //Console.WriteLine(n0.X +", "+n0.Y+", "+n0.Z);
+                            //n0 = new Vector3D(n0.X, (n0.Y - n0.X) / 3, n0.Z);
                             n0.Normalize();
+                            //Console.WriteLine(n0.X + ", " + n0.Y + ", " + n0.Z);
                             v.Add(n0);
                             //view1.Children.Add(new RectangleVisual3D { Origin = p0, Normal = n0, Fill = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0)), BackMaterial = MaterialHelper.CreateMaterial(new SolidColorBrush(Colors.Green)) });
                         }
@@ -786,18 +794,21 @@ namespace smileUp
         
         private void view1_MouseMove(object sender, MouseEventArgs e)
         {
-            mousePoint = e.GetPosition(view1);
-            var pt = view1.FindNearestPoint(e.GetPosition(view1));
+//            mousePoint = e.GetPosition(view1);
+//            var pt = view1.FindNearestPoint(e.GetPosition(view1));
 
 
-            if (MeasurementLineBtn.IsChecked == true)
+/*            if (MeasurementLineBtn.IsChecked == true)
             {
                 if (mpoints.Count > 0 && pt != null)
-                    vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt, false);
+                {
+                    //vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt, false);
+                    vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt);
+                }
                 //if(mpoints.Count  == 2 && pt != null)
                     //vm.JawVisual.mc.drawLine(mpoints[0], (Point3D)pt, true);                
             }
- 
+ */
             //TODO: detect collision between visual3d
             /*ModelVisual3D result = GetHitTestResult(mousePoint);
             if (result == null)
@@ -910,9 +921,9 @@ namespace smileUp
 
         private void CutMeshBtn_Click(object sender, RoutedEventArgs e)
         {
-            busyIndicator.IsBusy = true;
-            busyIndicator.BusyContent = "Processing Segmentation....Please Wait....";
-            Thread.Sleep(1000);
+            //busyIndicator.IsBusy = true;
+            //busyIndicator.BusyContent = "Processing Segmentation....Please Wait....";
+            //Thread.Sleep(1000);
 
             if (AddPlaneBtn.IsChecked == true)
             {
@@ -924,7 +935,7 @@ namespace smileUp
             }
 
 
-            busyIndicator.IsBusy = false;
+            //busyIndicator.IsBusy = false;
             //busyIndicator.Visibility = System.Windows.Visibility.Hidden;
         }
 
@@ -1049,10 +1060,10 @@ namespace smileUp
             displayHelp("Slices");
             if (TeethMarkerBtn.IsChecked == false)
             {
-                busyIndicator.IsBusy  = true;
-                Thread.Sleep(1000);
+                //busyIndicator.IsBusy  = true;
+                //Thread.Sleep(1000);
                 vm.manualSegment(points, vectors);
-                busyIndicator.IsBusy = false;
+                //busyIndicator.IsBusy = false;
             }
             
             points = null;
@@ -1251,12 +1262,12 @@ namespace smileUp
         }
 		
 		 //added by Achie
-        private void MeasurementLineBtn_Click(object sender, RoutedEventArgs e)
+        private void old_MeasurementLineBtn_Click(object sender, RoutedEventArgs e)
         {
             if (MeasurementLineBtn.IsChecked == true)
             {
                 AutoMeasurementLineBtn.IsChecked = false;
-                mForm.Clear();
+                mForm.ClearMan();
                 mForm.Show();
                 mForm.Topmost = true;
 
@@ -1273,12 +1284,43 @@ namespace smileUp
             }
         }
 
-        private void AutoMeasurementLineBtn_Click(object sender, RoutedEventArgs e)
+        private void MeasurementLineBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (mForm.IsActive == false && MeasurementLineBtn.IsChecked == false && AutoMeasurementLineBtn.IsChecked == false)
+            {
+                mForm.Show();
+                mForm.Topmost = false;
+                MeasurementLineBtn.IsChecked = true;
+            }
+            else if (mForm.IsActive == true && AutoMeasurementLineBtn.IsChecked == true)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to save the current measurement?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.No)
+                {
+                    AutoMeasurementLineBtn.IsChecked = false;
+                    mForm.ClearMan();
+                    mForm.Close();
+                    mForm.Show();
+                    mForm.Topmost = false;
+                }
+                return;
+            }
+            else if (mForm.IsActive == false && (AutoMeasurementLineBtn.IsChecked == false) && (MeasurementLineBtn.IsChecked == true))
+            {
+                mForm.Show();
+                mForm.Topmost = false;
+                AutoMeasurementLineBtn.IsChecked = false;
+                MeasurementLineBtn.IsChecked = true;
+            }
+        }
+
+
+        private void Old_AutoMeasurementLineBtn_Click(object sender, RoutedEventArgs e)
         {
             if (AutoMeasurementLineBtn.IsChecked == true)
             {
                 MeasurementLineBtn.IsChecked = false;
-                mForm.Clear();
+                mForm.ClearAuto();
                 mForm.Show();
                 mForm.Topmost = true;
 
@@ -1295,12 +1337,84 @@ namespace smileUp
             }
         }
 
+        private void AutoMeasurementLineBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (mForm.IsActive == false && MeasurementLineBtn.IsChecked == false && AutoMeasurementLineBtn.IsChecked == false)
+            {
+                mForm.Show();
+                mForm.Topmost = false;
+                AutoMeasurementLineBtn.IsChecked = true;
+            }
+            else if (mForm.IsActive == false && (MeasurementLineBtn.IsChecked == true))
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to save the current measurement?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.No)
+                {
+                    MeasurementLineBtn.IsChecked = false;
+                    mForm.ClearAuto();
+                    mForm.Show();
+                    mForm.Topmost = false;
+                }
+                return;
+            }
+            else if (mForm.IsActive == false && (AutoMeasurementLineBtn.IsChecked == true) && (MeasurementLineBtn.IsChecked == false))
+            {
+                mForm.Show();
+                mForm.Topmost = false;
+                MeasurementLineBtn.IsChecked = false;
+                AutoMeasurementLineBtn.IsChecked = true;
+            }
+
+            //if (AutoMeasurementLineBtn.IsChecked == true)
+            //{
+            //    MeasurementLineBtn.IsChecked = false;
+            //    mForm.Clear();
+            //    mForm.Show();
+            //    mForm.Topmost = true;
+
+            //}
+            //else
+            //{
+            //    mForm.Hide();
+            //}
+        }
+
+        private void LoadMeasurementBtn_Click(object sender, RoutedEventArgs e)
+        {
+            mForm.Show();
+            mForm.Topmost = false;
+        }
+
+        private void SetMeasurementBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Forms.Ruler setRulerForm = new Forms.Ruler();
+            //setRulerForm.Show();
+        }
+
+
         internal void createLine(Point3D p1, Point3D p2)
         {
-
             //var group = new JawVisual3D(p1, p2);
             //view1.Children.Add(group);
-            vm.JawVisual.mc.drawLine(p1, p2, true);
+            vm.JawVisual.mc.drawLine(p1, p2);
+            mpoints.Clear();
+
+        }
+
+        internal void removeLine(Point3D p1, Point3D p2)
+        {
+            //var group = new JawVisual3D(p1, p2);
+            //view1.Children.Add(group);
+            vm.JawVisual.mc.undrawLine(p1, p2);
+            mpoints.Clear();
+
+        }
+
+        internal void old_createLine(Point3D p1, Point3D p2)
+        {
+            //var group = new JawVisual3D(p1, p2);
+            //view1.Children.Add(group);
+            //vm.JawVisual.mc.drawLine(p1, p2, true);
             mpoints.Clear();
         }
 
@@ -1345,8 +1459,7 @@ namespace smileUp
 
          private void AutoSegmentMeshBtn_Click(object sender, RoutedEventArgs e)
          {
-             vm.AutoSegmentMesh();
-
+            // vm.AutoSegmentMesh();
          }
 
         

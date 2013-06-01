@@ -5,7 +5,7 @@ using System.Text;
 
 namespace smileUp.DataModel
 {
-    class Measurement
+    public class Measurement
     {
         public int Id { get; set; }
         public string Patient { get; set; }

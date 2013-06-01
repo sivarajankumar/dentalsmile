@@ -1,17 +1,39 @@
 ﻿<Window x:Class="smileUp.Forms.MeasurementForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Measurement Form" Height="300" Width="300">
-    <Grid>
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="false" Height="150" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="0,70,0,0" Name="resultDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="300" 
-                  SelectedValuePath="Id">
+        Title="Measurement Form" Height="472" Width="599">
+    <Grid Height="415" Width="526">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="false" Height="128" HorizontalAlignment="Left" Margin="0,34,0,0" Name="resultDataGridMan" VerticalAlignment="Top" Width="511" 
+                  SelectedValuePath="Identity" SelectedIndex="0" MinColumnWidth="40">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="iddColumn" Binding="{Binding Path=Identity}" Header="Identity" Width="SizeToHeader" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="lengthColumn" Binding="{Binding Path=Length}" Header="Length" Width="SizeToHeader" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="spointColumn" Binding="{Binding Path=SPoint}" Header="Star Point" Width="SizeToHeader" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="epointColumn" Binding="{Binding Path=EPoint}" Header="End Point" Width="SizeToHeader" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="iddColumn" Binding="{Binding Path=Identity}" Header="Identity" Width="Auto" IsReadOnly="True" />
+                <!--<DataGridTextColumn x:Name="NameColumn" Binding="{Binding Path=Identity}" Header="Name" Width="Auto" IsReadOnly="True" />-->
+                <DataGridTextColumn x:Name="lengthColumn" Binding="{Binding Path=Length}" Header="Length (mm)" Width="Auto" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="spointColumn" Binding="{Binding Path=SPoint}" Header="Start Point" Width="Auto" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="epointColumn" Binding="{Binding Path=EPoint}" Header="End Point" Width="Auto" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="modifiedDateColumn" Binding="{Binding Path=ModifiedDate,StringFormat={}{0:dd/MM/yyyy}}" Header="Date Modified" Width="Auto" IsReadOnly="True" />
+                <DataGridTemplateColumn Header="Show Line">
+            
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding BooleanFlag}" Checked="CheckBox_Checked" Unchecked="UncheckBox_Checked"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="175,226,0,0" Name="saveBtn" VerticalAlignment="Top" Width="75" Click="saveBtn_Click" />
+        <Button Content="Save Manual" Height="23" HorizontalAlignment="Left" Margin="436,168,0,0" Name="saveManBtn" VerticalAlignment="Top" Width="75" Click="saveManBtn_Click" />
+        
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="false" Height="169" HorizontalAlignment="Left" Name="resultDataGridAuto" VerticalAlignment="Top" Width="511" 
+                  SelectedValuePath="Identity" SelectedIndex="0" MinColumnWidth="40" Margin="0,216,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="iddAutoColumn" Binding="{Binding Path=Identity}" Header="Identity" Width="Auto" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="lengthAutoColumn" Binding="{Binding Path=Length}" Header="Length (mm)" Width="Auto" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="modifiedDateAutoColumn" Binding="{Binding Path=ModifiedDate, StringFormat={}{0:dd/MM/yyyy}}" Header="Date Modified" Width="Auto" IsReadOnly="True" />
+            </DataGrid.Columns>
+            </DataGrid>
+        <Button Content="Save Auto" Height="23" HorizontalAlignment="Left" Margin="436,392,0,0" Name="btnSaveAuto" VerticalAlignment="Top" Width="75" Click="btnSaveAuto_Click" />
+        <Label Content="Manual Measurement " Height="28" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" FontSize="16" Foreground="Blue" />
+        <Label Content="Auto Measurement " FontSize="16" Foreground="Blue" Height="28" HorizontalAlignment="Left" Margin="0,182,0,0" Name="label2" VerticalAlignment="Top" />
     </Grid>
 </Window>

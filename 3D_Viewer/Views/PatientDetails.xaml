@@ -811,7 +811,7 @@
                             <StackPanel Orientation="Vertical">
                                 <Label Margin="0,0,5,0" Content="" HorizontalAlignment="Center"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Margin="15,0,10,0" x:Name="btnNewScan" Content="Scan_3D New" FontSize="10" Width="110" HorizontalAlignment="Center" Style="{DynamicResource NormalButtonStyle}"/>
+                                    <Button Margin="15,0,10,0" x:Name="btnNewScan" Content="Scan_3D New" FontSize="10" Width="110" HorizontalAlignment="Center" Style="{DynamicResource NormalButtonStyle}" />
                                     <Button Margin="15,0,10,0" x:Name="btnContinueManipulation" Content="Contin_ue Manipulation" FontSize="10" Width="110" HorizontalAlignment="Center" Style="{DynamicResource NormalButtonStyle}" Click="btnContinueManipulation_Click"/>
                                     <Button Margin="15,0,10,0" x:Name="btnStartManipulation" Content="Start _Manipulation" FontSize="10" Width="110" HorizontalAlignment="Center" Style="{DynamicResource NormalButtonStyle}" Click="btnStartManipulation_Click"/>
                                 </StackPanel>
