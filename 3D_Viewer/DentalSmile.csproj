@@ -11,8 +11,7 @@
     <RootNamespace>smileUp</RootNamespace>
     <AssemblyName>DentalSmile</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -44,7 +43,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Components\AvalonDock.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Components\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="QuantumConcepts.Common">
       <HintPath>Components\QuantumConcepts.Common.dll</HintPath>
     </Reference>
@@ -89,6 +92,7 @@
     <Compile Include="Algorithm\CubicSpline\CubicSpline.cs" />
     <Compile Include="Algorithm\CubicSpline\Program.cs" />
     <Compile Include="Algorithm\CubicSpline\TriDiagonalMatrix.cs" />
+    <Compile Include="Algorithm\HoleFilling\RobustHoleFillingWithPoisson.cs" />
     <Compile Include="Algorithm\Jacobi.cs" />
     <Compile Include="Algorithm\JacobiC.cs" />
     <Compile Include="Algorithm\Mesh3D.cs" />
@@ -670,6 +674,21 @@
   <ItemGroup>
     <Resource Include="Icons\glyph_measure.png" />
     <Resource Include="Icons\measure_jangka.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ico1.JPG" />
+    <Resource Include="Icons\ico10.JPG" />
+    <Resource Include="Icons\ico11.JPG" />
+    <Resource Include="Icons\ico2.JPG" />
+    <Resource Include="Icons\ico3.JPG" />
+    <Resource Include="Icons\ico4.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ico01.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Jaw1.PNG" />
+    <Resource Include="Icons\ShowTeeth1.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

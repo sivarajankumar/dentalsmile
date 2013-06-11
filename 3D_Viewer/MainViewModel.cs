@@ -22,6 +22,7 @@ namespace smileUp
     using smileUp.DataModel;
     using smileUp.Forms;
     using smileUp.Algorithm;
+    using System.Diagnostics;
 
     public class VisualElement
     {
@@ -109,7 +110,7 @@ namespace smileUp
 
         //private const string OpenFileFilter = "3D model files (*.3ds;*.obj;*.lwo;*.stl)|*.3ds;*.obj;*.objz;*.lwo;*.stl";
         private const string OpenFileFilter = "3D model files (*.obj)|*.obj";
-        private const string TitleFormatString = "3D model viewer - {0}";
+        private const string TitleFormatString = "Dental.Smile - 3D Viewer - {0}";
 
         private string _currentModelPath;
         public string CurrentModelPath
@@ -211,7 +212,7 @@ namespace smileUp
             FileExportStlCommand = new DelegateCommand(StlFileExport);            
 
 
-            ApplicationTitle = "Dental Smile - 3D Viewer";
+            ApplicationTitle = "Dental.Smile - 3D Viewer";
 
             ModelToBaseMarker = new Dictionary<Model3D, BaseMarker>();
             OriginalMaterial = new Dictionary<Model3D, Material>();
@@ -331,11 +332,17 @@ namespace smileUp
             n.ShowDialog();
             if (n != null && n.Notes != null)
             {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
                 DirectFileExport(n.Notes);
                 SaveMedicalResume(n.MedicalResume, n.Notes);
 
                 n.Close();
-                MessageBox.Show("Data saved successfully.", "Successfully");
+
+
+                string elapsedTime = showStatus(stopWatch, "Exported");
+                MessageBox.Show("Data saved successfully ( "+elapsedTime+" ).", "Successfully");
             }
         }
 
@@ -388,6 +395,10 @@ namespace smileUp
             var path = FileDialogService.SaveFileDialog(null, null, "StereoLithography Files (*.stl)|*.stl;", ".stl");
             if (path == null)
                 return;
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             var e = new SmileStlExporter(path);
             //e.Export(CurrentModel);
             if (window.ShowHideJawVisualBtn.IsChecked.Value)
@@ -420,12 +431,16 @@ namespace smileUp
 
                 if(((SmileStlExporter)e).Finish)
                     MessageBox.Show("Data Exported to STL file format at "+path+".", "STL Export - Successfully");
-            }            
+            }
+            showStatus(stopWatch,"Exported");
         }
 
 
         private void DirectFileExport(string notes)
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start(); 
+            
             bool newFile = false;
             SmileFile.Patient = Patient;
             SmileFile.Description = notes;
@@ -475,6 +490,7 @@ namespace smileUp
             {
                 DB.UpdateFileInfo(SmileFile);
             }
+            showStatus(stopWatch, "Exported");
         }
 
         private void SaveMedicalResume(string resume, string description)
@@ -484,12 +500,17 @@ namespace smileUp
 
         private void DirectFileExportRaw()
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start(); 
+            
             var path = Smile.MANIPULATED_PATH + "RAW" + "SmileFile.Id" + ".obj";
             var e = new SmileObjExporter(path);
             //e.Export(CurrentModel);
             ((SmileObjExporter)e).rawVisual = RawVisual;
             ((SmileObjExporter)e).Export(RawVisual, Patient);
             e.Close();
+
+            showStatus(stopWatch, "Exported");
         }
 
         private void FileExport()
@@ -499,7 +520,10 @@ namespace smileUp
                 return;
                 //HelixView.Export(path);
             ///*
-                        var ext = Path.GetExtension(path).ToLowerInvariant();
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+  
+            var ext = Path.GetExtension(path).ToLowerInvariant();
                         switch (ext)
                         {
                             case ".png":
@@ -548,6 +572,9 @@ namespace smileUp
                                     break;
                                 }
                         }
+
+            showStatus(stopWatch, "Exported");
+
             //*/
         }
 
@@ -558,6 +585,9 @@ namespace smileUp
                 return;
             //HelixView.Export(path);
             ///*
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             var ext = Path.GetExtension(path).ToLowerInvariant();
             switch (ext)
             {
@@ -607,6 +637,7 @@ namespace smileUp
                         break;
                     }
             }
+            showStatus(stopWatch, "Exported");
             //*/
         }
         private void CopyXaml()
@@ -622,8 +653,12 @@ namespace smileUp
 
         private void LoadRawFile(string CurrentModelPath)
         {
+
             try
             {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
                 CurrentModel = ModelImporter.Load(CurrentModelPath);
                 Model3DGroup group = new Model3DGroup();
                 if (CurrentModel != null)
@@ -664,18 +699,26 @@ namespace smileUp
                     smileMode = "RAW";
                     ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
                     HelixView.ZoomExtents(100);
+
                 }
+
+                showStatus(stopWatch, "Loaded");
+
             }
             catch (FileNotFoundException fnfe)
             {
                 MessageBox.Show("File not found. Make sure your Path Setting is correct.");
-            }            
+            }
+
         }
 
         private void LoadJawFile(string CurrentModelPath)
         {
             try
             {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
                 JawVisual3D jv = null;
                 jv = (JawVisual3D)SmileModelImporter.Load(CurrentModelPath);
                 if (jv != null)
@@ -693,15 +736,27 @@ namespace smileUp
 
                     //if (!HelixView.Viewport.Children.Contains(RootVisual))                    HelixView.Viewport.Children.Add(RootVisual);
                     window.chartPanel.Visibility = Visibility.Visible;
-                    ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
+                    ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath) ;
                 }
 
                 HelixView.ZoomExtents(100);
+                showStatus(stopWatch, "Loaded");
             }
             catch (FileNotFoundException fnfe)
             {
                 MessageBox.Show("File not found. Make sure your Path Setting is correct.");
             }            
+        }
+
+        private string showStatus(Stopwatch stopWatch, string title)
+        {
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds / 10);
+            window.statusBarText.Text = title+" in " + elapsedTime;
+            return elapsedTime;
         }
 
         private void FileOpen()
@@ -742,6 +797,9 @@ namespace smileUp
             {
 #endif
             ///*
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             CurrentModel = ModelImporter.Load(CurrentModelPath);
             Model3DGroup group = new Model3DGroup();
             if (CurrentModel != null)
@@ -841,6 +899,8 @@ namespace smileUp
 
                 ApplicationTitle = String.Format(TitleFormatString, CurrentModelPath);
                 HelixView.ZoomExtents(0);
+
+                showStatus(stopWatch, "Loaded");
             }
 #if !DEBUG
             }
@@ -937,6 +997,9 @@ namespace smileUp
         {
             if (RawVisual != null)
             {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
                 GeometryModel3D gumModel = RawVisual.cutByPlane();
                 if (JawVisual == null)
                 {
@@ -945,7 +1008,12 @@ namespace smileUp
                     JawVisual = new JawVisual3D(p);
                 }
                 JawVisual.replaceGum(gumModel);
-                MessageBox.Show("Processing is done.", "Cutting Mesh");
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds,
+                ts.Milliseconds / 10);
+                MessageBox.Show("Processing is done ( "+elapsedTime+" ).", "Cutting Mesh");
             }
 
         }
@@ -1054,8 +1122,10 @@ namespace smileUp
 
         internal void manualSegment(Point3DCollection points, Vector3DCollection vectors)
         {
-            if (RawVisual != null)
+            if (RawVisual != null && points.Count > 0)
             {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
                 List<GeometryModel3D> models = RawVisual.manualSegment(points, vectors);
                 if (JawVisual != null && models.Count > 0)
                 {
@@ -1063,7 +1133,11 @@ namespace smileUp
                     //add points as archs
                     JawVisual.selectedGum.Archs = points;
                 }
-                MessageBox.Show("Processing is done.", "Manual Segmentation");
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+                MessageBox.Show("Processing is done ( "+elapsedTime+" ).", "Manual Segmentation");
             }
 
         }
@@ -1132,13 +1206,24 @@ namespace smileUp
         {
             SegmentationB b = new SegmentationB();
             ModelVisual3D m = new ModelVisual3D();
-            MeshGeometry3D mg = b.AutoSnake(RawVisual.GetMesh());
+            MeshBuilder mb = new MeshBuilder(false, false);
+            MeshGeometry3D mg = b.AutoSnake(RawVisual.GetMesh(),ref mb);
             GeometryModel3D g = new GeometryModel3D();
             g.Geometry = mg;
-            g.Material = MaterialHelper.CreateMaterial(Brushes.Black);
+            g.Material = MaterialHelper.CreateMaterial(Brushes.Blue);
             g.BackMaterial = MaterialHelper.CreateMaterial(Brushes.Yellow);
             m.Content = g;
-            JawVisual.Children.Add(m);
+            //JawVisual.gc.Children.Add(m);
+
+            GeometryModel3D gP = new GeometryModel3D();
+            gP.Geometry = mb.ToMesh();
+            gP.Material = MaterialHelper.CreateMaterial(Brushes.Red);
+            gP.BackMaterial = MaterialHelper.CreateMaterial(Brushes.Pink);
+            ModelVisual3D mP = new ModelVisual3D();
+            mP.Content = gP;
+            //JawVisual.tc.Children.Add(mP);
+
+            SegmentationB.drawSnakes(JawVisual.bc);
         }
 
        

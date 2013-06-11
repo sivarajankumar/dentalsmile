@@ -293,11 +293,12 @@ namespace smileUp
                 BraceVisual3D brace = d as BraceVisual3D;
                 if (brace != null)
                 {
-                    Transform3D go = e.OldValue as Transform3D;
-                    Transform3D gn= e.NewValue as Transform3D;
+                    Transform3D go = e.OldValue as Transform3DGroup;
+                    Transform3D gn = e.NewValue as Transform3DGroup;
                     if (go != null && gn != null)
                     {
                         Transform3D bt = brace.Transform;
+
                         if (gn is TranslateTransform3D)
                         {
                             Matrix3D btm = bt.Value;

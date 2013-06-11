@@ -90,6 +90,7 @@ namespace smileUp
             
             //mForm = new Forms.MeasurementForm(new Treatment(), new SmileFile());
             navigateButton("demo");
+            ExportRawMenuItem.IsEnabled = true;
         }
 
         //INTEGRATION with Dashboard
@@ -1459,7 +1460,16 @@ namespace smileUp
 
          private void AutoSegmentMeshBtn_Click(object sender, RoutedEventArgs e)
          {
-            // vm.AutoSegmentMesh();
+             Stopwatch stopWatch = new Stopwatch();
+             stopWatch.Start();
+             vm.AutoSegmentMesh();
+             stopWatch.Stop();
+             // Get the elapsed time as a TimeSpan value.
+             TimeSpan ts = stopWatch.Elapsed;
+             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds / 10);
+             MessageBox.Show("Time Elapsed: " + elapsedTime);
          }
 
         

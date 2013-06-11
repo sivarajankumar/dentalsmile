@@ -771,7 +771,7 @@ namespace smileUp.Algorithm
     
         /** The area calculation method used. **/
         private int _areaCalMethod = BARYCENTRIC_AREA;
-        internal MeshGeometry3D AutoSnake(MeshGeometry3D mesh)
+        internal MeshGeometry3D AutoSnake(MeshGeometry3D mesh, ref MeshBuilder newmbP)
         {
             //Dictionary<Int32, SmileEdge> neighbours = SmileVisual3D.findNeighbours(mesh);
 
@@ -779,50 +779,160 @@ namespace smileUp.Algorithm
             Int32Collection triangleIndices = mesh.TriangleIndices;
             Mesh3D m3d = new Mesh3D(positions, triangleIndices);
 
-            Vector3DCollection t = new Vector3DCollection();
-            Vector3DCollection b = new Vector3DCollection();
-            Vector3DCollection n = new Vector3DCollection();
-            double eThreshold = -0.3;
+            Vector3DCollection t = new Vector3DCollection(positions.Count);
+            Vector3DCollection b = new Vector3DCollection(positions.Count);
+            Vector3DCollection n = new Vector3DCollection(positions.Count);
+            double eThreshold = -0.5;
             double nThreshold = 0.8;
             double minEnergy = 10;
             double alpha = 1;
             double betha = 1;
             double ballon = 1;
             double lambda = 1;
-            Vector3DCollection e = new Vector3DCollection();
-            Vector3DCollection eInt = new Vector3DCollection();
-            Vector3DCollection eExt = new Vector3DCollection();
+            Vector3DCollection e = new Vector3DCollection(positions.Count);
+            Vector3DCollection eInt = new Vector3DCollection(positions.Count);
+            Vector3DCollection eExt = new Vector3DCollection(positions.Count);
 
-            Vector3DCollection delta = new Vector3DCollection();
-            List<Vector3DCollection> N = new List<Vector3DCollection>();
-            Vector3DCollection f = new Vector3DCollection();
-            Vector3DCollection tETF = new Vector3DCollection();
+            Vector3DCollection delta = new Vector3DCollection(positions.Count);
+            Vector3DCollection f = new Vector3DCollection(positions.Count);
+            Vector3DCollection tETF = new Vector3DCollection(positions.Count);
 
-            Vector3DCollection k = new Vector3DCollection();
-            DoubleCollection kH = new DoubleCollection();
-            MeshBuilder newmb = new MeshBuilder(false,false); 
+            //Vector3DCollection k = new Vector3DCollection();
+            //DoubleCollection kH = new DoubleCollection();
+            Dictionary<int, Double> kH = new Dictionary<int, double>();
+            MeshBuilder newmbD = new MeshBuilder(false,false); 
             for (int i = 0; i < triangleIndices.Count; i+=3)
             {
-                for (int j = 0; j < 3; j++)
+                for (int a = 0; a < 3; a++)
                 {
-                    int vi = triangleIndices[i+j];
-
-                    //Console.WriteLine("start mean");
-                    double kHi = _MeanCurvature(m3d, vi);
-                    kH.Add(kHi);
-                    //Console.WriteLine("end mean");
-                    if (j == 2 && (kH[i] < eThreshold || kH[i-1] < eThreshold || kH[i-2] < eThreshold))
+                    int vi = triangleIndices[i+a];
+                    
+                    if (!kH.ContainsKey(vi))
                     {
-                        newmb.Positions.Add(positions[i]);
-                        newmb.Positions.Add(positions[i-1]);
-                        newmb.Positions.Add(positions[i-2]);
-                        newmb.TriangleIndices.Add(i);
-                        newmb.TriangleIndices.Add(i-1);
-                        newmb.TriangleIndices.Add(i-2);
+                        double kHi = _MeanCurvature(m3d, vi);
+                        kH.Add(vi, kHi);
                     }
+                    //Console.WriteLine("start mean");
+                    //kH.Add(kHi);
+                    //Console.WriteLine("end mean");
+                    if (a == 2)
+                    {
+                        int vi1 = triangleIndices[i + a - 1];
+                        int vi2 = triangleIndices[i + a - 2];
+                        double kH3 = 0;
+                        kH.TryGetValue(vi, out kH3);
+                        double kH2 =0;
+                        kH.TryGetValue(vi1, out kH2);
+                        double kH1 = 0;
+                        kH.TryGetValue(vi2, out kH1);
+
+                        if ((kH3 < eThreshold || kH2 < eThreshold || kH1 < eThreshold))
+                        {
+                            newmbD.Positions.Add(positions[vi]);
+                            newmbD.Positions.Add(positions[vi1]);
+                            newmbD.Positions.Add(positions[vi2]);
+                            newmbD.TriangleIndices.Add(i + a);
+                            newmbD.TriangleIndices.Add(i + a - 1);
+                            newmbD.TriangleIndices.Add(i + a - 2);
+                        }
+                        if ((kH3 > nThreshold || kH2 > nThreshold || kH1 > nThreshold))
+                        {
+                            newmbP.Positions.Add(positions[vi]);
+                            newmbP.Positions.Add(positions[vi1]);
+                            newmbP.Positions.Add(positions[vi2]);
+                            newmbP.TriangleIndices.Add(i + a);
+                            newmbP.TriangleIndices.Add(i + a - 1);
+                            newmbP.TriangleIndices.Add(i + a - 2);
+                        }
+                    }
+
+                    int[] nbrs = m3d.GetNeighbourVertices(vi);
+                    Vector3DCollection N = new Vector3DCollection(positions.Count);
+                    Point3D pi = positions[vi];
+                    int i0 = triangleIndices[i + a ];
+                    if (i + a - 1 >= 0) i0 = triangleIndices[i + a - 1];
+                    Point3D pi0 = positions[i0];
+                    int i1 = vi;
+                    if (i + a + i < triangleIndices.Count) i1 = triangleIndices[i + a + 1];
+                    Point3D pi1 = positions[i1];
+
+                    t.Insert(vi, (pi1 - pi0) / (Point3D.Subtract(pi1, pi0).Length));
+                    //t[i] = (pi1 - pi0) / Math.Sqrt((Point3D.Subtract(pi1, pi0).Length));
+                    n.Insert(vi, SmileVisual3D.CalculateNormal(pi0, pi, pi1));
+                    b.Insert(vi, Vector3D.CrossProduct(t[vi], n[vi]));
+
+                    Vector3D eIntV = new Vector3D(); //eInt[vi];
+                    Vector3D eExtV = new Vector3D(); //eExt[vi];
+                    Vector3D eV = new Vector3D(); //e[vi];
+                    Vector3D sumDeltaNbrs = new Vector3D();
+                    Vector3D sumFNbrs = new Vector3D();
+                    int maxNbrs = (nbrs.Length > 2 ? 2 : nbrs.Length);
+                    for (int j = 0; j < maxNbrs; j++)
+                    {
+                        Point3D nbj = positions[nbrs[j]];
+                        N.Add(nbj.ToVector3D());
+                    }
+                    double determinantVi = determinant(N);
+                    double kv = 0;
+                    kH.TryGetValue(vi, out kv);
+                    double jminEnergy = minEnergy;
+                    Point3D tempNbj = pi;
+                    for (int j = 0; j < maxNbrs; j++)
+                    {
+                        Point3D nbj = positions[nbrs[j]];
+
+                        double ku = 0;
+                        kH.TryGetValue(nbrs[j], out ku);
+                        sumDeltaNbrs +=  Vector3D.Multiply( (kv - ku) , Vector3D.Divide(Point3D.Subtract(nbj, pi) , (Point3D.Subtract(nbj,pi).Length) ) );
+                        delta.Insert(vi, (1 / determinantVi) * sumDeltaNbrs);
+                        f.Insert(vi, Vector3D.Multiply((1 - lambda) , Vector3D.Multiply((1 / determinantVi ), new Vector3D()) ) + Vector3D.Multiply(lambda,delta[vi]));
+                        double eIntj = alpha * (Point3D.Subtract(pi0, nbj).Length) + betha * (Point3D.Subtract(pi0, Point3D.Add(pi1, (Vector3D)nbj)).Length); //TODO: crosscheck
+                        double eFaej = ballon * (-(f[vi].Length) - Vector3D.DotProduct((f[vi] / f[vi].Length), (Point3D.Subtract(nbj, pi) / Point3D.Subtract(nbj, pi).Length))); //TODO: crosscheck
+                        double ePressj = ballon * Vector3D.DotProduct(b[vi], (Point3D.Subtract(pi0, nbj) / Point3D.Subtract(pi0, nbj).Length));
+                        double eExtj = eFaej + ePressj;
+                        double ej = eIntj + eExtj;
+
+                        if (j == 0)
+                        {
+                            eIntV.X = eIntj;
+                            eExtV.X = eExtj;
+                            eV.X = ej;
+                        }
+                        if (j == 1)
+                        {
+                            eIntV.Y = eIntj;
+                            eExtV.Y = eExtj;
+                            eV.Y = ej;
+                        }
+                        if (j == 2)
+                        {
+                            eIntV.Z = eIntj;
+                            eExtV.Z = eExtj;
+                            eV.Z = ej;
+                        }
+
+                        if (ej < jminEnergy)
+                        {
+                            jminEnergy = ej;
+                            tempNbj = nbj;
+                            //TODO: snake movement
+                            //AddSnakeElement(nbj);
+                        }
+
+                    }
+                    AddSnakeElement(tempNbj);
+
+                    eInt.Insert(vi, eIntV);
+                    eExt.Insert(vi, eExtV);
+                    e.Insert(vi, eV);
+
+                    //delta.Insert(vi,  (1 / determinant(N[vi])) * sumDeltaNbrs); //TODO:implemenet
+                    //f.Insert(vi, n[vi]);// (1 - lambda) * (1 / (Math.Abs(nbrs.Count))) + lambda *delta[i]; //TODO:implemenet
+
+                    tETF.Insert(vi, Vector3D.CrossProduct(delta[vi], n[vi]));
                 }
             }
-            return newmb.ToMesh();
+            return newmbD.ToMesh();
 /*
             for (int i = 0; i < positions.Count; i++)
             {

@@ -145,7 +145,7 @@ namespace smileUp
             var geo = MeshGeometryHelper.Cut(worldMesh, p, nn);
             //var geo1 = ToLocalMesh(geo);
             var model = new GeometryModel3D(geo, MaterialHelper.CreateMaterial(Colors.Tomato));
-            
+            model.BackMaterial = MaterialHelper.CreateMaterial(Colors.Bisque);
             
             this.Cut(p, n);
             showManipulator = false;

@@ -277,6 +277,7 @@ namespace smileUp
                 material = MaterialHelper.CreateMaterial(TeethVisual3D.getTeethColor(intID));
             }
             ((GeometryModel3D)t.Content).Material = material;
+            ((GeometryModel3D)t.Content).BackMaterial = material;
 
             selectedTeeth = t;
             return t;
